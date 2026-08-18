@@ -21,573 +21,17 @@
     <div class="cube cube-3"></div>
     <div class="cube cube-4"></div>
 
-
-    <!-- =====================================================
-         CUBE KNIGHT DECORATIVE MASCOT
-    ====================================================== -->
-
-    <div id="cube-knight" class="cube-knight" aria-label="Cube Knight">
-
-        <div class="knight-glow"></div>
-
-        <svg
-            class="knight-svg"
-            viewBox="0 0 260 360"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-
-            <!-- =========================
-                 GLOW FILTER
-            ========================== -->
-
-            <defs>
-
-                <filter id="knightGlow">
-                    <feGaussianBlur
-                        stdDeviation="3"
-                        result="blur"
-                    />
-
-                    <feMerge>
-                        <feMergeNode in="blur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                </filter>
-
-                <linearGradient
-                    id="armorGradient"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-                    <stop
-                        offset="0%"
-                        stop-color="#164f72"
-                    />
-
-                    <stop
-                        offset="50%"
-                        stop-color="#092c48"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#041725"
-                    />
-                </linearGradient>
-
-                <linearGradient
-                    id="shieldGradient"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-                    <stop
-                        offset="0%"
-                        stop-color="#20dfff"
-                    />
-
-                    <stop
-                        offset="50%"
-                        stop-color="#087dc5"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#05365c"
-                    />
-                </linearGradient>
-
-                <linearGradient
-                    id="swordGradient"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-                    <stop
-                        offset="0%"
-                        stop-color="#ffffff"
-                    />
-
-                    <stop
-                        offset="50%"
-                        stop-color="#73eaff"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#1598d5"
-                    />
-                </linearGradient>
-
-            </defs>
-
-
-            <!-- =========================
-                 SHADOW
-            ========================== -->
-
-            <ellipse
-                cx="130"
-                cy="345"
-                rx="75"
-                ry="10"
-                fill="rgba(0,0,0,0.55)"
-            />
-
-
-            <!-- =========================
-                 CAPE / BACK ARMOR
-            ========================== -->
-
-            <path
-                d="
-                    M75 195
-                    L185 195
-                    L205 310
-                    L55 310
-                    Z
-                "
-                fill="#031522"
-                stroke="#128fc6"
-                stroke-width="3"
-            />
-
-            <path
-                d="
-                    M75 205
-                    L185 205
-                    L190 295
-                    L70 295
-                    Z
-                "
-                fill="#062a43"
-                opacity="0.7"
-            />
-
-
-            <!-- =========================
-                 BODY ARMOR
-            ========================== -->
-
-            <path
-                d="
-                    M82 180
-                    L178 180
-                    L194 285
-                    L66 285
-                    Z
-                "
-                fill="url(#armorGradient)"
-                stroke="#20dfff"
-                stroke-width="3"
-            />
-
-            <!-- Chest Core -->
-
-            <polygon
-                points="
-                    130,205
-                    154,220
-                    154,248
-                    130,263
-                    106,248
-                    106,220
-                "
-                fill="#031725"
-                stroke="#24d9ff"
-                stroke-width="3"
-                filter="url(#knightGlow)"
-            />
-
-            <circle
-                cx="130"
-                cy="234"
-                r="7"
-                fill="#55edff"
-                filter="url(#knightGlow)"
-            />
-
-
-            <!-- =========================
-                 LEFT ARM
-            ========================== -->
-
-            <path
-                d="
-                    M82 195
-                    L55 210
-                    L38 275
-                    L63 285
-                    L90 225
-                "
-                fill="url(#armorGradient)"
-                stroke="#159bd1"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 RIGHT ARM
-            ========================== -->
-
-            <path
-                d="
-                    M178 195
-                    L205 210
-                    L220 270
-                    L195 282
-                    L170 225
-                "
-                fill="url(#armorGradient)"
-                stroke="#159bd1"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 LEFT LEG
-            ========================== -->
-
-            <path
-                d="
-                    M72 275
-                    L122 275
-                    L118 325
-                    L70 325
-                "
-                fill="#062b45"
-                stroke="#20bce9"
-                stroke-width="3"
-            />
-
-            <!-- =========================
-                 RIGHT LEG
-            ========================== -->
-
-            <path
-                d="
-                    M138 275
-                    L188 275
-                    L190 325
-                    L142 325
-                "
-                fill="#062b45"
-                stroke="#20bce9"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 BOOTS
-            ========================== -->
-
-            <path
-                d="
-                    M65 315
-                    L118 315
-                    L125 337
-                    L58 337
-                    Z
-                "
-                fill="#04121f"
-                stroke="#158dbd"
-                stroke-width="3"
-            />
-
-            <path
-                d="
-                    M142 315
-                    L195 315
-                    L202 337
-                    L135 337
-                    Z
-                "
-                fill="#04121f"
-                stroke="#158dbd"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 NECK
-            ========================== -->
-
-            <rect
-                x="105"
-                y="157"
-                width="50"
-                height="35"
-                rx="7"
-                fill="#071d30"
-                stroke="#159bd1"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 CUBE HEAD
-            ========================== -->
-
-            <polygon
-                points="
-                    70,55
-                    130,30
-                    190,55
-                    190,140
-                    130,170
-                    70,140
-                "
-                fill="#082b45"
-                stroke="#24d9ff"
-                stroke-width="4"
-                filter="url(#knightGlow)"
-            />
-
-            <!-- Head front -->
-
-            <polygon
-                points="
-                    70,55
-                    130,80
-                    130,170
-                    70,140
-                "
-                fill="#0a3857"
-            />
-
-            <!-- Head right -->
-
-            <polygon
-                points="
-                    130,80
-                    190,55
-                    190,140
-                    130,170
-                "
-                fill="#06263e"
-            />
-
-            <!-- Top cube face -->
-
-            <polygon
-                points="
-                    70,55
-                    130,30
-                    190,55
-                    130,80
-                "
-                fill="#0d4668"
-            />
-
-
-            <!-- =========================
-                 CUBE DETAILS
-            ========================== -->
-
-            <path
-                d="M82 61 L130 42 L177 61"
-                fill="none"
-                stroke="#4de8ff"
-                stroke-width="2"
-                opacity="0.6"
-            />
-
-            <path
-                d="M82 128 L130 148 L178 128"
-                fill="none"
-                stroke="#0ca8dc"
-                stroke-width="2"
-                opacity="0.5"
-            />
-
-
-            <!-- =========================
-                 LEFT GLOWING EYE
-            ========================== -->
-
-            <polygon
-                class="knight-eye"
-                points="
-                    84,91
-                    113,99
-                    113,113
-                    84,105
-                "
-                fill="#65f4ff"
-                filter="url(#knightGlow)"
-            />
-
-
-            <!-- =========================
-                 RIGHT GLOWING EYE
-            ========================== -->
-
-            <polygon
-                class="knight-eye"
-                points="
-                    147,99
-                    176,91
-                    176,105
-                    147,113
-                "
-                fill="#65f4ff"
-                filter="url(#knightGlow)"
-            />
-
-
-            <!-- =========================
-                 FACE LINE
-            ========================== -->
-
-            <path
-                d="
-                    M101 130
-                    L130 140
-                    L159 130
-                "
-                fill="none"
-                stroke="#159acb"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 SWORD
-            ========================== -->
-
-            <g class="knight-sword">
-
-                <!-- Blade -->
-
-                <polygon
-                    points="
-                        205,260
-                        236,105
-                        247,90
-                        239,135
-                        220,275
-                    "
-                    fill="url(#swordGradient)"
-                    stroke="#65efff"
-                    stroke-width="3"
-                    filter="url(#knightGlow)"
-                />
-
-                <!-- Sword edge -->
-
-                <line
-                    x1="236"
-                    y1="105"
-                    x2="205"
-                    y2="260"
-                    stroke="#ffffff"
-                    stroke-width="2"
-                    opacity="0.8"
-                />
-
-                <!-- Guard -->
-
-                <line
-                    x1="190"
-                    y1="267"
-                    x2="228"
-                    y2="278"
-                    stroke="#24d9ff"
-                    stroke-width="8"
-                    stroke-linecap="round"
-                />
-
-                <!-- Handle -->
-
-                <line
-                    x1="210"
-                    y1="273"
-                    x2="202"
-                    y2="309"
-                    stroke="#102d42"
-                    stroke-width="9"
-                    stroke-linecap="round"
-                />
-
-                <!-- Handle glow -->
-
-                <line
-                    x1="207"
-                    y1="276"
-                    x2="201"
-                    y2="307"
-                    stroke="#1bb9e9"
-                    stroke-width="3"
-                />
-
-            </g>
-
-
-            <!-- =========================
-                 SHIELD
-            ========================== -->
-
-            <g class="knight-shield">
-
-                <path
-                    d="
-                        M20 210
-                        L60 225
-                        L60 280
-                        Q40 310 20 320
-                        Q0 310 -20 280
-                        L-20 225
-                        Z
-                    "
-                    transform="translate(43,0)"
-                    fill="url(#shieldGradient)"
-                    stroke="#24d9ff"
-                    stroke-width="3"
-                    filter="url(#knightGlow)"
-                />
-
-                <!-- Shield symbol -->
-
-                <polygon
-                    points="
-                        43,240
-                        58,248
-                        58,267
-                        43,277
-                        28,267
-                        28,248
-                    "
-                    fill="#031b2c"
-                    stroke="#72efff"
-                    stroke-width="2"
-                />
-
-                <path
-                    d="
-                        M43 244
-                        L43 272
-                    "
-                    stroke="#5deaff"
-                    stroke-width="2"
-                />
-
-                <path
-                    d="
-                        M30 254
-                        L56 254
-                    "
-                    stroke="#5deaff"
-                    stroke-width="2"
-                />
-
-            </g>
-
-        </svg>
-
+    <!-- GLOWING PARTICLES -->
+
+    <div class="particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
 
@@ -624,12 +68,18 @@
             <div class="title-brand">
 
                 <div class="main-title">
+
                     <span>◆</span>
+
                     CUBES
+
                 </div>
 
+
                 <div class="sub-title">
+
                     ADVENTURE KNIGHT
+
                 </div>
 
             </div>
@@ -659,6 +109,7 @@
     </header>
 
 
+
     <!-- =====================================================
          MAIN
     ====================================================== -->
@@ -666,7 +117,9 @@
     <main class="main-wrapper">
 
 
-        <!-- STATUS -->
+        <!-- =================================================
+             STATUS BAR
+        ================================================== -->
 
         <div class="status-bar">
 
@@ -682,7 +135,7 @@
             <div class="energy">
 
                 ENERGY
-                <span id="energy-value">100%</span>
+                <strong id="energy-value">100%</strong>
 
                 <span>⚡</span>
 
@@ -691,8 +144,9 @@
         </div>
 
 
+
         <!-- =================================================
-             MODE
+             MODE BAR
         ================================================== -->
 
         <div class="mode-bar">
@@ -731,6 +185,7 @@
         </div>
 
 
+
         <!-- =================================================
              WORKSPACE
         ================================================== -->
@@ -739,19 +194,336 @@
 
 
             <!-- =============================================
-                 CALCULATOR
+                 CALCULATOR PANEL
             ============================================== -->
 
             <div class="calculator-panel">
 
 
-                <!-- DISPLAY -->
+                <!-- =========================================
+                     CUBE KNIGHT
+                ========================================== -->
+
+                <div class="cube-knight-area">
+
+                    <div class="knight-glow"></div>
+
+
+                    <!-- INLINE SVG CUBE KNIGHT -->
+
+                    <svg
+                        class="cube-knight"
+                        viewBox="0 0 220 250"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Cube Knight"
+                    >
+
+                        <!-- SHADOW -->
+
+                        <ellipse
+                            cx="110"
+                            cy="235"
+                            rx="55"
+                            ry="9"
+                            fill="rgba(0,0,0,0.45)"
+                        />
+
+
+                        <!-- CAPE -->
+
+                        <path
+                            d="M72 137
+                               L45 215
+                               L72 205
+                               L90 220
+                               L110 145
+                               Z"
+                            fill="#052d4a"
+                            stroke="#24d9ff"
+                            stroke-width="2"
+                        />
+
+
+                        <!-- BODY ARMOR -->
+
+                        <path
+                            d="M76 128
+                               L144 128
+                               L159 195
+                               L110 218
+                               L61 195
+                               Z"
+                            fill="#0a3453"
+                            stroke="#24d9ff"
+                            stroke-width="3"
+                        />
+
+
+                        <!-- ARMOR CENTER -->
+
+                        <path
+                            d="M91 139
+                               L129 139
+                               L138 188
+                               L110 201
+                               L82 188
+                               Z"
+                            fill="#0c4568"
+                            stroke="#078fe5"
+                            stroke-width="2"
+                        />
+
+
+                        <!-- ARMOR CORE -->
+
+                        <circle
+                            cx="110"
+                            cy="165"
+                            r="10"
+                            fill="#24d9ff"
+                            opacity="0.9"
+                        />
+
+                        <circle
+                            cx="110"
+                            cy="165"
+                            r="5"
+                            fill="#ffffff"
+                        />
+
+
+                        <!-- LEFT ARM -->
+
+                        <path
+                            d="M72 137
+                               L48 157
+                               L58 176
+                               L82 157"
+                            fill="#0a3453"
+                            stroke="#24d9ff"
+                            stroke-width="3"
+                        />
+
+
+                        <!-- RIGHT ARM -->
+
+                        <path
+                            d="M148 137
+                               L174 151
+                               L166 172
+                               L140 157"
+                            fill="#0a3453"
+                            stroke="#24d9ff"
+                            stroke-width="3"
+                        />
+
+
+                        <!-- LEFT LEG -->
+
+                        <path
+                            d="M77 192
+                               L102 198
+                               L96 225
+                               L72 225
+                               Z"
+                            fill="#082942"
+                            stroke="#24d9ff"
+                            stroke-width="3"
+                        />
+
+
+                        <!-- RIGHT LEG -->
+
+                        <path
+                            d="M118 198
+                               L143 192
+                               L148 225
+                               L124 225
+                               Z"
+                            fill="#082942"
+                            stroke="#24d9ff"
+                            stroke-width="3"
+                        />
+
+
+                        <!-- LEFT BOOT -->
+
+                        <path
+                            d="M69 219
+                               L97 219
+                               L101 230
+                               L66 230
+                               Z"
+                            fill="#061b2d"
+                            stroke="#078fe5"
+                            stroke-width="2"
+                        />
+
+
+                        <!-- RIGHT BOOT -->
+
+                        <path
+                            d="M123 219
+                               L150 219
+                               L154 230
+                               L120 230
+                               Z"
+                            fill="#061b2d"
+                            stroke="#078fe5"
+                            stroke-width="2"
+                        />
+
+
+                        <!-- SHIELD -->
+
+                        <path
+                            d="M40 145
+                               L17 155
+                               L21 190
+                               L40 207
+                               L59 190
+                               L63 155
+                               Z"
+                            fill="#063553"
+                            stroke="#24d9ff"
+                            stroke-width="3"
+                        />
+
+
+                        <!-- SHIELD SYMBOL -->
+
+                        <path
+                            d="M40 160
+                               L31 170
+                               L40 190
+                               L49 170
+                               Z"
+                            fill="#24d9ff"
+                        />
+
+
+                        <!-- SWORD -->
+
+                        <path
+                            d="M170 140
+                               L199 74
+                               L205 79
+                               L178 145
+                               Z"
+                            fill="#d9faff"
+                            stroke="#24d9ff"
+                            stroke-width="2"
+                        />
+
+
+                        <!-- SWORD HANDLE -->
+
+                        <path
+                            d="M165 143
+                               L181 150"
+                            stroke="#24d9ff"
+                            stroke-width="6"
+                            stroke-linecap="round"
+                        />
+
+                        <path
+                            d="M171 136
+                               L185 143"
+                            stroke="#078fe5"
+                            stroke-width="3"
+                        />
+
+
+                        <!-- CUBE HEAD -->
+
+                        <polygon
+                            points="67,48 110,27 153,48 153,103 110,126 67,103"
+                            fill="#0b3553"
+                            stroke="#24d9ff"
+                            stroke-width="4"
+                        />
+
+
+                        <!-- HEAD LEFT SIDE -->
+
+                        <polygon
+                            points="67,48 110,70 110,126 67,103"
+                            fill="#072a45"
+                        />
+
+
+                        <!-- HEAD RIGHT SIDE -->
+
+                        <polygon
+                            points="110,70 153,48 153,103 110,126"
+                            fill="#0d4566"
+                        />
+
+
+                        <!-- FACE -->
+
+                        <polygon
+                            points="78,61 110,77 142,61 142,94 110,111 78,94"
+                            fill="#020f1c"
+                            stroke="#078fe5"
+                            stroke-width="2"
+                        />
+
+
+                        <!-- LEFT GLOWING EYE -->
+
+                        <polygon
+                            class="knight-eye"
+                            points="85,76 101,83 101,89 85,82"
+                            fill="#24d9ff"
+                        />
+
+
+                        <!-- RIGHT GLOWING EYE -->
+
+                        <polygon
+                            class="knight-eye"
+                            points="119,83 135,76 135,82 119,89"
+                            fill="#24d9ff"
+                        />
+
+
+                        <!-- HEAD TOP GEM -->
+
+                        <polygon
+                            points="110,34 119,40 110,47 101,40"
+                            fill="#24d9ff"
+                        />
+
+                    </svg>
+
+
+                    <!-- KNIGHT TEXT -->
+
+                    <div class="knight-name">
+
+                        <strong>CUBE KNIGHT</strong>
+
+                        <span id="knight-status">
+                            READY FOR ADVENTURE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     DISPLAY
+                ========================================== -->
 
                 <div class="display">
 
                     <div id="history">
                         READY FOR CALCULATION
                     </div>
+
 
                     <div id="result">
                         0
@@ -760,8 +532,46 @@
                 </div>
 
 
+
                 <!-- =========================================
-                     BASIC
+                     CALCULATION EFFECT
+                ========================================== -->
+
+                <div
+                    id="calculation-effect"
+                    class="calculation-effect"
+                >
+
+                    <span id="effect-energy">
+                        ENERGY PULSE
+                    </span>
+
+
+                    <span class="effect-arrow">
+                        ↓
+                    </span>
+
+
+                    <span id="effect-calculation">
+                        CALCULATION
+                    </span>
+
+
+                    <span class="effect-arrow">
+                        ↓
+                    </span>
+
+
+                    <span id="effect-xp">
+                        +XP
+                    </span>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     BASIC MODE
                 ========================================== -->
 
                 <section
@@ -770,6 +580,7 @@
                 >
 
                     <div class="buttons">
+
 
                         <button
                             class="clear-btn"
@@ -905,8 +716,9 @@
                 </section>
 
 
+
                 <!-- =========================================
-                     SCIENTIFIC
+                     SCIENTIFIC MODE
                 ========================================== -->
 
                 <section
@@ -1211,8 +1023,9 @@
                 </section>
 
 
+
                 <!-- =========================================
-                     PROGRAMMER
+                     PROGRAMMER MODE
                 ========================================== -->
 
                 <section
@@ -1222,35 +1035,56 @@
 
                     <div class="programmer-display">
 
+
                         <div>
-                            <span>DEC</span>
+
+                            <span>
+                                DEC
+                            </span>
+
                             <strong id="programmer-dec">
                                 0
                             </strong>
+
                         </div>
 
 
                         <div>
-                            <span>BIN</span>
+
+                            <span>
+                                BIN
+                            </span>
+
                             <strong id="programmer-bin">
                                 0
                             </strong>
+
                         </div>
 
 
                         <div>
-                            <span>HEX</span>
+
+                            <span>
+                                HEX
+                            </span>
+
                             <strong id="programmer-hex">
                                 0
                             </strong>
+
                         </div>
 
 
                         <div>
-                            <span>OCT</span>
+
+                            <span>
+                                OCT
+                            </span>
+
                             <strong id="programmer-oct">
                                 0
                             </strong>
+
                         </div>
 
                     </div>
@@ -1265,6 +1099,7 @@
 
 
                     <div class="programmer-buttons">
+
 
                         <button
                             onclick="programmerOperation('AND')"
@@ -1312,8 +1147,9 @@
                 </section>
 
 
+
                 <!-- =========================================
-                     CONVERTER
+                     CONVERTER MODE
                 ========================================== -->
 
                 <section
@@ -1322,6 +1158,7 @@
                 >
 
                     <div class="converter-box">
+
 
                         <label>
                             Jenis Converter
@@ -1373,6 +1210,7 @@
 
 
                         <div class="converter-inputs">
+
 
                             <div>
 
@@ -1430,18 +1268,20 @@
                 </section>
 
 
+
                 <!-- =========================================
                      KNIGHT STATUS
                 ========================================== -->
 
                 <div class="knight-status">
 
+
                     <span>
                         ⚔ KNIGHT CALCULATOR
                     </span>
 
 
-                    <span id="knight-message">
+                    <span>
                         CALCULATION MODE: ACTIVE
                     </span>
 
@@ -1450,13 +1290,16 @@
             </div>
 
 
+
             <!-- =============================================
-                 HISTORY
+                 HISTORY PANEL
             ============================================== -->
 
             <aside class="history-panel">
 
+
                 <div class="history-title">
+
 
                     <h2>
                         ⚔️ ADVENTURE HISTORY
@@ -1485,11 +1328,13 @@
     </main>
 
 
+
     <!-- =====================================================
-         TEAM
+         TEAM PROJECT
     ====================================================== -->
 
     <section class="team-section">
+
 
         <h2>
             TEAM PROJECT
@@ -1498,32 +1343,54 @@
 
         <div class="team-list">
 
+
             <div class="member">
-                <span>01</span>
+
+                <span>
+                    01
+                </span>
+
                 Finsa Dwi W.T
+
             </div>
 
 
             <div class="member">
-                <span>02</span>
+
+                <span>
+                    02
+                </span>
+
                 Talitha Nur S
+
             </div>
 
 
             <div class="member">
-                <span>03</span>
+
+                <span>
+                    03
+                </span>
+
                 Nazwa Agustina R
+
             </div>
 
 
             <div class="member">
-                <span>04</span>
+
+                <span>
+                    04
+                </span>
+
                 Aulia Putri M
+
             </div>
 
         </div>
 
     </section>
+
 
 
     <!-- =====================================================
@@ -1532,15 +1399,20 @@
 
     <footer>
 
+
         <strong>
             CUBES ADVENTURE KNIGHT
         </strong>
 
+
         <br>
+
 
         Futuristic Calculator
 
+
         <br>
+
 
         <small>
             SMKN 1 SANDEN • RPL
@@ -1549,8 +1421,9 @@
     </footer>
 
 
+
     <!-- =====================================================
-         JAVASCRIPT
+         SCRIPT
     ====================================================== -->
 
     <script src="script.js"></script>
