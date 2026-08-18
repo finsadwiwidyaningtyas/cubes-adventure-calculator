@@ -1,897 +1,545 @@
 /* ========================================
-   RESET
+   CUBES ADVENTURE KNIGHT
+   FUTURISTIC SCIENTIFIC CALCULATOR
 ======================================== */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
-    font-family: Arial, Helvetica, sans-serif;
 }
 
+:root {
+    --bg-dark: #020b18;
+    --bg-blue: #061a31;
+    --panel: rgba(7, 28, 52, 0.88);
+    --button: rgba(16, 50, 79, 0.9);
+    --button-hover: rgba(23, 72, 108, 0.95);
+    --cyan: #38d9ff;
+    --cyan-light: #72e8ff;
+    --blue: #168cff;
+    --white: #f4fbff;
+    --muted: #82a9c5;
+    --danger: #ff5264;
+    --warning: #ffc247;
+    --border: rgba(48, 196, 255, 0.28);
+}
 
 /* ========================================
    BODY
 ======================================== */
 
 body {
-
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 35px 20px;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--white);
 
     background:
-        radial-gradient(
-            circle at top,
-            #123b70,
-            #030b18 60%
-        );
-
-    color: white;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+        radial-gradient(circle at 20% 20%, rgba(0, 157, 255, 0.13), transparent 28%),
+        radial-gradient(circle at 80% 80%, rgba(0, 119, 255, 0.12), transparent 30%),
+        linear-gradient(135deg, #010711, #04182d 50%, #020a16);
 
     overflow-x: hidden;
 }
 
+/* Grid futuristic background */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        linear-gradient(rgba(47, 178, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(47, 178, 255, 0.035) 1px, transparent 1px);
+
+    background-size: 45px 45px;
+    pointer-events: none;
+}
 
 /* ========================================
-   HEADER
-======================================== */
-
-header {
-
-    text-align: center;
-
-    margin-top: 30px;
-
-    width: 100%;
-
-    z-index: 2;
-}
-
-
-/* ========================================
-   LOGO KELOMPOK
-======================================== */
-
-.logo-kelompok {
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    margin-bottom: 18px;
-}
-
-
-.logo-kelompok img {
-
-    width: 120px;
-    height: 120px;
-
-    object-fit: cover;
-
-    border-radius: 50%;
-
-    border: 3px solid #00d9ff;
-
-    box-shadow:
-
-        0 0 10px #00d9ff,
-
-        0 0 25px
-        rgba(0, 217, 255, 0.7),
-
-        inset 0 0 15px
-        rgba(0, 217, 255, 0.3);
-
-    transition: 0.3s;
-}
-
-
-.logo-kelompok img:hover {
-
-    transform: scale(1.08);
-
-    box-shadow:
-
-        0 0 15px #00eaff,
-
-        0 0 35px #008cff;
-}
-
-
-/* ========================================
-   LOGO CONTAINER
-======================================== */
-
-.logo-container {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 25px;
-
-    width: 100%;
-}
-
-
-/* ========================================
-   LOGO SEKOLAH & RPL
-======================================== */
-
-.logo-img {
-
-    width: 85px;
-    height: 85px;
-
-    object-fit: contain;
-
-    border-radius: 15px;
-
-    filter:
-
-        drop-shadow(
-            0 0 8px
-            rgba(0, 217, 255, 0.7)
-        );
-
-    transition: 0.3s;
-}
-
-
-.logo-img:hover {
-
-    transform: scale(1.08);
-
-    filter:
-
-        drop-shadow(
-            0 0 15px
-            #00d9ff
-        );
-}
-
-
-/* ========================================
-   LOGO TENGAH
-======================================== */
-
-.logo-tengah {
-
-    text-align: center;
-}
-
-
-/* ========================================
-   CUBES
-======================================== */
-
-.logo {
-
-    font-size: 38px;
-
-    font-weight: bold;
-
-    letter-spacing: 5px;
-
-    color: #ffffff;
-
-    text-shadow:
-
-        0 0 10px #00d9ff,
-
-        0 0 25px #008cff;
-}
-
-
-.logo span {
-
-    color: #00eaff;
-}
-
-
-/* ========================================
-   SUBTITLE
-======================================== */
-
-.subtitle {
-
-    margin-top: 5px;
-
-    color: #66eaff;
-
-    font-size: 14px;
-
-    letter-spacing: 5px;
-}
-
-
-/* ========================================
-   LOGO MOKO
-======================================== */
-
-.moko-logo {
-
-    margin-top: 15px;
-
-    display: flex;
-
-    justify-content: center;
-}
-
-
-.moko-logo img {
-
-    width: 95px;
-    height: 95px;
-
-    object-fit: contain;
-
-    border-radius: 15px;
-
-    filter:
-
-        drop-shadow(
-            0 0 10px
-            rgba(0, 217, 255, 0.6)
-        );
-
-    transition: 0.3s;
-}
-
-
-.moko-logo img:hover {
-
-    transform:
-        rotate(3deg)
-        scale(1.05);
-
-    filter:
-
-        drop-shadow(
-            0 0 18px
-            #00d9ff
-        );
-}
-
-
-/* ========================================
-   CALCULATOR
+   CALCULATOR CONTAINER
 ======================================== */
 
 .calculator {
+    position: relative;
+    width: min(430px, 100%);
 
-    width: 360px;
+    padding: 22px;
 
-    margin-top: 25px;
-
-    padding: 20px;
-
-    border-radius: 25px;
+    border: 1px solid rgba(54, 210, 255, 0.45);
+    border-radius: 28px;
 
     background:
-        rgba(5, 24, 48, 0.85);
-
-    border:
-        1px solid #00d9ff;
+        linear-gradient(
+            145deg,
+            rgba(12, 43, 72, 0.95),
+            rgba(2, 17, 32, 0.96)
+        );
 
     box-shadow:
+        0 0 25px rgba(0, 174, 255, 0.16),
+        0 0 70px rgba(0, 119, 255, 0.08),
+        inset 0 0 25px rgba(0, 191, 255, 0.04);
 
-        0 0 15px #00aaff,
-
-        inset 0 0 25px
-        rgba(0, 200, 255, 0.15);
-
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(18px);
 
     z-index: 2;
 }
 
+/* Glow around calculator */
 
-/* ========================================
-   STATUS
-======================================== */
+.calculator::before {
+    content: "";
 
-.status {
+    position: absolute;
+    inset: -2px;
 
-    display: flex;
+    border-radius: 30px;
 
-    justify-content: space-between;
+    background: linear-gradient(
+        135deg,
+        rgba(52, 219, 255, 0.5),
+        transparent 35%,
+        transparent 65%,
+        rgba(0, 121, 255, 0.35)
+    );
 
-    font-size: 10px;
-
-    color: #54eaff;
-
-    margin-bottom: 15px;
+    z-index: -1;
+    opacity: 0.7;
 }
 
+/* ========================================
+   TITLE
+======================================== */
+
+.calculator h1 {
+    text-align: center;
+
+    margin-bottom: 4px;
+
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: 3px;
+
+    color: var(--white);
+
+    text-shadow:
+        0 0 10px rgba(60, 220, 255, 0.6),
+        0 0 25px rgba(0, 130, 255, 0.3);
+}
+
+.calculator .subtitle {
+    text-align: center;
+
+    margin-bottom: 18px;
+
+    font-size: 10px;
+    letter-spacing: 4px;
+
+    color: var(--cyan);
+    text-transform: uppercase;
+}
 
 /* ========================================
    DISPLAY
 ======================================== */
 
 .display {
+    position: relative;
+
+    width: 100%;
+    min-height: 125px;
+
+    margin-bottom: 18px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    border-radius: 17px;
 
     background:
-        rgba(0, 0, 0, 0.45);
+        linear-gradient(
+            145deg,
+            rgba(1, 13, 27, 0.98),
+            rgba(4, 27, 48, 0.95)
+        );
 
-    border:
-        1px solid #155d85;
-
-    border-radius: 15px;
-
-    padding: 15px;
-
-    margin-bottom: 15px;
+    border: 1px solid rgba(49, 193, 255, 0.22);
 
     box-shadow:
-
-        inset 0 0 15px
-        rgba(0, 200, 255, 0.2);
-}
-
-
-/* ========================================
-   HISTORY
-======================================== */
-
-#history {
-
-    height: 25px;
-
-    text-align: right;
-
-    color: #62b7cc;
-
-    font-size: 12px;
+        inset 0 0 25px rgba(0, 135, 255, 0.08),
+        0 0 15px rgba(0, 174, 255, 0.05);
 
     overflow: hidden;
 }
 
+/* Small display line */
 
-/* ========================================
-   RESULT
-======================================== */
+.display::before {
+    content: "DEG";
+
+    position: absolute;
+    top: 12px;
+    left: 15px;
+
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    color: var(--cyan);
+}
+
+/* Result */
 
 #result {
+    width: 100%;
 
     text-align: right;
 
-    font-size: 38px;
+    font-size: clamp(32px, 7vw, 48px);
+    font-weight: 600;
 
-    font-weight: bold;
-
-    color: white;
-
-    overflow-x: auto;
+    color: #ffffff;
 
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     text-shadow:
-
-        0 0 8px #00eaff;
+        0 0 8px rgba(255, 255, 255, 0.4),
+        0 0 22px rgba(42, 210, 255, 0.35);
 }
 
+/* History */
+
+#history {
+    width: 100%;
+
+    margin-bottom: 7px;
+
+    text-align: right;
+
+    font-size: 11px;
+    letter-spacing: 1px;
+
+    color: var(--muted);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* ========================================
    BUTTON GRID
 ======================================== */
 
-.buttons {
-
+.buttons,
+.button-grid,
+.calculator-buttons {
     display: grid;
 
-    grid-template-columns:
-        repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 10px;
 }
-
 
 /* ========================================
    BUTTON
 ======================================== */
 
 button {
+    position: relative;
 
-    height: 60px;
+    min-height: 58px;
 
-    border: none;
-
-    border-radius: 14px;
+    border: 1px solid rgba(54, 201, 255, 0.22);
+    border-radius: 13px;
 
     background:
-        rgba(18, 50, 80, 0.9);
+        linear-gradient(
+            145deg,
+            rgba(22, 61, 91, 0.95),
+            rgba(10, 35, 58, 0.95)
+        );
 
-    color: white;
+    color: var(--cyan-light);
 
-    font-size: 20px;
-
-    font-weight: bold;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
 
     cursor: pointer;
 
-    border:
-        1px solid
-        rgba(0, 210, 255, 0.35);
-
-    transition: 0.2s;
-}
-
-
-/* ========================================
-   BUTTON HOVER
-======================================== */
-
-button:hover {
-
-    transform:
-        translateY(-2px);
-
-    background:
-        #075a7e;
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
 
     box-shadow:
-
-        0 0 12px #00d9ff;
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 4px 10px rgba(0, 0, 0, 0.22);
 }
 
+/* Hover */
 
-/* ========================================
-   BUTTON ACTIVE
-======================================== */
-
-button:active {
-
-    transform:
-        scale(0.93);
-}
-
-
-/* ========================================
-   SPECIAL
-======================================== */
-
-.special {
-
-    color: #55eaff;
-}
-
-
-/* ========================================
-   OPERATOR
-======================================== */
-
-.operator {
-
-    color: #a8f5ff;
+button:hover {
+    transform: translateY(-2px);
 
     background:
-        rgba(0, 100, 150, 0.5);
+        linear-gradient(
+            145deg,
+            rgba(28, 83, 119, 0.98),
+            rgba(12, 48, 75, 0.98)
+        );
+
+    border-color: rgba(65, 218, 255, 0.65);
+
+    box-shadow:
+        0 0 14px rgba(32, 202, 255, 0.22),
+        inset 0 0 12px rgba(0, 190, 255, 0.06);
 }
 
+/* Click */
+
+button:active {
+    transform: scale(0.95);
+}
 
 /* ========================================
-   EQUAL
+   NUMBER BUTTONS
 ======================================== */
 
-.equal {
+button.number,
+button[data-number] {
+    color: #f5fbff;
+}
+
+/* ========================================
+   OPERATOR BUTTONS
+======================================== */
+
+button.operator,
+button[data-operator] {
+    color: var(--cyan-light);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8, 73, 109, 0.95),
+            rgba(5, 45, 72, 0.95)
+        );
+}
+
+/* ========================================
+   EQUAL BUTTON
+======================================== */
+
+button.equal,
+button.equals,
+button[data-action="calculate"] {
+    color: white;
 
     background:
         linear-gradient(
             135deg,
-            #00bfff,
-            #006eff
+            #1598f5,
+            #086bd1
+        );
+
+    border-color: rgba(91, 224, 255, 0.7);
+
+    box-shadow:
+        0 0 18px rgba(16, 157, 255, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+button.equal:hover,
+button.equals:hover,
+button[data-action="calculate"]:hover {
+    background:
+        linear-gradient(
+            135deg,
+            #29b4ff,
+            #0877e5
         );
 
     box-shadow:
-
-        0 0 15px #00bfff;
+        0 0 25px rgba(30, 184, 255, 0.55);
 }
 
-
 /* ========================================
-   ZERO
+   AC BUTTON
 ======================================== */
 
-.zero {
-
-    grid-column:
-        span 2;
+button.ac,
+button.clear,
+button[data-action="clear"] {
+    color: var(--danger);
 }
 
-
 /* ========================================
-   KNIGHT INFO
+   DELETE BUTTON
 ======================================== */
 
-.knight-info {
+button.delete,
+button.del {
+    color: var(--warning);
+}
 
-    margin-top: 18px;
+/* ========================================
+   SCIENTIFIC BUTTON
+======================================== */
 
-    padding: 12px;
+.scientific {
+    color: #58ddff;
+}
 
-    border-top:
-        1px solid #12516f;
+/* ========================================
+   BUTTON SPAN / SYMBOL
+======================================== */
 
-    text-align: center;
-
-    color: #62dff5;
-
+button sup {
     font-size: 10px;
-
-    line-height: 20px;
-
-    letter-spacing: 1px;
 }
-
-
-/* ========================================
-   TEAM PROJECT
-======================================== */
-
-.kelompok {
-
-    width: 360px;
-
-    margin-top: 20px;
-
-    padding: 18px;
-
-    background:
-        rgba(5, 24, 48, 0.85);
-
-    border:
-        1px solid #00d9ff;
-
-    border-radius: 20px;
-
-    box-shadow:
-
-        0 0 15px
-        rgba(0, 170, 255, 0.5),
-
-        inset 0 0 20px
-        rgba(0, 200, 255, 0.1);
-
-    backdrop-filter: blur(10px);
-
-    z-index: 2;
-}
-
-
-/* ========================================
-   TEAM TITLE
-======================================== */
-
-.kelompok h2 {
-
-    text-align: center;
-
-    color: #55eaff;
-
-    font-size: 15px;
-
-    letter-spacing: 3px;
-
-    margin-bottom: 15px;
-
-    text-shadow:
-
-        0 0 8px #00d9ff;
-}
-
-
-/* ========================================
-   ANGGOTA
-======================================== */
-
-.anggota {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 9px;
-}
-
-
-/* ========================================
-   MEMBER
-======================================== */
-
-.member {
-
-    display: flex;
-
-    align-items: center;
-
-    padding: 10px 12px;
-
-    background:
-        rgba(18, 50, 80, 0.7);
-
-    border:
-        1px solid
-        rgba(0, 210, 255, 0.3);
-
-    border-radius: 10px;
-
-    color: white;
-
-    font-size: 13px;
-
-    transition: 0.2s;
-}
-
-
-/* ========================================
-   MEMBER HOVER
-======================================== */
-
-.member:hover {
-
-    transform:
-        translateX(5px);
-
-    border-color:
-        #00d9ff;
-
-    box-shadow:
-
-        0 0 10px
-        rgba(0, 217, 255, 0.5);
-}
-
-
-/* ========================================
-   NUMBER MEMBER
-======================================== */
-
-.member span {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 28px;
-    height: 28px;
-
-    margin-right: 12px;
-
-    border-radius: 8px;
-
-    background:
-        #006eff;
-
-    color: white;
-
-    font-size: 11px;
-
-    font-weight: bold;
-
-    box-shadow:
-
-        0 0 8px #008cff;
-}
-
 
 /* ========================================
    FOOTER
 ======================================== */
 
-footer {
+.calculator-footer {
+    margin-top: 17px;
 
     text-align: center;
 
-    margin: 25px 0;
-
-    color: #4da6bd;
-
-    font-size: 11px;
-
-    letter-spacing: 2px;
-
-    z-index: 2;
-}
-
-
-footer small {
-
-    color: #55eaff;
-
     font-size: 9px;
-
     letter-spacing: 2px;
+
+    color: rgba(140, 190, 215, 0.55);
+
+    text-transform: uppercase;
 }
 
-
 /* ========================================
-   CUBES BACKGROUND
+   RESPONSIVE TABLET
 ======================================== */
 
-.cube {
+@media (max-width: 600px) {
 
-    position: fixed;
-
-    width: 100px;
-    height: 100px;
-
-    border:
-        1px solid
-        rgba(0, 217, 255, 0.25);
-
-    transform:
-        rotate(45deg);
-
-    animation:
-        floatCube 8s
-        infinite ease-in-out;
-
-    z-index: 0;
-}
-
-
-/* ========================================
-   CUBE 1
-======================================== */
-
-.cube1 {
-
-    top: 15%;
-
-    left: 5%;
-}
-
-
-/* ========================================
-   CUBE 2
-======================================== */
-
-.cube2 {
-
-    bottom: 15%;
-
-    right: 5%;
-
-    width: 140px;
-    height: 140px;
-
-    animation-delay: 2s;
-}
-
-
-/* ========================================
-   CUBE 3
-======================================== */
-
-.cube3 {
-
-    top: 55%;
-
-    left: 10%;
-
-    width: 60px;
-    height: 60px;
-
-    animation-delay: 4s;
-}
-
-
-/* ========================================
-   ANIMATION CUBE
-======================================== */
-
-@keyframes floatCube {
-
-    0% {
-
-        transform:
-            rotate(45deg)
-            translateY(0);
-
-        opacity: 0.2;
+    body {
+        padding: 15px;
+        align-items: flex-start;
     }
-
-
-    50% {
-
-        transform:
-            rotate(135deg)
-            translateY(-30px);
-
-        opacity: 0.5;
-    }
-
-
-    100% {
-
-        transform:
-            rotate(225deg)
-            translateY(0);
-
-        opacity: 0.2;
-    }
-}
-
-
-/* ========================================
-   MOBILE
-======================================== */
-
-@media (max-width: 500px) {
-
 
     .calculator {
+        width: 100%;
+        max-width: 430px;
 
-        width: 92%;
+        margin-top: 10px;
+
+        padding: 16px;
+
+        border-radius: 22px;
     }
 
-
-    .kelompok {
-
-        width: 92%;
+    .calculator h1 {
+        font-size: 21px;
     }
 
-
-    .logo-container {
-
-        gap: 8px;
+    .display {
+        min-height: 110px;
     }
-
-
-    .logo-img {
-
-        width: 65px;
-
-        height: 65px;
-    }
-
-
-    .logo-kelompok img {
-
-        width: 100px;
-
-        height: 100px;
-    }
-
-
-    .moko-logo img {
-
-        width: 75px;
-
-        height: 75px;
-    }
-
-
-    .logo {
-
-        font-size: 25px;
-
-        letter-spacing: 3px;
-    }
-
-
-    .subtitle {
-
-        font-size: 9px;
-
-        letter-spacing: 3px;
-    }
-
 
     button {
-
-        height: 55px;
+        min-height: 54px;
+        font-size: 15px;
     }
 
+    .buttons,
+    .button-grid,
+    .calculator-buttons {
+        gap: 8px;
+    }
+}
+
+/* ========================================
+   RESPONSIVE MOBILE
+======================================== */
+
+@media (max-width: 400px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .calculator {
+        padding: 12px;
+    }
+
+    .calculator h1 {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+
+    .calculator .subtitle {
+        font-size: 8px;
+        letter-spacing: 3px;
+    }
+
+    .display {
+        min-height: 100px;
+        padding: 15px;
+    }
+
+    button {
+        min-height: 48px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    .buttons,
+    .button-grid,
+    .calculator-buttons {
+        gap: 6px;
+    }
+}
+
+/* ========================================
+   SCROLLBAR
+======================================== */
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020b18;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #12618b;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1caee6;
+}
+
+/* ========================================
+   SELECTION
+======================================== */
+
+::selection {
+    background: rgba(42, 203, 255, 0.3);
+    color: white;
 }
