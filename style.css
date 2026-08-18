@@ -1,281 +1,203 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
+/* ================================
+   LOGO HEADER
+================================ */
 
-body {
-    min-height: 100vh;
-    background:
-        radial-gradient(circle at top, #123b70, #030b18 60%);
-    color: white;
+.logo-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    overflow-x: hidden;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
 }
 
-/* HEADER */
+.logo-img {
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
 
-header {
+    border-radius: 15px;
+
+    filter:
+        drop-shadow(0 0 8px rgba(0, 217, 255, 0.7));
+
+    transition: 0.3s;
+}
+
+.logo-img:hover {
+    transform: scale(1.08);
+    filter:
+        drop-shadow(0 0 15px #00d9ff);
+}
+
+.logo-tengah {
     text-align: center;
-    margin-top: 35px;
-    z-index: 2;
 }
 
-.logo {
-    font-size: 38px;
-    font-weight: bold;
-    letter-spacing: 5px;
-    color: #ffffff;
-    text-shadow:
-        0 0 10px #00d9ff,
-        0 0 25px #008cff;
+.moko-logo {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
 }
 
-.logo span {
-    color: #00eaff;
+.moko-logo img {
+    width: 95px;
+    height: 95px;
+    object-fit: contain;
+
+    border-radius: 15px;
+
+    filter:
+        drop-shadow(0 0 10px rgba(0, 217, 255, 0.6));
+
+    transition: 0.3s;
 }
 
-.subtitle {
-    margin-top: 5px;
-    color: #66eaff;
-    font-size: 14px;
-    letter-spacing: 5px;
+.moko-logo img:hover {
+    transform: rotate(3deg) scale(1.05);
+
+    filter:
+        drop-shadow(0 0 18px #00d9ff);
 }
 
-/* CALCULATOR */
 
-.calculator {
+/* ================================
+   NAMA KELOMPOK
+================================ */
+
+.kelompok {
     width: 360px;
-    margin-top: 25px;
-    padding: 20px;
-    border-radius: 25px;
+    margin-top: 20px;
+    padding: 18px;
 
     background: rgba(5, 24, 48, 0.85);
 
     border: 1px solid #00d9ff;
+    border-radius: 20px;
 
     box-shadow:
-        0 0 15px #00aaff,
-        inset 0 0 25px rgba(0, 200, 255, 0.15);
+        0 0 15px rgba(0, 170, 255, 0.5),
+        inset 0 0 20px rgba(0, 200, 255, 0.1);
 
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(10px);
 
     z-index: 2;
 }
 
-/* STATUS */
+.kelompok h2 {
+    text-align: center;
 
-.status {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: #54eaff;
+    color: #55eaff;
+
+    font-size: 15px;
+
+    letter-spacing: 3px;
+
     margin-bottom: 15px;
-}
-
-/* DISPLAY */
-
-.display {
-    background: rgba(0, 0, 0, 0.45);
-    border: 1px solid #155d85;
-    border-radius: 15px;
-    padding: 15px;
-    margin-bottom: 15px;
-
-    box-shadow:
-        inset 0 0 15px rgba(0, 200, 255, 0.2);
-}
-
-#history {
-    height: 25px;
-    text-align: right;
-    color: #62b7cc;
-    font-size: 12px;
-    overflow: hidden;
-}
-
-#result {
-    text-align: right;
-    font-size: 38px;
-    font-weight: bold;
-    color: white;
-
-    overflow-x: auto;
-    white-space: nowrap;
 
     text-shadow:
-        0 0 8px #00eaff;
+        0 0 8px #00d9ff;
 }
 
-/* BUTTON GRID */
-
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
+.anggota {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
 }
 
-button {
-    height: 60px;
-    border: none;
-    border-radius: 14px;
+.member {
+    display: flex;
+    align-items: center;
 
-    background: rgba(18, 50, 80, 0.9);
+    padding: 10px 12px;
+
+    background: rgba(18, 50, 80, 0.7);
+
+    border: 1px solid rgba(0, 210, 255, 0.3);
+
+    border-radius: 10px;
 
     color: white;
-    font-size: 20px;
-    font-weight: bold;
 
-    cursor: pointer;
-
-    border: 1px solid rgba(0, 210, 255, 0.35);
+    font-size: 13px;
 
     transition: 0.2s;
 }
 
-button:hover {
-    transform: translateY(-2px);
+.member:hover {
+    transform: translateX(5px);
 
-    background: #075a7e;
-
-    box-shadow:
-        0 0 12px #00d9ff;
-}
-
-button:active {
-    transform: scale(0.93);
-}
-
-/* SPECIAL */
-
-.special {
-    color: #55eaff;
-}
-
-/* OPERATOR */
-
-.operator {
-    color: #a8f5ff;
-    background: rgba(0, 100, 150, 0.5);
-}
-
-/* EQUAL */
-
-.equal {
-    background: linear-gradient(
-        135deg,
-        #00bfff,
-        #006eff
-    );
+    border-color: #00d9ff;
 
     box-shadow:
-        0 0 15px #00bfff;
+        0 0 10px rgba(0, 217, 255, 0.5);
 }
 
-.zero {
-    grid-column: span 2;
-}
+.member span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-/* KNIGHT INFO */
+    width: 28px;
+    height: 28px;
 
-.knight-info {
-    margin-top: 18px;
-    padding: 12px;
+    margin-right: 12px;
 
-    border-top: 1px solid #12516f;
+    border-radius: 8px;
 
-    text-align: center;
+    background: #006eff;
 
-    color: #62dff5;
+    color: white;
 
-    font-size: 10px;
-    line-height: 20px;
-    letter-spacing: 1px;
-}
-
-/* FOOTER */
-
-footer {
-    text-align: center;
-    margin: 25px 0;
-    color: #4da6bd;
     font-size: 11px;
+    font-weight: bold;
+
+    box-shadow:
+        0 0 8px #008cff;
+}
+
+
+/* ================================
+   FOOTER TAMBAHAN
+================================ */
+
+footer small {
+    color: #55eaff;
+    font-size: 9px;
     letter-spacing: 2px;
 }
 
-/* CUBES */
 
-.cube {
-    position: fixed;
-
-    width: 100px;
-    height: 100px;
-
-    border: 1px solid rgba(0, 217, 255, 0.25);
-
-    transform: rotate(45deg);
-
-    animation: floatCube 8s infinite ease-in-out;
-
-    z-index: 0;
-}
-
-.cube1 {
-    top: 15%;
-    left: 5%;
-}
-
-.cube2 {
-    bottom: 15%;
-    right: 5%;
-    width: 140px;
-    height: 140px;
-    animation-delay: 2s;
-}
-
-.cube3 {
-    top: 55%;
-    left: 10%;
-    width: 60px;
-    height: 60px;
-    animation-delay: 4s;
-}
-
-@keyframes floatCube {
-
-    0% {
-        transform: rotate(45deg) translateY(0);
-        opacity: 0.2;
-    }
-
-    50% {
-        transform: rotate(135deg) translateY(-30px);
-        opacity: 0.5;
-    }
-
-    100% {
-        transform: rotate(225deg) translateY(0);
-        opacity: 0.2;
-    }
-}
-
-/* MOBILE */
+/* ================================
+   MOBILE
+================================ */
 
 @media (max-width: 500px) {
 
-    .calculator {
+    .logo-container {
+        gap: 8px;
+    }
+
+    .logo-img {
+        width: 65px;
+        height: 65px;
+    }
+
+    .moko-logo img {
+        width: 75px;
+        height: 75px;
+    }
+
+    .kelompok {
         width: 92%;
     }
 
     .logo {
-        font-size: 30px;
+        font-size: 25px;
+        letter-spacing: 3px;
     }
 
-    button {
-        height: 55px;
+    .subtitle {
+        font-size: 9px;
+        letter-spacing: 3px;
     }
-
 }
