@@ -1,19 +1,14 @@
-/* =====================================================
+/* =========================================================
    CUBES ADVENTURE KNIGHT
    FUTURISTIC CALCULATOR
    STYLE.CSS - FULL VERSION
-===================================================== */
+========================================================= */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
-
-/* =====================================================
-   ROOT
-===================================================== */
 
 :root {
     --bg: #010914;
@@ -22,6 +17,7 @@
 
     --cyan: #24d9ff;
     --blue: #078fe5;
+    --blue-dark: #075278;
 
     --white: #f1fbff;
     --muted: #6c91a5;
@@ -29,14 +25,12 @@
     --border: rgba(30, 190, 255, 0.35);
 }
 
-
-/* =====================================================
+/* =========================================================
    BODY
-===================================================== */
+========================================================= */
 
 body {
     min-height: 100vh;
-
     padding: 20px 15px;
 
     font-family:
@@ -48,9 +42,9 @@ body {
 
     background:
         radial-gradient(
-            circle at 50% 25%,
+            circle at 50% 20%,
             rgba(0, 142, 255, 0.13),
-            transparent 35%
+            transparent 38%
         ),
         radial-gradient(
             circle at 10% 80%,
@@ -62,10 +56,9 @@ body {
     overflow-x: hidden;
 }
 
-
-/* =====================================================
+/* =========================================================
    BACKGROUND CUBES
-===================================================== */
+========================================================= */
 
 .cube {
     position: fixed;
@@ -130,29 +123,24 @@ body {
     transform: rotate(25deg);
 }
 
-
-/* =====================================================
+/* =========================================================
    HEADER
-===================================================== */
+========================================================= */
 
 .top-header {
     width: min(1350px, 100%);
-
     height: 90px;
 
     margin: 0 auto 25px;
-
     padding: 10px 28px;
 
     display: grid;
 
-    grid-template-columns:
-        100px 1fr 100px;
+    grid-template-columns: 100px 1fr 100px;
 
     align-items: center;
 
     border: 1px solid rgba(0, 195, 255, 0.45);
-
     border-radius: 8px;
 
     background:
@@ -178,7 +166,7 @@ body {
 
     left: 30px;
     right: 30px;
-    top: -1px;
+    top: 0;
 
     height: 1px;
 
@@ -191,22 +179,22 @@ body {
         );
 }
 
-
-/* =====================================================
-   HEADER LOGO
-===================================================== */
+/* =========================================================
+   LOGO
+   UKURAN LOGO SUDAH DIKUNCI
+========================================================= */
 
 .brand-side {
-    display: flex;
+    width: 90px;
+    height: 70px;
 
+    display: flex;
+    align-items: center;
     justify-content: flex-start;
 
-    align-items: center;
-
-    width: 90px;
-    height: 80px;
-
     overflow: hidden;
+
+    flex-shrink: 0;
 }
 
 .brand-side.right {
@@ -217,41 +205,51 @@ body {
     width: 52px !important;
     height: 52px !important;
 
+    min-width: 52px !important;
+    min-height: 52px !important;
+
     max-width: 52px !important;
     max-height: 52px !important;
 
-    min-width: 0 !important;
-    min-height: 0 !important;
+    display: block !important;
 
     object-fit: contain !important;
-
-    display: block;
+    object-position: center !important;
 
     border-radius: 8px;
-
-    position: static !important;
-
-    transform: none !important;
 
     flex-shrink: 0;
 }
 
-
-/* =====================================================
-   SCHOOL BRAND
-===================================================== */
-
 .school-brand {
+    min-width: 0;
+
     display: flex;
 
+    align-items: center;
     justify-content: center;
 
-    align-items: center;
-
-    gap: 20px;
-
-    min-width: 0;
+    gap: 18px;
 }
+
+.school-brand .header-logo {
+    width: 50px !important;
+    height: 50px !important;
+
+    min-width: 50px !important;
+    min-height: 50px !important;
+
+    max-width: 50px !important;
+    max-height: 50px !important;
+}
+
+.top-header img {
+    object-fit: contain !important;
+}
+
+/* =========================================================
+   TITLE
+========================================================= */
 
 .title-brand {
     text-align: center;
@@ -271,8 +269,7 @@ body {
     color: #f4fcff;
 
     text-shadow:
-        0 0 12px
-        rgba(20, 200, 255, 0.8);
+        0 0 12px rgba(20, 200, 255, 0.8);
 }
 
 .main-title span {
@@ -293,37 +290,24 @@ body {
     letter-spacing: 6px;
 }
 
-
-/* Logo yang berada di tengah */
-.school-brand .header-logo {
-    width: 55px !important;
-    height: 55px !important;
-
-    max-width: 55px !important;
-    max-height: 55px !important;
-}
-
-
-/* =====================================================
+/* =========================================================
    MAIN WRAPPER
-===================================================== */
+========================================================= */
 
 .main-wrapper {
-    width: min(1200px, 100%);
+    width: min(950px, 100%);
 
-    margin: auto;
+    margin: 0 auto;
 }
 
-
-/* =====================================================
+/* =========================================================
    STATUS
-===================================================== */
+========================================================= */
 
 .status-bar {
     display: flex;
 
     justify-content: space-between;
-
     align-items: center;
 
     padding: 0 20px 12px;
@@ -350,8 +334,7 @@ body {
     background: #52ec6d;
 
     box-shadow:
-        0 0 10px
-        rgba(70, 255, 100, 0.8);
+        0 0 10px rgba(70, 255, 100, 0.8);
 }
 
 .energy {
@@ -364,25 +347,21 @@ body {
     font-size: 20px;
 }
 
-
-/* =====================================================
+/* =========================================================
    MODE BAR
-===================================================== */
+========================================================= */
 
 .mode-bar {
     display: grid;
 
-    grid-template-columns:
-        repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 10px;
 
     margin-bottom: 15px;
-
     padding: 7px;
 
-    border: 1px solid
-        rgba(0, 165, 255, 0.2);
+    border: 1px solid rgba(0, 165, 255, 0.2);
 
     border-radius: 10px;
 
@@ -393,8 +372,7 @@ body {
 .mode-btn {
     height: 45px;
 
-    border: 1px solid
-        rgba(0, 155, 255, 0.35);
+    border: 1px solid rgba(0, 155, 255, 0.35);
 
     border-radius: 8px;
 
@@ -431,30 +409,26 @@ body {
         rgba(70, 220, 255, 0.9);
 
     box-shadow:
-        0 0 15px
-        rgba(0, 160, 255, 0.25);
+        0 0 15px rgba(0, 160, 255, 0.25);
 }
 
-
-/* =====================================================
+/* =========================================================
    WORKSPACE
-===================================================== */
+========================================================= */
 
 .workspace {
     display: grid;
 
-    grid-template-columns:
-        1.15fr 0.85fr;
+    grid-template-columns: 1.15fr 0.85fr;
 
     gap: 15px;
 
     align-items: stretch;
 }
 
-
-/* =====================================================
+/* =========================================================
    CALCULATOR PANEL
-===================================================== */
+========================================================= */
 
 .calculator-panel {
     padding: 18px;
@@ -471,20 +445,17 @@ body {
         );
 
     box-shadow:
-        0 0 30px
-        rgba(0, 140, 255, 0.08);
+        0 0 30px rgba(0, 140, 255, 0.08);
 }
 
-
-/* =====================================================
+/* =========================================================
    DISPLAY
-===================================================== */
+========================================================= */
 
 .display {
     height: 115px;
 
     margin-bottom: 15px;
-
     padding: 17px;
 
     display: flex;
@@ -492,7 +463,6 @@ body {
     flex-direction: column;
 
     justify-content: space-between;
-
     align-items: flex-end;
 
     border-radius: 11px;
@@ -504,12 +474,12 @@ body {
             #031a2c
         );
 
-    border: 1px solid
-        rgba(20, 180, 255, 0.28);
+    border: 1px solid rgba(20, 180, 255, 0.28);
 
     box-shadow:
-        inset 0 0 20px
-        rgba(0, 130, 255, 0.06);
+        inset 0 0 20px rgba(0, 130, 255, 0.06);
+
+    overflow: hidden;
 }
 
 #history {
@@ -546,18 +516,14 @@ body {
     text-overflow: ellipsis;
 
     text-shadow:
-        0 0 12px
-        rgba(70, 225, 255, 0.6);
+        0 0 12px rgba(70, 225, 255, 0.6);
 }
 
-
-/* =====================================================
-   =====================================================
+/* =========================================================
+   MODE KALKULATOR
    PENTING:
-   MODE CALCULATOR
-   HANYA SATU MODE YANG AKTIF
-   =====================================================
-===================================================== */
+   HANYA MODE ACTIVE YANG MUNCUL
+========================================================= */
 
 .calculator-mode {
     display: none;
@@ -567,36 +533,31 @@ body {
     display: block;
 }
 
-
-/* =====================================================
-   BASIC + SCIENTIFIC BUTTON GRID
-===================================================== */
+/* =========================================================
+   BASIC / SCIENTIFIC BUTTON GRID
+========================================================= */
 
 .buttons {
     width: 100%;
 
     display: grid;
 
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 8px;
 }
 
-
-/* =====================================================
-   BUTTON
-===================================================== */
+/* =========================================================
+   TOMBOL
+========================================================= */
 
 .buttons button {
     width: 100%;
-
     height: 58px;
 
     border-radius: 11px;
 
-    border: 1px solid
-        rgba(0, 160, 225, 0.28);
+    border: 1px solid rgba(0, 160, 225, 0.28);
 
     background:
         linear-gradient(
@@ -613,13 +574,10 @@ body {
 
     cursor: pointer;
 
-    transition: 0.15s;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
+    transition:
+        transform 0.15s,
+        border-color 0.15s,
+        box-shadow 0.15s;
 }
 
 .buttons button:hover {
@@ -629,8 +587,7 @@ body {
         rgba(50, 215, 255, 0.7);
 
     box-shadow:
-        0 0 12px
-        rgba(20, 190, 255, 0.15);
+        0 0 12px rgba(20, 190, 255, 0.15);
 
     background:
         linear-gradient(
@@ -644,19 +601,9 @@ body {
     transform: scale(0.96);
 }
 
-
-/* =====================================================
-   SPECIAL BUTTON
-===================================================== */
-
 .buttons .special {
     color: var(--cyan);
 }
-
-
-/* =====================================================
-   OPERATOR
-===================================================== */
 
 .buttons .operator {
     color: var(--cyan);
@@ -669,19 +616,9 @@ body {
         );
 }
 
-
-/* =====================================================
-   CLEAR
-===================================================== */
-
 .buttons .clear-btn {
     color: #ff4e61;
 }
-
-
-/* =====================================================
-   EQUAL
-===================================================== */
 
 .buttons .equal {
     color: white;
@@ -697,34 +634,41 @@ body {
         rgba(70, 220, 255, 0.8);
 
     box-shadow:
-        0 0 14px
-        rgba(0, 150, 255, 0.25);
+        0 0 14px rgba(0, 150, 255, 0.25);
 }
 
+/* =========================================================
+   ZERO BUTTON
+========================================================= */
 
-/* =====================================================
+.buttons .zero {
+    grid-column: span 2;
+}
+
+/* =========================================================
    SCIENTIFIC
-===================================================== */
+========================================================= */
 
 .scientific-buttons {
     display: grid;
 
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 8px;
 }
 
+.scientific-buttons button {
+    min-width: 0;
+}
 
-/* =====================================================
+/* =========================================================
    PROGRAMMER
-===================================================== */
+========================================================= */
 
 .programmer-display {
     display: grid;
 
-    grid-template-columns:
-        repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 8px;
 
@@ -732,14 +676,15 @@ body {
 }
 
 .programmer-display div {
+    min-width: 0;
+
     padding: 11px;
 
     border-radius: 8px;
 
     background: #041a2c;
 
-    border: 1px solid
-        rgba(0, 170, 230, 0.25);
+    border: 1px solid rgba(0, 170, 230, 0.25);
 }
 
 .programmer-display span {
@@ -753,6 +698,8 @@ body {
 }
 
 .programmer-display strong {
+    display: block;
+
     color: var(--cyan);
 
     font-size: 15px;
@@ -785,20 +732,24 @@ body {
 .programmer-buttons {
     display: grid;
 
-    grid-template-columns:
-        repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 8px;
 }
 
 .programmer-buttons button {
-    height: 50px;
+    min-height: 50px;
 
     border: 1px solid var(--border);
 
     border-radius: 8px;
 
-    background: #0a304c;
+    background:
+        linear-gradient(
+            145deg,
+            #0a304c,
+            #08263d
+        );
 
     color: var(--cyan);
 
@@ -810,15 +761,15 @@ body {
 }
 
 .programmer-buttons button:hover {
-    background: #0d4164;
-
     border-color: var(--cyan);
+
+    box-shadow:
+        0 0 10px rgba(0, 180, 255, 0.15);
 }
 
-
-/* =====================================================
+/* =========================================================
    CONVERTER
-===================================================== */
+========================================================= */
 
 .converter-box {
     padding: 15px;
@@ -846,8 +797,7 @@ body {
 
     padding: 11px;
 
-    border: 1px solid
-        rgba(0, 170, 230, 0.3);
+    border: 1px solid rgba(0, 170, 230, 0.3);
 
     border-radius: 7px;
 
@@ -856,13 +806,22 @@ body {
     background: #020d19;
 
     color: white;
+
+    font-family: inherit;
+}
+
+.converter-box select:focus,
+.converter-box input:focus {
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 0 8px rgba(0, 180, 255, 0.12);
 }
 
 .converter-inputs {
     display: grid;
 
-    grid-template-columns:
-        1fr 35px 1fr;
+    grid-template-columns: 1fr 35px 1fr;
 
     gap: 8px;
 
@@ -879,7 +838,6 @@ body {
     display: flex;
 
     align-items: center;
-
     justify-content: center;
 
     height: 40px;
@@ -889,10 +847,9 @@ body {
     font-size: 20px;
 }
 
-
-/* =====================================================
+/* =========================================================
    HISTORY PANEL
-===================================================== */
+========================================================= */
 
 .history-panel {
     min-height: 100%;
@@ -911,8 +868,7 @@ body {
         );
 
     box-shadow:
-        0 0 25px
-        rgba(0, 150, 255, 0.07);
+        0 0 25px rgba(0, 150, 255, 0.07);
 
     overflow: hidden;
 }
@@ -928,8 +884,7 @@ body {
 
     margin-bottom: 10px;
 
-    border-bottom: 1px solid
-        rgba(0, 175, 255, 0.18);
+    border-bottom: 1px solid rgba(0, 175, 255, 0.18);
 }
 
 .history-title h2 {
@@ -943,8 +898,7 @@ body {
 .history-title button {
     padding: 7px 11px;
 
-    border: 1px solid
-        rgba(0, 190, 255, 0.4);
+    border: 1px solid rgba(0, 190, 255, 0.4);
 
     border-radius: 6px;
 
@@ -960,8 +914,31 @@ body {
 }
 
 .history-title button:hover {
-    background:
-        rgba(0, 160, 255, 0.1);
+    background: rgba(0, 160, 255, 0.1);
+}
+
+#history-list {
+    max-height: 500px;
+
+    overflow-y: auto;
+
+    padding-right: 3px;
+}
+
+/* SCROLLBAR HISTORY */
+
+#history-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+#history-list::-webkit-scrollbar-track {
+    background: #020d19;
+}
+
+#history-list::-webkit-scrollbar-thumb {
+    background: #075278;
+
+    border-radius: 10px;
 }
 
 .history-item {
@@ -971,14 +948,11 @@ body {
 
     border-left: 3px solid var(--cyan);
 
-    border-top: 1px solid
-        rgba(0, 160, 255, 0.2);
+    border-top: 1px solid rgba(0, 160, 255, 0.2);
 
-    border-right: 1px solid
-        rgba(0, 160, 255, 0.2);
+    border-right: 1px solid rgba(0, 160, 255, 0.2);
 
-    border-bottom: 1px solid
-        rgba(0, 160, 255, 0.2);
+    border-bottom: 1px solid rgba(0, 160, 255, 0.2);
 
     border-radius: 7px;
 
@@ -990,6 +964,8 @@ body {
     color: #d5ebf4;
 
     font-size: 14px;
+
+    word-break: break-word;
 }
 
 .history-result {
@@ -1000,6 +976,8 @@ body {
     font-size: 19px;
 
     font-weight: 800;
+
+    word-break: break-word;
 }
 
 .empty-history {
@@ -1012,10 +990,9 @@ body {
     font-size: 11px;
 }
 
-
-/* =====================================================
+/* =========================================================
    KNIGHT STATUS
-===================================================== */
+========================================================= */
 
 .knight-status {
     display: flex;
@@ -1026,8 +1003,7 @@ body {
 
     padding: 11px 13px;
 
-    border: 1px solid
-        rgba(0, 160, 230, 0.25);
+    border: 1px solid rgba(0, 160, 230, 0.25);
 
     border-radius: 7px;
 
@@ -1045,13 +1021,12 @@ body {
     color: var(--cyan);
 }
 
-
-/* =====================================================
+/* =========================================================
    TEAM
-===================================================== */
+========================================================= */
 
 .team-section {
-    width: min(1200px, 100%);
+    width: min(950px, 100%);
 
     margin: 25px auto 15px;
 
@@ -1071,8 +1046,7 @@ body {
 .team-list {
     display: grid;
 
-    grid-template-columns:
-        repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
     gap: 10px;
 }
@@ -1080,8 +1054,7 @@ body {
 .member {
     padding: 11px;
 
-    border: 1px solid
-        rgba(0, 170, 230, 0.25);
+    border: 1px solid rgba(0, 170, 230, 0.25);
 
     border-radius: 7px;
 
@@ -1103,10 +1076,9 @@ body {
     font-weight: 900;
 }
 
-
-/* =====================================================
+/* =========================================================
    FOOTER
-===================================================== */
+========================================================= */
 
 footer {
     width: 100%;
@@ -1115,8 +1087,7 @@ footer {
 
     text-align: center;
 
-    border-top: 1px solid
-        rgba(0, 175, 255, 0.3);
+    border-top: 1px solid rgba(0, 175, 255, 0.3);
 
     color: #4f7488;
 
@@ -1135,24 +1106,34 @@ footer small {
     color: #3c5e70;
 }
 
-
-/* =====================================================
-   IMAGE SAFETY
-   AGAR FOTO/LOGO TIDAK MEMBESAR
-===================================================== */
+/* =========================================================
+   GLOBAL IMAGE FIX
+   MENCEGAH FOTO/LOGO MENJADI GEDE
+========================================================= */
 
 img {
     max-width: 100%;
 }
 
-.top-header img {
+/* HANYA gambar header yang dikunci ukurannya */
+.top-header img.header-logo {
+    width: 52px !important;
+    height: 52px !important;
+
+    min-width: 52px !important;
+    min-height: 52px !important;
+
+    max-width: 52px !important;
+    max-height: 52px !important;
+
     object-fit: contain !important;
+
+    display: block !important;
 }
 
-
-/* =====================================================
-   MOBILE
-===================================================== */
+/* =========================================================
+   MOBILE TABLET
+========================================================= */
 
 @media (max-width: 850px) {
 
@@ -1165,18 +1146,25 @@ img {
     }
 
     .top-header {
-        grid-template-columns:
-            60px 1fr 60px;
+        grid-template-columns: 70px 1fr 70px;
 
         padding: 8px 12px;
     }
 
-    .header-logo {
-        width: 42px !important;
-        height: 42px !important;
+    .brand-side {
+        width: 65px;
+    }
 
-        max-width: 42px !important;
-        max-height: 42px !important;
+    .header-logo,
+    .top-header img.header-logo {
+        width: 45px !important;
+        height: 45px !important;
+
+        min-width: 45px !important;
+        min-height: 45px !important;
+
+        max-width: 45px !important;
+        max-height: 45px !important;
     }
 
     .school-brand {
@@ -1186,6 +1174,9 @@ img {
     .school-brand .header-logo {
         width: 42px !important;
         height: 42px !important;
+
+        min-width: 42px !important;
+        min-height: 42px !important;
 
         max-width: 42px !important;
         max-height: 42px !important;
@@ -1204,10 +1195,9 @@ img {
     }
 }
 
-
-/* =====================================================
-   MOBILE KECIL
-===================================================== */
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 600px) {
 
@@ -1218,20 +1208,25 @@ img {
     .top-header {
         height: 75px;
 
-        grid-template-columns:
-            45px 1fr 45px;
+        grid-template-columns: 45px 1fr 45px;
 
         padding: 6px 8px;
+
+        margin-bottom: 15px;
     }
 
     .brand-side {
-        width: 45px;
+        width: 42px;
         height: 60px;
     }
 
-    .header-logo {
+    .header-logo,
+    .top-header img.header-logo {
         width: 35px !important;
         height: 35px !important;
+
+        min-width: 35px !important;
+        min-height: 35px !important;
 
         max-width: 35px !important;
         max-height: 35px !important;
@@ -1242,11 +1237,14 @@ img {
     }
 
     .school-brand .header-logo {
-        width: 35px !important;
-        height: 35px !important;
+        width: 32px !important;
+        height: 32px !important;
 
-        max-width: 35px !important;
-        max-height: 35px !important;
+        min-width: 32px !important;
+        min-height: 32px !important;
+
+        max-width: 32px !important;
+        max-height: 32px !important;
     }
 
     .main-title {
@@ -1269,8 +1267,14 @@ img {
         font-size: 9px;
     }
 
+    .energy span {
+        font-size: 14px;
+    }
+
     .mode-bar {
         gap: 4px;
+
+        padding: 5px;
     }
 
     .mode-btn {
@@ -1283,12 +1287,22 @@ img {
         display: block;
     }
 
+    .calculator-panel {
+        padding: 12px;
+    }
+
     .history-panel {
         margin-top: 12px;
     }
 
-    .calculator-panel {
-        padding: 12px;
+    .display {
+        height: 100px;
+
+        padding: 14px;
+    }
+
+    #result {
+        font-size: 35px;
     }
 
     .buttons {
@@ -1299,18 +1313,86 @@ img {
         height: 52px;
 
         font-size: 16px;
+
+        border-radius: 9px;
     }
 
-    #result {
-        font-size: 35px;
+    .scientific-buttons {
+        gap: 5px;
     }
 
-    .team-list {
-        grid-template-columns:
-            repeat(2, 1fr);
+    .scientific-buttons button {
+        font-size: 13px;
+    }
+
+    .programmer-buttons {
+        gap: 5px;
+    }
+
+    .programmer-buttons button {
+        min-height: 45px;
+
+        font-size: 11px;
+    }
+
+    .converter-inputs {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+    .convert-arrow {
+        height: 25px;
     }
 
     .knight-status {
         font-size: 7px;
+
+        gap: 10px;
+    }
+
+    .team-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .member {
+        font-size: 10px;
+    }
+}
+
+/* =========================================================
+   VERY SMALL SCREEN
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .main-title {
+        font-size: 15px;
+
+        letter-spacing: 1px;
+    }
+
+    .sub-title {
+        font-size: 5px;
+
+        letter-spacing: 1px;
+    }
+
+    .school-brand .header-logo {
+        display: none !important;
+    }
+
+    .buttons button {
+        height: 48px;
+
+        font-size: 14px;
+    }
+
+    .scientific-buttons button {
+        font-size: 11px;
+    }
+
+    .team-list {
+        grid-template-columns: 1fr;
     }
 }
