@@ -1159,3 +1159,53 @@ footer small {
     }
 
 }
+/* =========================================
+   FIX GAMBAR BESAR
+========================================= */
+
+body {
+    background-color: #010914 !important;
+    background-image:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(0, 150, 255, 0.12),
+            transparent 40%
+        ) !important;
+    background-size: auto !important;
+    background-position: initial !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Jangan biarkan gambar memenuhi halaman */
+img {
+    max-width: 100%;
+}
+
+/* Khusus logo */
+.header-logo {
+    width: 52px !important;
+    height: 52px !important;
+    max-width: 52px !important;
+    max-height: 52px !important;
+
+    object-fit: contain !important;
+}
+
+/* Kalau gambar besar itu memakai class background */
+.background,
+.background-image,
+.hero-image,
+.hero-background {
+    background-image: none !important;
+}
+
+/* Kalau gambar langsung berupa IMG */
+.background img,
+.hero-image img,
+.hero-background img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 120px !important;
+    max-height: 120px !important;
+    object-fit: contain !important;
+}
