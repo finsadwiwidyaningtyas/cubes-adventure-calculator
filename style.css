@@ -3015,3 +3015,84 @@ img {
     }
 
 }
+
+/* ================================
+   FIX GAMBAR AGAR TIDAK MEMBESAR
+================================ */
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Gambar utama / gambar dekorasi */
+.hero img,
+.hero-image,
+.main-image,
+.banner-image {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: contain;
+}
+
+/* Jika gambar berada di dalam container */
+.image-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ================================
+   CUBE KNIGHT
+================================ */
+
+.cube-knight {
+    width: 140px !important;
+    height: 180px !important;
+    max-width: 140px !important;
+    max-height: 180px !important;
+    margin: 20px auto;
+    position: relative;
+    transform: scale(1);
+    animation: knightFloat 4s ease-in-out infinite;
+}
+
+.cube-knight img,
+.cube-knight svg {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 140px !important;
+    max-height: 180px !important;
+    object-fit: contain;
+}
+
+/* Animasi kecil saja */
+@keyframes knightFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* Jangan sampai gambar dekorasi memenuhi layar */
+.decorative-image {
+    width: auto !important;
+    height: auto !important;
+    max-width: 90% !important;
+    max-height: 450px !important;
+    object-fit: contain !important;
+}
