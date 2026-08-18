@@ -1,1850 +1,1161 @@
-/* ========================================
-   CUBES ADVENTURE KNIGHT
-   SCIENTIFIC CALCULATOR
-======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-let expression = "";
+:root {
+    --bg: #010914;
+    --panel: #031525;
+    --panel2: #061e34;
 
-let result = "0";
+    --cyan: #24d9ff;
+    --blue: #078fe5;
 
-let currentMode = "basic";
+    --white: #f1fbff;
+    --muted: #6c91a5;
 
+    --border: rgba(30, 190, 255, 0.35);
+}
 
-/* ========================================
-   UPDATE DISPLAY
-======================================== */
+body {
+    min-height: 100vh;
 
-function updateDisplay() {
+    padding: 20px 15px;
 
-    document.getElementById("result").textContent =
-        expression || "0";
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
 
+    color: var(--white);
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(0, 142, 255, 0.13),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 10% 80%,
+            rgba(0, 115, 255, 0.07),
+            transparent 30%
+        ),
+        #010914;
+
+    overflow-x: hidden;
 }
 
 
-/* ========================================
-   FORMAT RESULT
-======================================== */
+/* =====================================
+   BACKGROUND CUBES
+===================================== */
 
-function formatResult(number) {
+.cube {
+    position: fixed;
 
-    if (!Number.isFinite(number)) {
-        throw new Error("Invalid");
-    }
+    width: 100px;
+    height: 100px;
 
-    return String(
-        parseFloat(
-            number.toFixed(10)
-        )
-    );
+    border: 1px solid
+        rgba(0, 145, 255, 0.18);
+
+    transform: rotate(30deg);
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+.cube::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 15px;
+
+    border: 1px solid
+        rgba(0, 200, 255, 0.08);
+}
+
+.cube-1 {
+    left: 35px;
+    top: 220px;
+
+    width: 120px;
+    height: 120px;
+}
+
+.cube-2 {
+    right: 40px;
+    top: 180px;
+
+    width: 70px;
+    height: 70px;
+
+    transform: rotate(45deg);
+}
+
+.cube-3 {
+    right: 80px;
+    top: 440px;
+
+    width: 110px;
+    height: 110px;
+
+    transform: rotate(20deg);
+}
+
+.cube-4 {
+    left: 30px;
+    bottom: 230px;
+
+    width: 55px;
+    height: 55px;
+
+    transform: rotate(25deg);
 }
 
 
-/* ========================================
-   ADD NUMBER / OPERATOR
-======================================== */
+/* =====================================
+   HEADER
+===================================== */
 
-function addNumber(value) {
+.top-header {
+    width: min(1350px, 100%);
 
-    if (expression === "ERROR") {
-        expression = "";
-    }
+    height: 90px;
 
+    margin: 0 auto 25px;
 
-    const lastChar =
-        expression.slice(-1);
+    padding: 10px 28px;
 
+    display: grid;
 
-    if (
-        ["+", "-", "*", "/", "%", "^"].includes(value) &&
-        ["+", "-", "*", "/", "%", "^"].includes(lastChar)
-    ) {
-        return;
-    }
+    grid-template-columns:
+        100px 1fr 100px;
 
+    align-items: center;
 
-    if (value === ".") {
+    border: 1px solid
+        rgba(0, 195, 255, 0.45);
 
-        const parts =
-            expression.split(
-                /[\+\-\*\/%\^]/
-            );
+    border-radius: 8px;
 
-        const currentNumber =
-            parts[parts.length - 1];
-
-
-        if (currentNumber.includes(".")) {
-            return;
-        }
-
-    }
-
-
-    expression += value;
-
-    updateDisplay();
-
-}
-
-
-/* ========================================
-   CLEAR
-======================================== */
-
-function clearDisplay() {
-
-    expression = "";
-
-    document.getElementById(
-        "history"
-    ).textContent =
-        "READY FOR CALCULATION";
-
-    updateDisplay();
-
-}
-
-
-/* ========================================
-   DELETE
-======================================== */
-
-function deleteNumber() {
-
-    if (expression === "ERROR") {
-        expression = "";
-    }
-
-    expression =
-        expression.slice(0, -1);
-
-    updateDisplay();
-
-}
-
-
-/* ========================================
-   CALCULATE
-======================================== */
-
-function calculate() {
-
-    if (!expression) {
-        return;
-    }
-
-
-    const oldExpression =
-        expression;
-
-
-    try {
-
-        let calculation =
-            expression;
-
-
-        calculation =
-            calculation.replace(
-                /(\d+(\.\d+)?)%/g,
-                "($1/100)"
-            );
-
-
-        calculation =
-            calculation.replace(
-                /\^/g,
-                "**"
-            );
-
-
-        if (
-            !/^[0-9+\-*/().%\s*]+$/.test(
-                calculation
-            )
-        ) {
-
-            throw new Error("Invalid");
-
-        }
-
-
-        let answer =
-            Function(
-                '"use strict"; return (' +
-                calculation +
-                ')'
-            )();
-
-
-        if (!Number.isFinite(answer)) {
-            throw new Error("Invalid");
-        }
-
-
-        answer =
-            Number(
-                formatResult(answer)
-            );
-
-
-        document.getElementById(
-            "history"
-        ).textContent =
-            oldExpression + " =";
-
-
-        expression =
-            String(answer);
-
-
-        saveHistory(
-            oldExpression,
-            answer
+    background:
+        linear-gradient(
+            90deg,
+            rgba(1, 20, 36, 0.96),
+            rgba(2, 17, 31, 0.98),
+            rgba(1, 20, 36, 0.96)
         );
 
+    box-shadow:
+        0 0 25px
+        rgba(0, 150, 255, 0.1);
 
-        updateDisplay();
+    position: relative;
+}
 
+.top-header::before {
+    content: "";
 
-    } catch (error) {
+    position: absolute;
 
-        showError();
+    left: 30px;
+    right: 30px;
+    top: -1px;
 
-    }
+    height: 1px;
 
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--cyan),
+            transparent
+        );
+}
+
+.brand-side {
+    display: flex;
+
+    justify-content: flex-start;
+
+    align-items: center;
+}
+
+.brand-side.right {
+    justify-content: flex-end;
+}
+
+.header-logo {
+    width: 52px;
+    height: 52px;
+
+    object-fit: contain;
+
+    display: block;
+
+    border-radius: 8px;
+
+    max-width: 52px;
+    max-height: 52px;
+}
+
+.school-brand {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+.title-brand {
+    text-align: center;
+}
+
+.main-title {
+    font-size: 34px;
+
+    font-weight: 900;
+
+    letter-spacing: 8px;
+
+    line-height: 1;
+
+    color: #f4fcff;
+
+    text-shadow:
+        0 0 12px
+        rgba(20, 200, 255, 0.8);
+}
+
+.main-title span {
+    color: var(--cyan);
+
+    margin-right: 5px;
+}
+
+.sub-title {
+    margin-top: 8px;
+
+    color: var(--cyan);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 6px;
 }
 
 
-/* ========================================
-   SQUARE ROOT
-======================================== */
+/* =====================================
+   MAIN WRAPPER
+===================================== */
 
-function squareRoot() {
+.main-wrapper {
+    width: min(950px, 100%);
 
-    calculateFunction(
-        Math.sqrt,
-        "√"
-    );
+    margin: auto;
 
+    padding: 0;
 }
 
 
-/* ========================================
-   SQUARE
-======================================== */
+/* =====================================
+   STATUS
+===================================== */
 
-function squareNumber() {
+.status-bar {
+    display: flex;
 
-    calculateFunction(
-        number => Math.pow(number, 2),
-        "²"
-    );
+    justify-content: space-between;
 
+    align-items: center;
+
+    padding: 0 20px 12px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.system-online {
+    color: #47e76a;
+}
+
+.online-dot {
+    display: inline-block;
+
+    width: 10px;
+    height: 10px;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    background: #52ec6d;
+
+    box-shadow:
+        0 0 10px
+        rgba(70, 255, 100, 0.8);
+}
+
+.energy {
+    color: var(--cyan);
+}
+
+.energy span {
+    margin-left: 5px;
+
+    font-size: 20px;
 }
 
 
-/* ========================================
-   POWER
-======================================== */
+/* =====================================
+   MODE BAR
+===================================== */
 
-function powerNumber() {
+.mode-bar {
+    display: grid;
 
-    if (!expression) {
-        return;
-    }
+    grid-template-columns:
+        repeat(4, 1fr);
 
-    if (
-        expression.slice(-1) === "^"
-    ) {
-        return;
-    }
+    gap: 10px;
 
-    expression += "^";
+    margin-bottom: 15px;
 
-    updateDisplay();
+    padding: 7px;
 
+    border: 1px solid
+        rgba(0, 165, 255, 0.2);
+
+    border-radius: 10px;
+
+    background:
+        rgba(1, 16, 29, 0.9);
 }
 
+.mode-btn {
+    height: 45px;
 
-/* ========================================
-   INVERSE
-======================================== */
+    border: 1px solid
+        rgba(0, 155, 255, 0.35);
 
-function inverseNumber() {
+    border-radius: 8px;
 
-    calculateFunction(
-        number => {
+    background: transparent;
 
-            if (number === 0) {
-                throw new Error("Invalid");
-            }
+    color: #9ab4c2;
 
-            return 1 / number;
+    font-size: 13px;
 
-        },
-        "1/"
-    );
+    font-weight: 800;
 
+    cursor: pointer;
+
+    transition: 0.2s;
 }
 
+.mode-btn:hover {
+    color: white;
 
-/* ========================================
-   PLUS MINUS
-======================================== */
-
-function plusMinus() {
-
-    if (!expression) {
-        return;
-    }
-
-    if (expression === "0") {
-        return;
-    }
-
-    if (expression.startsWith("-")) {
-
-        expression =
-            expression.substring(1);
-
-    } else {
-
-        expression =
-            "-" + expression;
-
-    }
-
-    updateDisplay();
-
+    border-color: var(--cyan);
 }
 
-
-/* ========================================
-   SIN
-======================================== */
-
-function sinNumber() {
-
-    calculateFunction(
-        number =>
-            Math.sin(
-                number * Math.PI / 180
-            ),
-        "sin"
-    );
-
-}
-
-
-/* ========================================
-   COS
-======================================== */
-
-function cosNumber() {
-
-    calculateFunction(
-        number =>
-            Math.cos(
-                number * Math.PI / 180
-            ),
-        "cos"
-    );
-
-}
-
-
-/* ========================================
-   TAN
-======================================== */
-
-function tanNumber() {
-
-    calculateFunction(
-        number =>
-            Math.tan(
-                number * Math.PI / 180
-            ),
-        "tan"
-    );
-
-}
-
-
-/* ========================================
-   ASIN
-======================================== */
-
-function asinNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (
-                number < -1 ||
-                number > 1
-            ) {
-                throw new Error("Invalid");
-            }
-
-            return Math.asin(number)
-                * 180 / Math.PI;
-
-        },
-        "asin"
-    );
-
-}
-
-
-/* ========================================
-   ACOS
-======================================== */
-
-function acosNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (
-                number < -1 ||
-                number > 1
-            ) {
-                throw new Error("Invalid");
-            }
-
-            return Math.acos(number)
-                * 180 / Math.PI;
-
-        },
-        "acos"
-    );
-
-}
-
-
-/* ========================================
-   ATAN
-======================================== */
-
-function atanNumber() {
-
-    calculateFunction(
-        number =>
-            Math.atan(number)
-            * 180 / Math.PI,
-        "atan"
-    );
-
-}
-
-
-/* ========================================
-   LOG
-======================================== */
-
-function logNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (number <= 0) {
-                throw new Error("Invalid");
-            }
-
-            return Math.log10(number);
-
-        },
-        "log"
-    );
-
-}
-
-
-/* ========================================
-   LN
-======================================== */
-
-function lnNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (number <= 0) {
-                throw new Error("Invalid");
-            }
-
-            return Math.log(number);
-
-        },
-        "ln"
-    );
-
-}
-
-
-/* ========================================
-   E POWER
-======================================== */
-
-function exponentialNumber() {
-
-    calculateFunction(
-        number =>
-            Math.exp(number),
-        "e^"
-    );
-
-}
-
-
-/* ========================================
-   10 POWER
-======================================== */
-
-function tenPowerNumber() {
-
-    calculateFunction(
-        number =>
-            Math.pow(10, number),
-        "10^"
-    );
-
-}
-
-
-/* ========================================
-   ABS
-======================================== */
-
-function absoluteNumber() {
-
-    calculateFunction(
-        number =>
-            Math.abs(number),
-        "abs"
-    );
-
-}
-
-
-/* ========================================
-   FACTORIAL
-======================================== */
-
-function factorialNumber() {
-
-    if (!expression) {
-        return;
-    }
-
-
-    try {
-
-        const number =
-            Number(expression);
-
-
-        if (
-            !Number.isInteger(number) ||
-            number < 0 ||
-            number > 170
-        ) {
-
-            throw new Error("Invalid");
-
-        }
-
-
-        let answer = 1;
-
-
-        for (
-            let i = 2;
-            i <= number;
-            i++
-        ) {
-
-            answer *= i;
-
-        }
-
-
-        document.getElementById(
-            "history"
-        ).textContent =
-            number + "!";
-
-
-        expression =
-            formatResult(answer);
-
-
-        saveHistory(
-            number + "!",
-            answer
+.mode-btn.active {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #078fe5,
+            #086bc1
         );
 
+    border-color:
+        rgba(70, 220, 255, 0.9);
 
-        updateDisplay();
-
-
-    } catch (error) {
-
-        showError();
-
-    }
-
+    box-shadow:
+        0 0 15px
+        rgba(0, 160, 255, 0.25);
 }
 
 
-/* ========================================
-   RANDOM
-======================================== */
+/* =====================================
+   WORKSPACE
+===================================== */
 
-function randomNumber() {
+.workspace {
+    display: grid;
 
-    const answer =
-        Math.random();
+    grid-template-columns:
+        1.15fr 0.85fr;
 
+    gap: 15px;
 
-    document.getElementById(
-        "history"
-    ).textContent =
-        "RANDOM NUMBER";
-
-
-    expression =
-        formatResult(answer);
-
-
-    saveHistory(
-        "RANDOM NUMBER",
-        answer
-    );
-
-
-    updateDisplay();
-
+    align-items: stretch;
 }
 
 
-/* ========================================
-   PI
-======================================== */
+/* =====================================
+   CALCULATOR PANEL
+===================================== */
 
-function addPi() {
+.calculator-panel {
+    padding: 18px;
 
-    expression +=
-        Math.PI.toString();
+    border: 1px solid var(--border);
 
-    updateDisplay();
+    border-radius: 15px;
 
-}
-
-
-/* ========================================
-   E
-======================================== */
-
-function addE() {
-
-    expression +=
-        Math.E.toString();
-
-    updateDisplay();
-
-}
-
-
-/* ========================================
-   PHI
-======================================== */
-
-function addPhi() {
-
-    const phi =
-        (1 + Math.sqrt(5)) / 2;
-
-    expression +=
-        phi.toString();
-
-    updateDisplay();
-
-}
-
-
-/* ========================================
-   SCIENTIFIC FUNCTION
-======================================== */
-
-function calculateFunction(
-    operation,
-    label
-) {
-
-    if (!expression) {
-        return;
-    }
-
-
-    try {
-
-        const number =
-            Number(expression);
-
-
-        if (!Number.isFinite(number)) {
-            throw new Error("Invalid");
-        }
-
-
-        const answer =
-            operation(number);
-
-
-        if (!Number.isFinite(answer)) {
-            throw new Error("Invalid");
-        }
-
-
-        document.getElementById(
-            "history"
-        ).textContent =
-            label +
-            "(" +
-            expression +
-            ")";
-
-
-        const oldExpression =
-            label +
-            "(" +
-            expression +
-            ")";
-
-
-        expression =
-            formatResult(answer);
-
-
-        saveHistory(
-            oldExpression,
-            answer
+    background:
+        linear-gradient(
+            145deg,
+            rgba(4, 29, 50, 0.98),
+            rgba(1, 15, 28, 0.98)
         );
 
-
-        updateDisplay();
-
-
-    } catch (error) {
-
-        showError();
-
-    }
-
+    box-shadow:
+        0 0 30px
+        rgba(0, 140, 255, 0.08);
 }
 
 
-/* ========================================
-   ERROR
-======================================== */
+/* =====================================
+   DISPLAY
+===================================== */
 
-function showError() {
+.display {
+    height: 115px;
 
-    expression =
-        "ERROR";
+    margin-bottom: 15px;
 
+    padding: 17px;
 
-    document.getElementById(
-        "history"
-    ).textContent =
-        "INVALID CALCULATION";
+    display: flex;
 
+    flex-direction: column;
 
-    updateDisplay();
+    justify-content: space-between;
 
+    align-items: flex-end;
 
-    setTimeout(() => {
+    border-radius: 11px;
 
-        expression = "";
+    background:
+        linear-gradient(
+            145deg,
+            #020d19,
+            #031a2c
+        );
 
-        document.getElementById(
-            "history"
-        ).textContent =
-            "READY FOR CALCULATION";
+    border: 1px solid
+        rgba(20, 180, 255, 0.28);
 
-        updateDisplay();
+    box-shadow:
+        inset 0 0 20px
+        rgba(0, 130, 255, 0.06);
+}
 
-    }, 1500);
+#history {
+    width: 100%;
 
+    text-align: left;
+
+    color: #66899b;
+
+    font-size: 11px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+#result {
+    width: 100%;
+
+    text-align: right;
+
+    color: white;
+
+    font-size: 42px;
+
+    font-weight: 500;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    text-shadow:
+        0 0 12px
+        rgba(70, 225, 255, 0.6);
 }
 
 
-/* ========================================
-   CALCULATOR MODE
-======================================== */
+/* =====================================
+   MODES
+===================================== */
 
-function switchMode(mode) {
+.calculator-mode {
+    display: none;
+}
 
-    currentMode =
-        mode;
-
-
-    document
-        .querySelectorAll(
-            ".mode-btn"
-        )
-        .forEach(button => {
-
-            button.classList.remove(
-                "active"
-            );
-
-        });
-
-
-    const activeButton =
-        document.querySelector(
-            `.mode-btn[onclick="switchMode('${mode}')"]`
-        );
-
-
-    if (activeButton) {
-
-        activeButton.classList.add(
-            "active"
-        );
-
-    }
-
-
-    document
-        .querySelectorAll(
-            ".calculator-mode"
-        )
-        .forEach(panel => {
-
-            panel.classList.remove(
-                "active"
-            );
-
-        });
-
-
-    const panel =
-        document.getElementById(
-            `${mode}-mode`
-        );
-
-
-    if (panel) {
-
-        panel.classList.add(
-            "active"
-        );
-
-    }
-
+.calculator-mode.active {
+    display: block;
 }
 
 
-/* ========================================
+/* =====================================
+   BUTTONS
+===================================== */
+
+.buttons {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+}
+
+.buttons button {
+    height: 58px;
+
+    border-radius: 11px;
+
+    border: 1px solid
+        rgba(0, 160, 225, 0.28);
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b2e4b,
+            #08223a
+        );
+
+    color: #f1faff;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+.buttons button:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(50, 215, 255, 0.7);
+
+    box-shadow:
+        0 0 12px
+        rgba(20, 190, 255, 0.15);
+
+    background:
+        linear-gradient(
+            145deg,
+            #12476b,
+            #0b2e4b
+        );
+}
+
+.buttons button:active {
+    transform: scale(0.96);
+}
+
+.buttons .special {
+    color: var(--cyan);
+}
+
+.buttons .operator {
+    color: var(--cyan);
+
+    background:
+        linear-gradient(
+            145deg,
+            #075278,
+            #063b5c
+        );
+}
+
+.buttons .clear-btn {
+    color: #ff4e61;
+}
+
+.buttons .equal {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #079ff1,
+            #0871ce
+        );
+
+    border-color:
+        rgba(70, 220, 255, 0.8);
+
+    box-shadow:
+        0 0 14px
+        rgba(0, 150, 255, 0.25);
+}
+
+
+/* =====================================
+   HISTORY PANEL
+===================================== */
+
+.history-panel {
+    min-height: 100%;
+
+    padding: 18px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(3, 25, 44, 0.98),
+            rgba(1, 14, 26, 0.98)
+        );
+
+    box-shadow:
+        0 0 25px
+        rgba(0, 150, 255, 0.07);
+
+    overflow: hidden;
+}
+
+.history-title {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-bottom: 12px;
+
+    margin-bottom: 10px;
+
+    border-bottom: 1px solid
+        rgba(0, 175, 255, 0.18);
+}
+
+.history-title h2 {
+    font-size: 15px;
+
+    letter-spacing: 1px;
+
+    color: white;
+}
+
+.history-title button {
+    padding: 7px 11px;
+
+    border: 1px solid
+        rgba(0, 190, 255, 0.4);
+
+    border-radius: 6px;
+
+    background: transparent;
+
+    color: var(--cyan);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.history-title button:hover {
+    background: rgba(0, 160, 255, 0.1);
+}
+
+.history-item {
+    margin-bottom: 9px;
+
+    padding: 13px;
+
+    border-left: 3px solid var(--cyan);
+
+    border-top: 1px solid
+        rgba(0, 160, 255, 0.2);
+
+    border-right: 1px solid
+        rgba(0, 160, 255, 0.2);
+
+    border-bottom: 1px solid
+        rgba(0, 160, 255, 0.2);
+
+    border-radius: 7px;
+
+    background:
+        rgba(4, 29, 48, 0.85);
+}
+
+.history-expression {
+    color: #d5ebf4;
+
+    font-size: 14px;
+}
+
+.history-result {
+    margin-top: 5px;
+
+    color: var(--cyan);
+
+    font-size: 19px;
+
+    font-weight: 800;
+}
+
+.empty-history {
+    padding: 35px 10px;
+
+    text-align: center;
+
+    color: #537588;
+
+    font-size: 11px;
+}
+
+
+/* =====================================
+   KNIGHT STATUS
+===================================== */
+
+.knight-status {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 12px;
+
+    padding: 11px 13px;
+
+    border: 1px solid
+        rgba(0, 160, 230, 0.25);
+
+    border-radius: 7px;
+
+    color: #6f9aad;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    background:
+        rgba(3, 24, 40, 0.7);
+}
+
+.knight-status span:first-child {
+    color: var(--cyan);
+}
+
+
+/* =====================================
    PROGRAMMER
-======================================== */
+===================================== */
 
-function getProgrammerValue() {
+.programmer-display {
+    display: grid;
 
-    const input =
-        document.getElementById(
-            "programmer-input"
-        );
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+}
+
+.programmer-display div {
+    padding: 11px;
+
+    border-radius: 8px;
+
+    background: #041a2c;
+
+    border: 1px solid
+        rgba(0, 170, 230, 0.25);
+}
+
+.programmer-display span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #64889a;
+
+    font-size: 9px;
+}
+
+.programmer-display strong {
+    color: var(--cyan);
+
+    font-size: 15px;
+
+    word-break: break-all;
+}
+
+#programmer-input {
+    width: 100%;
+
+    margin-bottom: 10px;
+
+    padding: 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #020c17;
+
+    color: white;
+
+    text-align: right;
+
+    font-size: 18px;
+}
+
+.programmer-buttons {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+}
+
+.programmer-buttons button {
+    height: 50px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    background: #0a304c;
+
+    color: var(--cyan);
+
+    cursor: pointer;
+
+    font-weight: 700;
+}
 
 
-    let value =
-        parseInt(input.value);
+/* =====================================
+   CONVERTER
+===================================== */
+
+.converter-box {
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: #041a2c;
+
+    border: 1px solid var(--border);
+}
+
+.converter-box label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #6d91a3;
+
+    font-size: 10px;
+}
+
+.converter-box select,
+.converter-box input {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid
+        rgba(0, 170, 230, 0.3);
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #020d19;
+
+    color: white;
+}
+
+.converter-inputs {
+    display: grid;
+
+    grid-template-columns:
+        1fr 35px 1fr;
+
+    gap: 8px;
+
+    align-items: end;
+
+    margin-top: 12px;
+}
+
+.converter-inputs input {
+    margin-bottom: 6px;
+}
+
+.convert-arrow {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 40px;
+
+    color: var(--cyan);
+
+    font-size: 20px;
+}
 
 
-    if (isNaN(value)) {
-        value = 0;
+/* =====================================
+   TEAM
+===================================== */
+
+.team-section {
+    width: min(950px, 100%);
+
+    margin: 25px auto 15px;
+
+    text-align: center;
+}
+
+.team-section h2 {
+    margin-bottom: 12px;
+
+    color: var(--cyan);
+
+    font-size: 15px;
+
+    letter-spacing: 4px;
+}
+
+.team-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+.member {
+    padding: 11px;
+
+    border: 1px solid
+        rgba(0, 170, 230, 0.25);
+
+    border-radius: 7px;
+
+    background:
+        rgba(3, 25, 42, 0.8);
+
+    color: #b6d0dc;
+
+    font-size: 11px;
+}
+
+.member span {
+    display: inline-block;
+
+    margin-right: 8px;
+
+    color: var(--cyan);
+
+    font-weight: 900;
+}
+
+
+/* =====================================
+   FOOTER
+===================================== */
+
+footer {
+    width: 100%;
+
+    padding: 15px;
+
+    text-align: center;
+
+    border-top: 1px solid
+        rgba(0, 175, 255, 0.3);
+
+    color: #4f7488;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+footer strong {
+    color: var(--cyan);
+
+    font-size: 12px;
+}
+
+footer small {
+    color: #3c5e70;
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 850px) {
+
+    .workspace {
+        grid-template-columns: 1fr;
     }
 
+    .history-panel {
+        min-height: 300px;
+    }
 
-    return value;
+    .top-header {
+        grid-template-columns:
+            60px 1fr 60px;
+
+        padding: 8px 12px;
+    }
+
+    .header-logo {
+        width: 42px;
+        height: 42px;
+
+        max-width: 42px;
+        max-height: 42px;
+    }
+
+    .school-brand {
+        gap: 8px;
+    }
+
+    .main-title {
+        font-size: 23px;
+
+        letter-spacing: 4px;
+    }
+
+    .sub-title {
+        font-size: 7px;
+
+        letter-spacing: 3px;
+    }
 
 }
 
 
-function updateProgrammer() {
+@media (max-width: 600px) {
 
-    const value =
-        getProgrammerValue();
+    body {
+        padding: 10px;
+    }
 
+    .top-header {
+        height: 75px;
 
-    document.getElementById(
-        "programmer-dec"
-    ).textContent =
-        value;
+        grid-template-columns:
+            45px 1fr 45px;
+    }
 
+    .header-logo {
+        width: 35px;
+        height: 35px;
 
-    document.getElementById(
-        "programmer-bin"
-    ).textContent =
-        (value >>> 0).toString(2);
+        max-width: 35px;
+        max-height: 35px;
+    }
 
+    .main-title {
+        font-size: 18px;
 
-    document.getElementById(
-        "programmer-hex"
-    ).textContent =
-        (value >>> 0)
-            .toString(16)
-            .toUpperCase();
+        letter-spacing: 2px;
+    }
 
+    .sub-title {
+        margin-top: 4px;
 
-    document.getElementById(
-        "programmer-oct"
-    ).textContent =
-        (value >>> 0).toString(8);
+        font-size: 6px;
+
+        letter-spacing: 2px;
+    }
+
+    .status-bar {
+        padding: 0 5px 10px;
+
+        font-size: 9px;
+    }
+
+    .mode-bar {
+        gap: 4px;
+    }
+
+    .mode-btn {
+        height: 40px;
+
+        font-size: 8px;
+    }
+
+    .workspace {
+        display: block;
+    }
+
+    .history-panel {
+        margin-top: 12px;
+    }
+
+    .calculator-panel {
+        padding: 12px;
+    }
+
+    .buttons {
+        gap: 5px;
+    }
+
+    .buttons button {
+        height: 52px;
+
+        font-size: 16px;
+    }
+
+    #result {
+        font-size: 35px;
+    }
+
+    .team-list {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .knight-status {
+        font-size: 7px;
+    }
 
 }
-
-
-/* ========================================
-   AND / OR / XOR
-======================================== */
-
-function programmerOperation(
-    operation
-) {
-
-    const value =
-        getProgrammerValue();
-
-
-    const input =
-        prompt(
-            `Masukkan angka untuk ${operation}:`
-        );
-
-
-    if (input === null) {
-        return;
-    }
-
-
-    const second =
-        parseInt(input);
-
-
-    if (isNaN(second)) {
-        return;
-    }
-
-
-    let answer;
-
-
-    switch (operation) {
-
-        case "AND":
-
-            answer =
-                value & second;
-
-            break;
-
-
-        case "OR":
-
-            answer =
-                value | second;
-
-            break;
-
-
-        case "XOR":
-
-            answer =
-                value ^ second;
-
-            break;
-
-
-        default:
-
-            return;
-
-    }
-
-
-    document.getElementById(
-        "programmer-input"
-    ).value =
-        answer;
-
-
-    updateProgrammer();
-
-
-    saveHistory(
-        `${value} ${operation} ${second}`,
-        answer
-    );
-
-}
-
-
-/* ========================================
-   NOT
-======================================== */
-
-function programmerNOT() {
-
-    const value =
-        getProgrammerValue();
-
-
-    const answer =
-        ~value;
-
-
-    document.getElementById(
-        "programmer-input"
-    ).value =
-        answer;
-
-
-    updateProgrammer();
-
-
-    saveHistory(
-        `NOT ${value}`,
-        answer
-    );
-
-}
-
-
-/* ========================================
-   SHIFT
-======================================== */
-
-function programmerShift(
-    direction
-) {
-
-    const value =
-        getProgrammerValue();
-
-
-    const input =
-        prompt(
-            direction === "left"
-                ? "Berapa bit SHIFT LEFT?"
-                : "Berapa bit SHIFT RIGHT?"
-        );
-
-
-    if (input === null) {
-        return;
-    }
-
-
-    const amount =
-        parseInt(input);
-
-
-    if (
-        isNaN(amount) ||
-        amount < 0
-    ) {
-
-        return;
-
-    }
-
-
-    let answer;
-
-
-    if (direction === "left") {
-
-        answer =
-            value << amount;
-
-    } else {
-
-        answer =
-            value >> amount;
-
-    }
-
-
-    document.getElementById(
-        "programmer-input"
-    ).value =
-        answer;
-
-
-    updateProgrammer();
-
-
-    saveHistory(
-        `${value} ${
-            direction === "left"
-                ? "<<"
-                : ">>"
-        } ${amount}`,
-        answer
-    );
-
-}
-
-
-/* ========================================
-   CONVERTER DATA
-======================================== */
-
-const converterUnits = {
-
-    length: {
-
-        units: {
-
-            Meter: 1,
-
-            Kilometer: 1000,
-
-            Centimeter: 0.01,
-
-            Millimeter: 0.001,
-
-            Mile: 1609.344,
-
-            Yard: 0.9144,
-
-            Foot: 0.3048,
-
-            Inch: 0.0254
-
-        },
-
-
-        convert(value, from, to) {
-
-            return value *
-                this.units[from] /
-                this.units[to];
-
-        }
-
-    },
-
-
-    weight: {
-
-        units: {
-
-            Kilogram: 1,
-
-            Gram: 0.001,
-
-            Milligram: 0.000001,
-
-            Ton: 1000,
-
-            Pound: 0.45359237,
-
-            Ounce: 0.0283495
-
-        },
-
-
-        convert(value, from, to) {
-
-            return value *
-                this.units[from] /
-                this.units[to];
-
-        }
-
-    },
-
-
-    temperature: {
-
-        units: {
-
-            Celsius: "C",
-
-            Fahrenheit: "F",
-
-            Kelvin: "K"
-
-        },
-
-
-        convert(value, from, to) {
-
-            let celsius;
-
-
-            if (from === "Celsius") {
-
-                celsius = value;
-
-            }
-
-            else if (
-                from === "Fahrenheit"
-            ) {
-
-                celsius =
-                    (value - 32) *
-                    5 / 9;
-
-            }
-
-            else {
-
-                celsius =
-                    value - 273.15;
-
-            }
-
-
-            if (to === "Celsius") {
-
-                return celsius;
-
-            }
-
-
-            if (
-                to === "Fahrenheit"
-            ) {
-
-                return celsius *
-                    9 / 5 + 32;
-
-            }
-
-
-            return celsius + 273.15;
-
-        }
-
-    },
-
-
-    area: {
-
-        units: {
-
-            "Square Meter": 1,
-
-            "Square Kilometer":
-                1000000,
-
-            "Square Centimeter":
-                0.0001,
-
-            Hectare: 10000,
-
-            Acre: 4046.856
-
-        },
-
-
-        convert(value, from, to) {
-
-            return value *
-                this.units[from] /
-                this.units[to];
-
-        }
-
-    },
-
-
-    volume: {
-
-        units: {
-
-            Liter: 1,
-
-            Milliliter: 0.001,
-
-            "Cubic Meter": 1000,
-
-            "Cubic Centimeter":
-                0.001,
-
-            Gallon: 3.78541
-
-        },
-
-
-        convert(value, from, to) {
-
-            return value *
-                this.units[from] /
-                this.units[to];
-
-        }
-
-    },
-
-
-    time: {
-
-        units: {
-
-            Second: 1,
-
-            Minute: 60,
-
-            Hour: 3600,
-
-            Day: 86400,
-
-            Week: 604800
-
-        },
-
-
-        convert(value, from, to) {
-
-            return value *
-                this.units[from] /
-                this.units[to];
-
-        }
-
-    },
-
-
-    speed: {
-
-        units: {
-
-            "Meter/Second": 1,
-
-            "Kilometer/Hour":
-                0.277777778,
-
-            "Mile/Hour":
-                0.44704,
-
-            Knot:
-                0.514444
-
-        },
-
-
-        convert(value, from, to) {
-
-            return value *
-                this.units[from] /
-                this.units[to];
-
-        }
-
-    },
-
-
-    data: {
-
-        units: {
-
-            Bit: 1,
-
-            Byte: 8,
-
-            KB: 8192,
-
-            MB: 8388608,
-
-            GB: 8589934592,
-
-            TB: 8796093022208
-
-        },
-
-
-        convert(value, from, to) {
-
-            return value *
-                this.units[from] /
-                this.units[to];
-
-        }
-
-    },
-
-
-    energy: {
-
-        units: {
-
-            Joule: 1,
-
-            Kilojoule: 1000,
-
-            Calorie: 4.184,
-
-            Kilocalorie: 4184,
-
-            "Watt Hour": 3600,
-
-            "Kilowatt Hour":
-                3600000
-
-        },
-
-
-        convert(value, from, to) {
-
-            return value *
-                this.units[from] /
-                this.units[to];
-
-        }
-
-    }
-
-};
-
-
-/* ========================================
-   LOAD CONVERTER
-======================================== */
-
-function changeConverter() {
-
-    const type =
-        document.getElementById(
-            "converter-type"
-        ).value;
-
-
-    const data =
-        converterUnits[type];
-
-
-    const from =
-        document.getElementById(
-            "from-unit"
-        );
-
-
-    const to =
-        document.getElementById(
-            "to-unit"
-        );
-
-
-    from.innerHTML = "";
-
-    to.innerHTML = "";
-
-
-    Object.keys(data.units)
-        .forEach(unit => {
-
-            const option1 =
-                document.createElement(
-                    "option"
-                );
-
-            option1.value =
-                unit;
-
-            option1.textContent =
-                unit;
-
-
-            from.appendChild(
-                option1
-            );
-
-
-            const option2 =
-                document.createElement(
-                    "option"
-                );
-
-            option2.value =
-                unit;
-
-            option2.textContent =
-                unit;
-
-
-            to.appendChild(
-                option2
-            );
-
-        });
-
-
-    if (to.options.length > 1) {
-
-        to.selectedIndex = 1;
-
-    }
-
-
-    convertValue();
-
-}
-
-
-/* ========================================
-   CONVERT VALUE
-======================================== */
-
-function convertValue() {
-
-    const type =
-        document.getElementById(
-            "converter-type"
-        ).value;
-
-
-    const value =
-        parseFloat(
-            document.getElementById(
-                "convert-value"
-            ).value
-        );
-
-
-    const from =
-        document.getElementById(
-            "from-unit"
-        ).value;
-
-
-    const to =
-        document.getElementById(
-            "to-unit"
-        ).value;
-
-
-    if (isNaN(value)) {
-
-        document.getElementById(
-            "convert-result"
-        ).value = "";
-
-        return;
-
-    }
-
-
-    const answer =
-        converterUnits[type]
-            .convert(
-                value,
-                from,
-                to
-            );
-
-
-    document.getElementById(
-        "convert-result"
-    ).value =
-        formatConverterResult(
-            answer
-        );
-
-}
-
-
-function formatConverterResult(
-    number
-) {
-
-    if (!Number.isFinite(number)) {
-        return "ERROR";
-    }
-
-
-    return Number(
-        number.toFixed(10)
-    ).toString();
-
-}
-
-
-/* ========================================
-   ADVENTURE HISTORY
-   LOCAL STORAGE
-======================================== */
-
-function saveHistory(
-    expressionText,
-    resultText
-) {
-
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "cubesAdventureHistory"
-            )
-        ) || [];
-
-
-    history.unshift({
-
-        expression:
-            String(expressionText),
-
-        result:
-            String(resultText),
-
-        date:
-            new Date().toLocaleString(
-                "id-ID"
-            )
-
-    });
-
-
-    /*
-       Maksimal 50 history
-    */
-
-    history =
-        history.slice(0, 50);
-
-
-    localStorage.setItem(
-        "cubesAdventureHistory",
-        JSON.stringify(history)
-    );
-
-
-    displayHistory();
-
-}
-
-
-/* ========================================
-   DISPLAY HISTORY
-======================================== */
-
-function displayHistory() {
-
-    const container =
-        document.getElementById(
-            "history-list"
-        );
-
-
-    if (!container) {
-        return;
-    }
-
-
-    const history =
-        JSON.parse(
-            localStorage.getItem(
-                "cubesAdventureHistory"
-            )
-        ) || [];
-
-
-    if (history.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="empty-history">
-
-                Belum ada petualangan...
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        history.map(item => `
-
-            <div class="history-item">
-
-                <div class="history-expression">
-
-                    ${escapeHTML(
-                        item.expression
-                    )}
-
-                </div>
-
-
-                <div class="history-result">
-
-                    = ${escapeHTML(
-                        item.result
-                    )}
-
-                </div>
-
-            </div>
-
-        `).join("");
-
-}
-
-
-/* ========================================
-   CLEAR HISTORY
-======================================== */
-
-function clearHistory() {
-
-    const answer =
-        confirm(
-            "Hapus semua Adventure History?"
-        );
-
-
-    if (!answer) {
-        return;
-    }
-
-
-    localStorage.removeItem(
-        "cubesAdventureHistory"
-    );
-
-
-    displayHistory();
-
-}
-
-
-/* ========================================
-   SECURITY
-======================================== */
-
-function escapeHTML(value) {
-
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* ========================================
-   KEYBOARD
-======================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        const key =
-            event.key;
-
-
-        if (/[0-9]/.test(key)) {
-
-            addNumber(key);
-
-        }
-
-
-        else if (
-            key === "+" ||
-            key === "-" ||
-            key === "*" ||
-            key === "/" ||
-            key === "%" ||
-            key === "^"
-        ) {
-
-            addNumber(key);
-
-        }
-
-
-        else if (key === ".") {
-
-            addNumber(".");
-
-        }
-
-
-        else if (key === "Enter") {
-
-            calculate();
-
-        }
-
-
-        else if (key === "Backspace") {
-
-            deleteNumber();
-
-        }
-
-
-        else if (key === "Escape") {
-
-            clearDisplay();
-
-        }
-
-    }
-);
-
-
-/* ========================================
-   INITIALIZE
-======================================== */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        switchMode("basic");
-
-        changeConverter();
-
-        updateProgrammer();
-
-        displayHistory();
-
-    }
-);
