@@ -11,20 +11,41 @@
 
 <body>
 
-    <!-- Background Cube -->
+    <!-- ================================
+         BACKGROUND CUBE
+    ================================= -->
+
     <div class="cube cube1"></div>
     <div class="cube cube2"></div>
     <div class="cube cube3"></div>
 
-    <!-- HEADER -->
+
+    <!-- ================================
+         HEADER
+    ================================= -->
+
     <header>
 
-        <!-- LOGO -->
+        <!-- FOTO KARTUN KELOMPOK -->
+        <div class="logo-kelompok">
+            <img src="logo-kelompok.png" alt="Logo Kelompok">
+        </div>
+
+
+        <!-- LOGO SEKOLAH + CUBES + RPL -->
         <div class="logo-container">
 
-            <img src="logo-sekolah.jpeg" class="logo-img" alt="Logo SMKN 1 Sanden">
+            <!-- Logo SMKN 1 Sanden -->
+            <img
+                src="logo-sekolah.jpeg"
+                class="logo-img"
+                alt="Logo SMKN 1 Sanden"
+            >
 
+
+            <!-- Judul -->
             <div class="logo-tengah">
+
                 <div class="logo">
                     <span>◆</span>
                     CUBES
@@ -33,29 +54,55 @@
                 <div class="subtitle">
                     ADVENTURE KNIGHT
                 </div>
+
             </div>
 
-            <img src="logo-rpl.jpeg" class="logo-img" alt="Logo RPL">
+
+            <!-- Logo RPL -->
+            <img
+                src="logo-rpl.jpeg"
+                class="logo-img"
+                alt="Logo RPL"
+            >
 
         </div>
 
+
         <!-- LOGO MOKO -->
         <div class="moko-logo">
-            <img src="logo-moko.jpeg" alt="MOKO Game Development">
+
+            <img
+                src="logo-moko.jpeg"
+                alt="MOKO Game Development"
+            >
+
         </div>
 
     </header>
 
 
-    <!-- CALCULATOR -->
+    <!-- ================================
+         CALCULATOR
+    ================================= -->
+
     <main class="calculator">
 
+
+        <!-- STATUS -->
         <div class="status">
-            <span>● SYSTEM ONLINE</span>
-            <span>ENERGY 100%</span>
+
+            <span>
+                ● SYSTEM ONLINE
+            </span>
+
+            <span>
+                ENERGY 100%
+            </span>
+
         </div>
 
-        <!-- Display -->
+
+        <!-- DISPLAY -->
         <div class="display">
 
             <div id="history">
@@ -69,91 +116,261 @@
         </div>
 
 
-        <!-- Buttons -->
+        <!-- ================================
+             BUTTON CALCULATOR
+        ================================= -->
+
         <div class="buttons">
 
-            <!-- Scientific Buttons -->
-            <button class="special" onclick="squareRoot()">√</button>
-            <button class="special" onclick="squareNumber()">x²</button>
-            <button class="special" onclick="inverseNumber()">1/x</button>
-            <button class="special" onclick="plusMinus()">±</button>
 
-            <button class="special" onclick="addPi()">π</button>
+            <!-- BARIS SCIENTIFIC -->
 
-            <button class="special" onclick="clearDisplay()">AC</button>
-            <button class="special" onclick="deleteNumber()">DEL</button>
-            <button class="operator" onclick="addNumber('%')">%</button>
-            <button class="operator" onclick="addNumber('/')">÷</button>
+            <button
+                class="special"
+                onclick="squareRoot()">
+                √
+            </button>
 
-            <button onclick="addNumber('7')">7</button>
-            <button onclick="addNumber('8')">8</button>
-            <button onclick="addNumber('9')">9</button>
-            <button class="operator" onclick="addNumber('*')">×</button>
+            <button
+                class="special"
+                onclick="squareNumber()">
+                x²
+            </button>
 
-            <button onclick="addNumber('4')">4</button>
-            <button onclick="addNumber('5')">5</button>
-            <button onclick="addNumber('6')">6</button>
-            <button class="operator" onclick="addNumber('-')">−</button>
+            <button
+                class="special"
+                onclick="inverseNumber()">
+                1/x
+            </button>
 
-            <button onclick="addNumber('1')">1</button>
-            <button onclick="addNumber('2')">2</button>
-            <button onclick="addNumber('3')">3</button>
-            <button class="operator" onclick="addNumber('+')">+</button>
+            <button
+                class="special"
+                onclick="plusMinus()">
+                ±
+            </button>
 
-            <button onclick="addNumber('0')" class="zero">0</button>
-            <button onclick="addNumber('.')">.</button>
-            <button class="equal" onclick="calculate()">=</button>
+
+            <!-- BARIS 2 -->
+
+            <button
+                class="special"
+                onclick="addPi()">
+                π
+            </button>
+
+            <button
+                class="special"
+                onclick="clearDisplay()">
+                AC
+            </button>
+
+            <button
+                class="special"
+                onclick="deleteNumber()">
+                DEL
+            </button>
+
+            <button
+                class="operator"
+                onclick="addNumber('%')">
+                %
+            </button>
+
+
+            <!-- BARIS 3 -->
+
+            <button
+                class="operator"
+                onclick="addNumber('/')">
+                ÷
+            </button>
+
+            <button onclick="addNumber('7')">
+                7
+            </button>
+
+            <button onclick="addNumber('8')">
+                8
+            </button>
+
+            <button onclick="addNumber('9')">
+                9
+            </button>
+
+
+            <!-- BARIS 4 -->
+
+            <button
+                class="operator"
+                onclick="addNumber('*')">
+                ×
+            </button>
+
+            <button onclick="addNumber('4')">
+                4
+            </button>
+
+            <button onclick="addNumber('5')">
+                5
+            </button>
+
+            <button onclick="addNumber('6')">
+                6
+            </button>
+
+
+            <!-- BARIS 5 -->
+
+            <button
+                class="operator"
+                onclick="addNumber('-')">
+                −
+            </button>
+
+            <button onclick="addNumber('1')">
+                1
+            </button>
+
+            <button onclick="addNumber('2')">
+                2
+            </button>
+
+            <button onclick="addNumber('3')">
+                3
+            </button>
+
+
+            <!-- BARIS 6 -->
+
+            <button
+                class="operator"
+                onclick="addNumber('+')">
+                +
+            </button>
+
+            <button
+                onclick="addNumber('0')"
+                class="zero">
+                0
+            </button>
+
+            <button onclick="addNumber('.')">
+                .
+            </button>
+
+            <button
+                class="equal"
+                onclick="calculate()">
+                =
+            </button>
 
         </div>
 
 
-        <!-- Knight Info -->
+        <!-- ================================
+             KNIGHT INFO
+        ================================= -->
+
         <div class="knight-info">
-            <div>⚔ KNIGHT CALCULATOR</div>
-            <div>CALCULATION MODE: ACTIVE</div>
+
+            <div>
+                ⚔ KNIGHT CALCULATOR
+            </div>
+
+            <div>
+                CALCULATION MODE: ACTIVE
+            </div>
+
         </div>
 
     </main>
 
 
-    <!-- NAMA KELOMPOK -->
+    <!-- ================================
+         NAMA KELOMPOK
+    ================================= -->
+
     <section class="kelompok">
 
-        <h2>TEAM PROJECT</h2>
+        <h2>
+            TEAM PROJECT
+        </h2>
+
 
         <div class="anggota">
+
+
             <div class="member">
-                <span>01</span>
+
+                <span>
+                    01
+                </span>
+
                 Finsa Dwi W.T
+
             </div>
 
+
             <div class="member">
-                <span>02</span>
+
+                <span>
+                    02
+                </span>
+
                 Talitha Nur S
+
             </div>
 
+
             <div class="member">
-                <span>03</span>
+
+                <span>
+                    03
+                </span>
+
                 Nazwa Agustina R
+
             </div>
 
+
             <div class="member">
-                <span>04</span>
+
+                <span>
+                    04
+                </span>
+
                 Aulia Putri M
+
             </div>
+
+
         </div>
 
     </section>
 
 
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
     <footer>
+
         CUBES ADVENTURE KNIGHT
+
         <br>
+
         Futuristic Calculator
+
         <br>
-        <small>SMKN 1 SANDEN • RPL</small>
+
+        <small>
+            SMKN 1 SANDEN • RPL
+        </small>
+
     </footer>
 
+
+    <!-- JAVASCRIPT -->
 
     <script src="script.js"></script>
 
