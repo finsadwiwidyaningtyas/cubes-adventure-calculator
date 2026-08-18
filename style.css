@@ -1,928 +1,1850 @@
 /* ========================================
    CUBES ADVENTURE KNIGHT
-   FUTURISTIC SCIENTIFIC CALCULATOR
+   SCIENTIFIC CALCULATOR
 ======================================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+let expression = "";
 
-:root {
-    --bg-dark: #020b18;
-    --bg-blue: #061a31;
-    --panel: rgba(7, 28, 52, 0.88);
-    --button: rgba(16, 50, 79, 0.9);
-    --button-hover: rgba(23, 72, 108, 0.95);
-    --cyan: #38d9ff;
-    --cyan-light: #72e8ff;
-    --blue: #168cff;
-    --white: #f4fbff;
-    --muted: #82a9c5;
-    --danger: #ff5264;
-    --warning: #ffc247;
-    --border: rgba(48, 196, 255, 0.28);
-}
+let result = "0";
+
+let currentMode = "basic";
+
 
 /* ========================================
-   BODY
+   UPDATE DISPLAY
 ======================================== */
 
-body {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+function updateDisplay() {
 
-    padding: 35px 20px;
+    document.getElementById("result").textContent =
+        expression || "0";
 
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: var(--white);
-
-    background:
-        radial-gradient(circle at 20% 20%, rgba(0, 157, 255, 0.13), transparent 28%),
-        radial-gradient(circle at 80% 80%, rgba(0, 119, 255, 0.12), transparent 30%),
-        linear-gradient(135deg, #010711, #04182d 50%, #020a16);
-
-    overflow-x: hidden;
 }
 
-/* Grid futuristic background */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-
-    background-image:
-        linear-gradient(rgba(47, 178, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(47, 178, 255, 0.035) 1px, transparent 1px);
-
-    background-size: 45px 45px;
-    pointer-events: none;
-}
 
 /* ========================================
-   CALCULATOR CONTAINER
+   FORMAT RESULT
 ======================================== */
 
-.calculator {
-    position: relative;
-    width: min(430px, 100%);
+function formatResult(number) {
 
-    padding: 22px;
+    if (!Number.isFinite(number)) {
+        throw new Error("Invalid");
+    }
 
-    border: 1px solid rgba(54, 210, 255, 0.45);
-    border-radius: 28px;
+    return String(
+        parseFloat(
+            number.toFixed(10)
+        )
+    );
+}
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(12, 43, 72, 0.95),
-            rgba(2, 17, 32, 0.96)
+
+/* ========================================
+   ADD NUMBER / OPERATOR
+======================================== */
+
+function addNumber(value) {
+
+    if (expression === "ERROR") {
+        expression = "";
+    }
+
+
+    const lastChar =
+        expression.slice(-1);
+
+
+    if (
+        ["+", "-", "*", "/", "%", "^"].includes(value) &&
+        ["+", "-", "*", "/", "%", "^"].includes(lastChar)
+    ) {
+        return;
+    }
+
+
+    if (value === ".") {
+
+        const parts =
+            expression.split(
+                /[\+\-\*\/%\^]/
+            );
+
+        const currentNumber =
+            parts[parts.length - 1];
+
+
+        if (currentNumber.includes(".")) {
+            return;
+        }
+
+    }
+
+
+    expression += value;
+
+    updateDisplay();
+
+}
+
+
+/* ========================================
+   CLEAR
+======================================== */
+
+function clearDisplay() {
+
+    expression = "";
+
+    document.getElementById(
+        "history"
+    ).textContent =
+        "READY FOR CALCULATION";
+
+    updateDisplay();
+
+}
+
+
+/* ========================================
+   DELETE
+======================================== */
+
+function deleteNumber() {
+
+    if (expression === "ERROR") {
+        expression = "";
+    }
+
+    expression =
+        expression.slice(0, -1);
+
+    updateDisplay();
+
+}
+
+
+/* ========================================
+   CALCULATE
+======================================== */
+
+function calculate() {
+
+    if (!expression) {
+        return;
+    }
+
+
+    const oldExpression =
+        expression;
+
+
+    try {
+
+        let calculation =
+            expression;
+
+
+        calculation =
+            calculation.replace(
+                /(\d+(\.\d+)?)%/g,
+                "($1/100)"
+            );
+
+
+        calculation =
+            calculation.replace(
+                /\^/g,
+                "**"
+            );
+
+
+        if (
+            !/^[0-9+\-*/().%\s*]+$/.test(
+                calculation
+            )
+        ) {
+
+            throw new Error("Invalid");
+
+        }
+
+
+        let answer =
+            Function(
+                '"use strict"; return (' +
+                calculation +
+                ')'
+            )();
+
+
+        if (!Number.isFinite(answer)) {
+            throw new Error("Invalid");
+        }
+
+
+        answer =
+            Number(
+                formatResult(answer)
+            );
+
+
+        document.getElementById(
+            "history"
+        ).textContent =
+            oldExpression + " =";
+
+
+        expression =
+            String(answer);
+
+
+        saveHistory(
+            oldExpression,
+            answer
         );
 
-    box-shadow:
-        0 0 25px rgba(0, 174, 255, 0.16),
-        0 0 70px rgba(0, 119, 255, 0.08),
-        inset 0 0 25px rgba(0, 191, 255, 0.04);
 
-    backdrop-filter: blur(18px);
+        updateDisplay();
 
-    z-index: 2;
+
+    } catch (error) {
+
+        showError();
+
+    }
+
 }
 
-/* Glow around calculator */
 
-.calculator::before {
-    content: "";
+/* ========================================
+   SQUARE ROOT
+======================================== */
 
-    position: absolute;
-    inset: -2px;
+function squareRoot() {
 
-    border-radius: 30px;
-
-    background: linear-gradient(
-        135deg,
-        rgba(52, 219, 255, 0.5),
-        transparent 35%,
-        transparent 65%,
-        rgba(0, 121, 255, 0.35)
+    calculateFunction(
+        Math.sqrt,
+        "√"
     );
 
-    z-index: -1;
-    opacity: 0.7;
 }
+
 
 /* ========================================
-   TITLE
+   SQUARE
 ======================================== */
 
-.calculator h1 {
-    text-align: center;
+function squareNumber() {
 
-    margin-bottom: 4px;
+    calculateFunction(
+        number => Math.pow(number, 2),
+        "²"
+    );
 
-    font-size: 25px;
-    font-weight: 800;
-    letter-spacing: 3px;
-
-    color: var(--white);
-
-    text-shadow:
-        0 0 10px rgba(60, 220, 255, 0.6),
-        0 0 25px rgba(0, 130, 255, 0.3);
 }
 
-.calculator .subtitle {
-    text-align: center;
-
-    margin-bottom: 18px;
-
-    font-size: 10px;
-    letter-spacing: 4px;
-
-    color: var(--cyan);
-    text-transform: uppercase;
-}
 
 /* ========================================
-   DISPLAY
+   POWER
 ======================================== */
 
-.display {
-    position: relative;
+function powerNumber() {
 
-    width: 100%;
-    min-height: 125px;
+    if (!expression) {
+        return;
+    }
 
-    margin-bottom: 18px;
-    padding: 20px;
+    if (
+        expression.slice(-1) === "^"
+    ) {
+        return;
+    }
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
+    expression += "^";
 
-    border-radius: 17px;
+    updateDisplay();
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(1, 13, 27, 0.98),
-            rgba(4, 27, 48, 0.95)
+}
+
+
+/* ========================================
+   INVERSE
+======================================== */
+
+function inverseNumber() {
+
+    calculateFunction(
+        number => {
+
+            if (number === 0) {
+                throw new Error("Invalid");
+            }
+
+            return 1 / number;
+
+        },
+        "1/"
+    );
+
+}
+
+
+/* ========================================
+   PLUS MINUS
+======================================== */
+
+function plusMinus() {
+
+    if (!expression) {
+        return;
+    }
+
+    if (expression === "0") {
+        return;
+    }
+
+    if (expression.startsWith("-")) {
+
+        expression =
+            expression.substring(1);
+
+    } else {
+
+        expression =
+            "-" + expression;
+
+    }
+
+    updateDisplay();
+
+}
+
+
+/* ========================================
+   SIN
+======================================== */
+
+function sinNumber() {
+
+    calculateFunction(
+        number =>
+            Math.sin(
+                number * Math.PI / 180
+            ),
+        "sin"
+    );
+
+}
+
+
+/* ========================================
+   COS
+======================================== */
+
+function cosNumber() {
+
+    calculateFunction(
+        number =>
+            Math.cos(
+                number * Math.PI / 180
+            ),
+        "cos"
+    );
+
+}
+
+
+/* ========================================
+   TAN
+======================================== */
+
+function tanNumber() {
+
+    calculateFunction(
+        number =>
+            Math.tan(
+                number * Math.PI / 180
+            ),
+        "tan"
+    );
+
+}
+
+
+/* ========================================
+   ASIN
+======================================== */
+
+function asinNumber() {
+
+    calculateFunction(
+        number => {
+
+            if (
+                number < -1 ||
+                number > 1
+            ) {
+                throw new Error("Invalid");
+            }
+
+            return Math.asin(number)
+                * 180 / Math.PI;
+
+        },
+        "asin"
+    );
+
+}
+
+
+/* ========================================
+   ACOS
+======================================== */
+
+function acosNumber() {
+
+    calculateFunction(
+        number => {
+
+            if (
+                number < -1 ||
+                number > 1
+            ) {
+                throw new Error("Invalid");
+            }
+
+            return Math.acos(number)
+                * 180 / Math.PI;
+
+        },
+        "acos"
+    );
+
+}
+
+
+/* ========================================
+   ATAN
+======================================== */
+
+function atanNumber() {
+
+    calculateFunction(
+        number =>
+            Math.atan(number)
+            * 180 / Math.PI,
+        "atan"
+    );
+
+}
+
+
+/* ========================================
+   LOG
+======================================== */
+
+function logNumber() {
+
+    calculateFunction(
+        number => {
+
+            if (number <= 0) {
+                throw new Error("Invalid");
+            }
+
+            return Math.log10(number);
+
+        },
+        "log"
+    );
+
+}
+
+
+/* ========================================
+   LN
+======================================== */
+
+function lnNumber() {
+
+    calculateFunction(
+        number => {
+
+            if (number <= 0) {
+                throw new Error("Invalid");
+            }
+
+            return Math.log(number);
+
+        },
+        "ln"
+    );
+
+}
+
+
+/* ========================================
+   E POWER
+======================================== */
+
+function exponentialNumber() {
+
+    calculateFunction(
+        number =>
+            Math.exp(number),
+        "e^"
+    );
+
+}
+
+
+/* ========================================
+   10 POWER
+======================================== */
+
+function tenPowerNumber() {
+
+    calculateFunction(
+        number =>
+            Math.pow(10, number),
+        "10^"
+    );
+
+}
+
+
+/* ========================================
+   ABS
+======================================== */
+
+function absoluteNumber() {
+
+    calculateFunction(
+        number =>
+            Math.abs(number),
+        "abs"
+    );
+
+}
+
+
+/* ========================================
+   FACTORIAL
+======================================== */
+
+function factorialNumber() {
+
+    if (!expression) {
+        return;
+    }
+
+
+    try {
+
+        const number =
+            Number(expression);
+
+
+        if (
+            !Number.isInteger(number) ||
+            number < 0 ||
+            number > 170
+        ) {
+
+            throw new Error("Invalid");
+
+        }
+
+
+        let answer = 1;
+
+
+        for (
+            let i = 2;
+            i <= number;
+            i++
+        ) {
+
+            answer *= i;
+
+        }
+
+
+        document.getElementById(
+            "history"
+        ).textContent =
+            number + "!";
+
+
+        expression =
+            formatResult(answer);
+
+
+        saveHistory(
+            number + "!",
+            answer
         );
 
-    border: 1px solid rgba(49, 193, 255, 0.22);
 
-    box-shadow:
-        inset 0 0 25px rgba(0, 135, 255, 0.08),
-        0 0 15px rgba(0, 174, 255, 0.05);
+        updateDisplay();
 
-    overflow: hidden;
+
+    } catch (error) {
+
+        showError();
+
+    }
+
 }
 
-/* Small display line */
-
-.display::before {
-    content: "DEG";
-
-    position: absolute;
-    top: 12px;
-    left: 15px;
-
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-
-    color: var(--cyan);
-}
-
-/* Result */
-
-#result {
-    width: 100%;
-
-    text-align: right;
-
-    font-size: clamp(32px, 7vw, 48px);
-    font-weight: 600;
-
-    color: #ffffff;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    text-shadow:
-        0 0 8px rgba(255, 255, 255, 0.4),
-        0 0 22px rgba(42, 210, 255, 0.35);
-}
-
-/* History */
-
-#history {
-    width: 100%;
-
-    margin-bottom: 7px;
-
-    text-align: right;
-
-    font-size: 11px;
-    letter-spacing: 1px;
-
-    color: var(--muted);
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 /* ========================================
-   BUTTON GRID
+   RANDOM
 ======================================== */
 
-.buttons,
-.button-grid,
-.calculator-buttons {
-    display: grid;
+function randomNumber() {
 
-    grid-template-columns: repeat(4, 1fr);
+    const answer =
+        Math.random();
 
-    gap: 10px;
+
+    document.getElementById(
+        "history"
+    ).textContent =
+        "RANDOM NUMBER";
+
+
+    expression =
+        formatResult(answer);
+
+
+    saveHistory(
+        "RANDOM NUMBER",
+        answer
+    );
+
+
+    updateDisplay();
+
 }
 
+
 /* ========================================
-   BUTTON
+   PI
 ======================================== */
 
-button {
-    position: relative;
+function addPi() {
 
-    min-height: 58px;
+    expression +=
+        Math.PI.toString();
 
-    border: 1px solid rgba(54, 201, 255, 0.22);
-    border-radius: 13px;
+    updateDisplay();
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(22, 61, 91, 0.95),
-            rgba(10, 35, 58, 0.95)
+}
+
+
+/* ========================================
+   E
+======================================== */
+
+function addE() {
+
+    expression +=
+        Math.E.toString();
+
+    updateDisplay();
+
+}
+
+
+/* ========================================
+   PHI
+======================================== */
+
+function addPhi() {
+
+    const phi =
+        (1 + Math.sqrt(5)) / 2;
+
+    expression +=
+        phi.toString();
+
+    updateDisplay();
+
+}
+
+
+/* ========================================
+   SCIENTIFIC FUNCTION
+======================================== */
+
+function calculateFunction(
+    operation,
+    label
+) {
+
+    if (!expression) {
+        return;
+    }
+
+
+    try {
+
+        const number =
+            Number(expression);
+
+
+        if (!Number.isFinite(number)) {
+            throw new Error("Invalid");
+        }
+
+
+        const answer =
+            operation(number);
+
+
+        if (!Number.isFinite(answer)) {
+            throw new Error("Invalid");
+        }
+
+
+        document.getElementById(
+            "history"
+        ).textContent =
+            label +
+            "(" +
+            expression +
+            ")";
+
+
+        const oldExpression =
+            label +
+            "(" +
+            expression +
+            ")";
+
+
+        expression =
+            formatResult(answer);
+
+
+        saveHistory(
+            oldExpression,
+            answer
         );
 
-    color: var(--cyan-light);
 
-    font-family: inherit;
-    font-size: 17px;
-    font-weight: 700;
+        updateDisplay();
 
-    cursor: pointer;
 
-    transition:
-        transform 0.15s ease,
-        background 0.15s ease,
-        box-shadow 0.15s ease,
-        border-color 0.15s ease;
+    } catch (error) {
 
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.05),
-        0 4px 10px rgba(0, 0, 0, 0.22);
+        showError();
+
+    }
+
 }
 
-/* Hover */
 
-button:hover {
-    transform: translateY(-2px);
+/* ========================================
+   ERROR
+======================================== */
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(28, 83, 119, 0.98),
-            rgba(12, 48, 75, 0.98)
+function showError() {
+
+    expression =
+        "ERROR";
+
+
+    document.getElementById(
+        "history"
+    ).textContent =
+        "INVALID CALCULATION";
+
+
+    updateDisplay();
+
+
+    setTimeout(() => {
+
+        expression = "";
+
+        document.getElementById(
+            "history"
+        ).textContent =
+            "READY FOR CALCULATION";
+
+        updateDisplay();
+
+    }, 1500);
+
+}
+
+
+/* ========================================
+   CALCULATOR MODE
+======================================== */
+
+function switchMode(mode) {
+
+    currentMode =
+        mode;
+
+
+    document
+        .querySelectorAll(
+            ".mode-btn"
+        )
+        .forEach(button => {
+
+            button.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const activeButton =
+        document.querySelector(
+            `.mode-btn[onclick="switchMode('${mode}')"]`
         );
 
-    border-color: rgba(65, 218, 255, 0.65);
 
-    box-shadow:
-        0 0 14px rgba(32, 202, 255, 0.22),
-        inset 0 0 12px rgba(0, 190, 255, 0.06);
-}
+    if (activeButton) {
 
-/* Click */
-
-button:active {
-    transform: scale(0.95);
-}
-
-/* ========================================
-   NUMBER BUTTONS
-======================================== */
-
-button.number,
-button[data-number] {
-    color: #f5fbff;
-}
-
-/* ========================================
-   OPERATOR BUTTONS
-======================================== */
-
-button.operator,
-button[data-operator] {
-    color: var(--cyan-light);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(8, 73, 109, 0.95),
-            rgba(5, 45, 72, 0.95)
-        );
-}
-
-/* ========================================
-   EQUAL BUTTON
-======================================== */
-
-button.equal,
-button.equals,
-button[data-action="calculate"] {
-    color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            #1598f5,
-            #086bd1
+        activeButton.classList.add(
+            "active"
         );
 
-    border-color: rgba(91, 224, 255, 0.7);
+    }
 
-    box-shadow:
-        0 0 18px rgba(16, 157, 255, 0.35),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
 
-button.equal:hover,
-button.equals:hover,
-button[data-action="calculate"]:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #29b4ff,
-            #0877e5
+    document
+        .querySelectorAll(
+            ".calculator-mode"
+        )
+        .forEach(panel => {
+
+            panel.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const panel =
+        document.getElementById(
+            `${mode}-mode`
         );
 
-    box-shadow:
-        0 0 25px rgba(30, 184, 255, 0.55);
-}
 
-/* ========================================
-   AC BUTTON
-======================================== */
+    if (panel) {
 
-button.ac,
-button.clear,
-button[data-action="clear"] {
-    color: var(--danger);
-}
-
-/* ========================================
-   DELETE BUTTON
-======================================== */
-
-button.delete,
-button.del {
-    color: var(--warning);
-}
-
-/* ========================================
-   SCIENTIFIC BUTTON
-======================================== */
-
-.scientific {
-    color: #58ddff;
-}
-
-/* ========================================
-   BUTTON SPAN / SYMBOL
-======================================== */
-
-button sup {
-    font-size: 10px;
-}
-
-/* ========================================
-   FOOTER
-======================================== */
-
-.calculator-footer {
-    margin-top: 17px;
-
-    text-align: center;
-
-    font-size: 9px;
-    letter-spacing: 2px;
-
-    color: rgba(140, 190, 215, 0.55);
-
-    text-transform: uppercase;
-}
-
-/* ========================================
-   RESPONSIVE TABLET
-======================================== */
-
-@media (max-width: 600px) {
-
-    body {
-        padding: 15px;
-        align-items: flex-start;
-    }
-
-    .calculator {
-        width: 100%;
-        max-width: 430px;
-
-        margin-top: 10px;
-
-        padding: 16px;
-
-        border-radius: 22px;
-    }
-
-    .calculator h1 {
-        font-size: 21px;
-    }
-
-    .display {
-        min-height: 110px;
-    }
-
-    button {
-        min-height: 54px;
-        font-size: 15px;
-    }
-
-    .buttons,
-    .button-grid,
-    .calculator-buttons {
-        gap: 8px;
-    }
-}
-
-/* ========================================
-   RESPONSIVE MOBILE
-======================================== */
-
-@media (max-width: 400px) {
-
-    body {
-        padding: 10px;
-    }
-
-    .calculator {
-        padding: 12px;
-    }
-
-    .calculator h1 {
-        font-size: 18px;
-        letter-spacing: 2px;
-    }
-
-    .calculator .subtitle {
-        font-size: 8px;
-        letter-spacing: 3px;
-    }
-
-    .display {
-        min-height: 100px;
-        padding: 15px;
-    }
-
-    button {
-        min-height: 48px;
-        border-radius: 10px;
-        font-size: 14px;
-    }
-
-    .buttons,
-    .button-grid,
-    .calculator-buttons {
-        gap: 6px;
-    }
-}
-
-/* ========================================
-   SCROLLBAR
-======================================== */
-
-::-webkit-scrollbar {
-    width: 7px;
-}
-
-::-webkit-scrollbar-track {
-    background: #020b18;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #12618b;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #1caee6;
-}
-
-/* ========================================
-   SELECTION
-======================================== */
-
-::selection {
-    background: rgba(42, 203, 255, 0.3);
-    color: white;
-}
-/* ========================================
-   CALCULATOR MODES
-======================================== */
-
-.calculator-modes {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-
-    margin-bottom: 18px;
-    padding: 6px;
-
-    background: rgba(2, 15, 30, 0.8);
-    border: 1px solid rgba(50, 200, 255, 0.2);
-    border-radius: 15px;
-}
-
-.mode-btn {
-    min-height: 42px;
-
-    border: none;
-    border-radius: 10px;
-
-    background: transparent;
-
-    color: #6e9bb5;
-
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1px;
-
-    cursor: pointer;
-}
-
-.mode-btn:hover {
-    color: #52ddff;
-    background: rgba(26, 112, 155, 0.2);
-}
-
-.mode-btn.active {
-    color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            #087fca,
-            #07518d
+        panel.classList.add(
+            "active"
         );
 
-    box-shadow:
-        0 0 15px rgba(23, 177, 255, 0.3);
-}
-
-/* ========================================
-   MODE PANEL
-======================================== */
-
-.mode-panel {
-    display: none;
-
-    animation: modeAppear 0.25s ease;
-}
-
-.mode-panel.active {
-    display: block;
-}
-
-@keyframes modeAppear {
-
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
     }
 
 }
+
 
 /* ========================================
    PROGRAMMER
 ======================================== */
 
-.programmer-display {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
+function getProgrammerValue() {
 
-    margin-bottom: 12px;
-}
-
-.programmer-display div {
-    padding: 13px;
-
-    border-radius: 12px;
-
-    background: rgba(3, 24, 43, 0.9);
-
-    border: 1px solid rgba(45, 192, 255, 0.18);
-}
-
-.programmer-display span {
-    display: block;
-
-    margin-bottom: 5px;
-
-    font-size: 9px;
-    letter-spacing: 1px;
-
-    color: #6b9bb7;
-}
-
-.programmer-display strong {
-    display: block;
-
-    font-size: 16px;
-
-    color: #5ee2ff;
-
-    word-break: break-all;
-}
-
-.programmer-input {
-    margin-bottom: 12px;
-}
-
-.programmer-input input {
-    width: 100%;
-
-    padding: 15px;
-
-    border-radius: 12px;
-
-    border: 1px solid rgba(50, 200, 255, 0.3);
-
-    background: #020f1d;
-
-    color: white;
-
-    font-size: 20px;
-    text-align: right;
-
-    outline: none;
-}
-
-.programmer-input input:focus {
-    border-color: #38d9ff;
-
-    box-shadow:
-        0 0 15px rgba(36, 201, 255, 0.2);
-}
-
-.programmer-buttons {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 9px;
-}
-
-.programmer-buttons button {
-    min-height: 52px;
-}
-
-/* ========================================
-   CONVERTER
-======================================== */
-
-.converter-box {
-    padding: 18px;
-
-    border-radius: 15px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(8, 38, 63, 0.95),
-            rgba(3, 20, 35, 0.95)
+    const input =
+        document.getElementById(
+            "programmer-input"
         );
 
-    border: 1px solid rgba(44, 198, 255, 0.2);
+
+    let value =
+        parseInt(input.value);
+
+
+    if (isNaN(value)) {
+        value = 0;
+    }
+
+
+    return value;
+
 }
 
-.converter-box > label {
-    display: block;
 
-    margin-bottom: 8px;
+function updateProgrammer() {
 
-    color: #74a9c2;
+    const value =
+        getProgrammerValue();
 
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+
+    document.getElementById(
+        "programmer-dec"
+    ).textContent =
+        value;
+
+
+    document.getElementById(
+        "programmer-bin"
+    ).textContent =
+        (value >>> 0).toString(2);
+
+
+    document.getElementById(
+        "programmer-hex"
+    ).textContent =
+        (value >>> 0)
+            .toString(16)
+            .toUpperCase();
+
+
+    document.getElementById(
+        "programmer-oct"
+    ).textContent =
+        (value >>> 0).toString(8);
+
 }
 
-.converter-box select,
-.converter-box input {
-    width: 100%;
 
-    padding: 13px;
+/* ========================================
+   AND / OR / XOR
+======================================== */
 
-    border-radius: 10px;
+function programmerOperation(
+    operation
+) {
 
-    border: 1px solid rgba(53, 200, 255, 0.22);
+    const value =
+        getProgrammerValue();
 
-    background: #061a2c;
 
-    color: white;
+    const input =
+        prompt(
+            `Masukkan angka untuk ${operation}:`
+        );
 
-    outline: none;
+
+    if (input === null) {
+        return;
+    }
+
+
+    const second =
+        parseInt(input);
+
+
+    if (isNaN(second)) {
+        return;
+    }
+
+
+    let answer;
+
+
+    switch (operation) {
+
+        case "AND":
+
+            answer =
+                value & second;
+
+            break;
+
+
+        case "OR":
+
+            answer =
+                value | second;
+
+            break;
+
+
+        case "XOR":
+
+            answer =
+                value ^ second;
+
+            break;
+
+
+        default:
+
+            return;
+
+    }
+
+
+    document.getElementById(
+        "programmer-input"
+    ).value =
+        answer;
+
+
+    updateProgrammer();
+
+
+    saveHistory(
+        `${value} ${operation} ${second}`,
+        answer
+    );
+
 }
 
-.converter-box select {
-    cursor: pointer;
+
+/* ========================================
+   NOT
+======================================== */
+
+function programmerNOT() {
+
+    const value =
+        getProgrammerValue();
+
+
+    const answer =
+        ~value;
+
+
+    document.getElementById(
+        "programmer-input"
+    ).value =
+        answer;
+
+
+    updateProgrammer();
+
+
+    saveHistory(
+        `NOT ${value}`,
+        answer
+    );
+
 }
 
-.converter-box select:focus,
-.converter-box input:focus {
-    border-color: #36d8ff;
+
+/* ========================================
+   SHIFT
+======================================== */
+
+function programmerShift(
+    direction
+) {
+
+    const value =
+        getProgrammerValue();
+
+
+    const input =
+        prompt(
+            direction === "left"
+                ? "Berapa bit SHIFT LEFT?"
+                : "Berapa bit SHIFT RIGHT?"
+        );
+
+
+    if (input === null) {
+        return;
+    }
+
+
+    const amount =
+        parseInt(input);
+
+
+    if (
+        isNaN(amount) ||
+        amount < 0
+    ) {
+
+        return;
+
+    }
+
+
+    let answer;
+
+
+    if (direction === "left") {
+
+        answer =
+            value << amount;
+
+    } else {
+
+        answer =
+            value >> amount;
+
+    }
+
+
+    document.getElementById(
+        "programmer-input"
+    ).value =
+        answer;
+
+
+    updateProgrammer();
+
+
+    saveHistory(
+        `${value} ${
+            direction === "left"
+                ? "<<"
+                : ">>"
+        } ${amount}`,
+        answer
+    );
+
 }
 
-.converter-inputs {
-    display: grid;
 
-    grid-template-columns: 1fr 35px 1fr;
+/* ========================================
+   CONVERTER DATA
+======================================== */
 
-    align-items: end;
+const converterUnits = {
 
-    gap: 10px;
+    length: {
 
-    margin-top: 15px;
+        units: {
+
+            Meter: 1,
+
+            Kilometer: 1000,
+
+            Centimeter: 0.01,
+
+            Millimeter: 0.001,
+
+            Mile: 1609.344,
+
+            Yard: 0.9144,
+
+            Foot: 0.3048,
+
+            Inch: 0.0254
+
+        },
+
+
+        convert(value, from, to) {
+
+            return value *
+                this.units[from] /
+                this.units[to];
+
+        }
+
+    },
+
+
+    weight: {
+
+        units: {
+
+            Kilogram: 1,
+
+            Gram: 0.001,
+
+            Milligram: 0.000001,
+
+            Ton: 1000,
+
+            Pound: 0.45359237,
+
+            Ounce: 0.0283495
+
+        },
+
+
+        convert(value, from, to) {
+
+            return value *
+                this.units[from] /
+                this.units[to];
+
+        }
+
+    },
+
+
+    temperature: {
+
+        units: {
+
+            Celsius: "C",
+
+            Fahrenheit: "F",
+
+            Kelvin: "K"
+
+        },
+
+
+        convert(value, from, to) {
+
+            let celsius;
+
+
+            if (from === "Celsius") {
+
+                celsius = value;
+
+            }
+
+            else if (
+                from === "Fahrenheit"
+            ) {
+
+                celsius =
+                    (value - 32) *
+                    5 / 9;
+
+            }
+
+            else {
+
+                celsius =
+                    value - 273.15;
+
+            }
+
+
+            if (to === "Celsius") {
+
+                return celsius;
+
+            }
+
+
+            if (
+                to === "Fahrenheit"
+            ) {
+
+                return celsius *
+                    9 / 5 + 32;
+
+            }
+
+
+            return celsius + 273.15;
+
+        }
+
+    },
+
+
+    area: {
+
+        units: {
+
+            "Square Meter": 1,
+
+            "Square Kilometer":
+                1000000,
+
+            "Square Centimeter":
+                0.0001,
+
+            Hectare: 10000,
+
+            Acre: 4046.856
+
+        },
+
+
+        convert(value, from, to) {
+
+            return value *
+                this.units[from] /
+                this.units[to];
+
+        }
+
+    },
+
+
+    volume: {
+
+        units: {
+
+            Liter: 1,
+
+            Milliliter: 0.001,
+
+            "Cubic Meter": 1000,
+
+            "Cubic Centimeter":
+                0.001,
+
+            Gallon: 3.78541
+
+        },
+
+
+        convert(value, from, to) {
+
+            return value *
+                this.units[from] /
+                this.units[to];
+
+        }
+
+    },
+
+
+    time: {
+
+        units: {
+
+            Second: 1,
+
+            Minute: 60,
+
+            Hour: 3600,
+
+            Day: 86400,
+
+            Week: 604800
+
+        },
+
+
+        convert(value, from, to) {
+
+            return value *
+                this.units[from] /
+                this.units[to];
+
+        }
+
+    },
+
+
+    speed: {
+
+        units: {
+
+            "Meter/Second": 1,
+
+            "Kilometer/Hour":
+                0.277777778,
+
+            "Mile/Hour":
+                0.44704,
+
+            Knot:
+                0.514444
+
+        },
+
+
+        convert(value, from, to) {
+
+            return value *
+                this.units[from] /
+                this.units[to];
+
+        }
+
+    },
+
+
+    data: {
+
+        units: {
+
+            Bit: 1,
+
+            Byte: 8,
+
+            KB: 8192,
+
+            MB: 8388608,
+
+            GB: 8589934592,
+
+            TB: 8796093022208
+
+        },
+
+
+        convert(value, from, to) {
+
+            return value *
+                this.units[from] /
+                this.units[to];
+
+        }
+
+    },
+
+
+    energy: {
+
+        units: {
+
+            Joule: 1,
+
+            Kilojoule: 1000,
+
+            Calorie: 4.184,
+
+            Kilocalorie: 4184,
+
+            "Watt Hour": 3600,
+
+            "Kilowatt Hour":
+                3600000
+
+        },
+
+
+        convert(value, from, to) {
+
+            return value *
+                this.units[from] /
+                this.units[to];
+
+        }
+
+    }
+
+};
+
+
+/* ========================================
+   LOAD CONVERTER
+======================================== */
+
+function changeConverter() {
+
+    const type =
+        document.getElementById(
+            "converter-type"
+        ).value;
+
+
+    const data =
+        converterUnits[type];
+
+
+    const from =
+        document.getElementById(
+            "from-unit"
+        );
+
+
+    const to =
+        document.getElementById(
+            "to-unit"
+        );
+
+
+    from.innerHTML = "";
+
+    to.innerHTML = "";
+
+
+    Object.keys(data.units)
+        .forEach(unit => {
+
+            const option1 =
+                document.createElement(
+                    "option"
+                );
+
+            option1.value =
+                unit;
+
+            option1.textContent =
+                unit;
+
+
+            from.appendChild(
+                option1
+            );
+
+
+            const option2 =
+                document.createElement(
+                    "option"
+                );
+
+            option2.value =
+                unit;
+
+            option2.textContent =
+                unit;
+
+
+            to.appendChild(
+                option2
+            );
+
+        });
+
+
+    if (to.options.length > 1) {
+
+        to.selectedIndex = 1;
+
+    }
+
+
+    convertValue();
+
 }
 
-.converter-inputs label {
-    display: block;
 
-    margin-bottom: 6px;
+/* ========================================
+   CONVERT VALUE
+======================================== */
 
-    font-size: 10px;
+function convertValue() {
 
-    color: #70a0b9;
+    const type =
+        document.getElementById(
+            "converter-type"
+        ).value;
+
+
+    const value =
+        parseFloat(
+            document.getElementById(
+                "convert-value"
+            ).value
+        );
+
+
+    const from =
+        document.getElementById(
+            "from-unit"
+        ).value;
+
+
+    const to =
+        document.getElementById(
+            "to-unit"
+        ).value;
+
+
+    if (isNaN(value)) {
+
+        document.getElementById(
+            "convert-result"
+        ).value = "";
+
+        return;
+
+    }
+
+
+    const answer =
+        converterUnits[type]
+            .convert(
+                value,
+                from,
+                to
+            );
+
+
+    document.getElementById(
+        "convert-result"
+    ).value =
+        formatConverterResult(
+            answer
+        );
+
 }
 
-.converter-inputs input {
-    margin-bottom: 7px;
+
+function formatConverterResult(
+    number
+) {
+
+    if (!Number.isFinite(number)) {
+        return "ERROR";
+    }
+
+
+    return Number(
+        number.toFixed(10)
+    ).toString();
+
 }
 
-.convert-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 45px;
-
-    color: #45dcff;
-
-    font-size: 22px;
-}
 
 /* ========================================
    ADVENTURE HISTORY
+   LOCAL STORAGE
 ======================================== */
 
-.adventure-history {
-    width: min(430px, 100%);
+function saveHistory(
+    expressionText,
+    resultText
+) {
 
-    margin-top: 18px;
-    padding: 18px;
+    let history =
+        JSON.parse(
+            localStorage.getItem(
+                "cubesAdventureHistory"
+            )
+        ) || [];
 
-    border-radius: 20px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(7, 29, 49, 0.95),
-            rgba(2, 15, 27, 0.95)
-        );
+    history.unshift({
 
-    border: 1px solid rgba(46, 190, 255, 0.2);
+        expression:
+            String(expressionText),
 
-    box-shadow:
-        0 0 25px rgba(0, 140, 255, 0.07);
+        result:
+            String(resultText),
+
+        date:
+            new Date().toLocaleString(
+                "id-ID"
+            )
+
+    });
+
+
+    /*
+       Maksimal 50 history
+    */
+
+    history =
+        history.slice(0, 50);
+
+
+    localStorage.setItem(
+        "cubesAdventureHistory",
+        JSON.stringify(history)
+    );
+
+
+    displayHistory();
+
 }
 
-.history-header {
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 14px;
-}
-
-.history-header h2 {
-    font-size: 16px;
-
-    color: #ecfaff;
-
-    text-shadow:
-        0 0 8px rgba(47, 211, 255, 0.3);
-}
-
-.history-header button {
-    min-height: 34px;
-
-    padding: 0 12px;
-
-    font-size: 10px;
-
-    color: #ff6b7b;
-
-    border-radius: 8px;
-}
-
-/* History item */
-
-.history-item {
-    padding: 12px 14px;
-
-    margin-bottom: 8px;
-
-    border-left: 2px solid #1caee6;
-    border-radius: 8px;
-
-    background: rgba(7, 39, 63, 0.65);
-}
-
-.history-expression {
-    font-size: 14px;
-
-    color: #a9d5e8;
-}
-
-.history-result {
-    margin-top: 4px;
-
-    font-size: 19px;
-    font-weight: 700;
-
-    color: #53ddff;
-}
-
-.empty-history {
-    padding: 18px;
-
-    text-align: center;
-
-    color: #5e8196;
-
-    font-size: 12px;
-}
 
 /* ========================================
-   MOBILE
+   DISPLAY HISTORY
 ======================================== */
 
-@media (max-width: 500px) {
+function displayHistory() {
 
-    .calculator-modes {
-        gap: 4px;
+    const container =
+        document.getElementById(
+            "history-list"
+        );
+
+
+    if (!container) {
+        return;
     }
 
-    .mode-btn {
-        font-size: 9px;
-        letter-spacing: 0;
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "cubesAdventureHistory"
+            )
+        ) || [];
+
+
+    if (history.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-history">
+
+                Belum ada petualangan...
+
+            </div>
+
+        `;
+
+        return;
+
     }
 
-    .converter-inputs {
-        grid-template-columns: 1fr;
-    }
 
-    .convert-arrow {
-        height: 25px;
-        transform: rotate(90deg);
-    }
+    container.innerHTML =
+        history.map(item => `
 
-    .programmer-display {
-        grid-template-columns: 1fr 1fr;
-    }
+            <div class="history-item">
+
+                <div class="history-expression">
+
+                    ${escapeHTML(
+                        item.expression
+                    )}
+
+                </div>
+
+
+                <div class="history-result">
+
+                    = ${escapeHTML(
+                        item.result
+                    )}
+
+                </div>
+
+            </div>
+
+        `).join("");
 
 }
+
+
+/* ========================================
+   CLEAR HISTORY
+======================================== */
+
+function clearHistory() {
+
+    const answer =
+        confirm(
+            "Hapus semua Adventure History?"
+        );
+
+
+    if (!answer) {
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "cubesAdventureHistory"
+    );
+
+
+    displayHistory();
+
+}
+
+
+/* ========================================
+   SECURITY
+======================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ========================================
+   KEYBOARD
+======================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const key =
+            event.key;
+
+
+        if (/[0-9]/.test(key)) {
+
+            addNumber(key);
+
+        }
+
+
+        else if (
+            key === "+" ||
+            key === "-" ||
+            key === "*" ||
+            key === "/" ||
+            key === "%" ||
+            key === "^"
+        ) {
+
+            addNumber(key);
+
+        }
+
+
+        else if (key === ".") {
+
+            addNumber(".");
+
+        }
+
+
+        else if (key === "Enter") {
+
+            calculate();
+
+        }
+
+
+        else if (key === "Backspace") {
+
+            deleteNumber();
+
+        }
+
+
+        else if (key === "Escape") {
+
+            clearDisplay();
+
+        }
+
+    }
+);
+
+
+/* ========================================
+   INITIALIZE
+======================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        switchMode("basic");
+
+        changeConverter();
+
+        updateProgrammer();
+
+        displayHistory();
+
+    }
+);
