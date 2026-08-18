@@ -101,7 +101,174 @@
 
         </div>
 
+   <!-- MODE KALKULATOR -->
+<div class="calculator-modes">
+    <button class="mode-btn active" onclick="switchMode('basic')">
+        BASIC
+    </button>
 
+    <button class="mode-btn" onclick="switchMode('scientific')">
+        SCIENTIFIC
+    </button>
+    <!-- PROGRAMMER MODE -->
+<div id="programmer-mode" class="mode-panel">
+
+    <div class="programmer-display">
+        <div>
+            <span>DEC</span>
+            <strong id="programmer-dec">0</strong>
+        </div>
+
+        <div>
+            <span>BIN</span>
+            <strong id="programmer-bin">0</strong>
+        </div>
+
+        <div>
+            <span>HEX</span>
+            <strong id="programmer-hex">0</strong>
+        </div>
+
+        <div>
+            <span>OCT</span>
+            <strong id="programmer-oct">0</strong>
+        </div>
+    </div>
+
+    <div class="programmer-input">
+        <input
+            type="number"
+            id="programmer-input"
+            value="0"
+            oninput="updateProgrammer()"
+        >
+    </div>
+
+    <div class="programmer-buttons">
+
+        <button onclick="programmerOperation('AND')">
+            AND
+        </button>
+
+        <button onclick="programmerOperation('OR')">
+            OR
+        </button>
+
+        <button onclick="programmerOperation('XOR')">
+            XOR
+        </button>
+
+        <button onclick="programmerNOT()">
+            NOT
+        </button>
+
+        <button onclick="programmerShift('left')">
+            SHIFT LEFT
+        </button>
+
+        <button onclick="programmerShift('right')">
+            SHIFT RIGHT
+        </button>
+
+    </div>
+
+</div>
+
+    <button class="mode-btn" onclick="switchMode('programmer')">
+        PROGRAMMER
+    </button>
+
+    <button class="mode-btn" onclick="switchMode('converter')">
+        CONVERTER
+    </button>
+    <!-- CONVERTER MODE -->
+<div id="converter-mode" class="mode-panel">
+
+    <div class="converter-box">
+
+        <label>Jenis Converter</label>
+
+        <select id="converter-type" onchange="changeConverter()">
+
+            <option value="length">
+                Panjang
+            </option>
+
+            <option value="weight">
+                Berat
+            </option>
+
+            <option value="temperature">
+                Suhu
+            </option>
+
+            <option value="area">
+                Luas
+            </option>
+
+            <option value="volume">
+                Volume
+            </option>
+
+            <option value="time">
+                Waktu
+            </option>
+
+            <option value="speed">
+                Kecepatan
+            </option>
+
+            <option value="data">
+                Data Digital
+            </option>
+
+            <option value="energy">
+                Energi
+            </option>
+
+        </select>
+
+        <div class="converter-inputs">
+
+            <div>
+                <label>Dari</label>
+
+                <input
+                    type="number"
+                    id="convert-value"
+                    value="1"
+                    oninput="convertValue()"
+                >
+
+                <select id="from-unit" onchange="convertValue()"></select>
+            </div>
+
+            <div class="convert-arrow">
+                ⇄
+            </div>
+
+            <div>
+
+                <label>Ke</label>
+
+                <input
+                    type="text"
+                    id="convert-result"
+                    readonly
+                >
+
+                <select id="to-unit" onchange="convertValue()"></select>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    
+</div>
+        
         <!-- DISPLAY -->
         <div class="display">
 
@@ -170,6 +337,29 @@
     <button class="special" onclick="addPhi()">φ</button>
 
     <button class="special" onclick="randomNumber()">RND</button>
+
+    <!-- ADVENTURE HISTORY -->
+<div class="adventure-history">
+
+    <div class="history-header">
+
+        <h2>⚔️ Adventure History</h2>
+
+        <button onclick="clearHistory()">
+            CLEAR
+        </button>
+
+    </div>
+
+    <div id="history-list">
+
+        <div class="empty-history">
+            Belum ada petualangan...
+        </div>
+
+    </div>
+
+</div>
 
 
     <!-- BASIC -->
