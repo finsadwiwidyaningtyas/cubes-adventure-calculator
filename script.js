@@ -1,10 +1,12 @@
 // ========================================
 // CUBES ADVENTURE KNIGHT
-// SCIENTIFIC CALCULATOR
+// CALCULATOR SYSTEM
+// BASIC + SCIENTIFIC + PROGRAMMER + CONVERTER
 // ========================================
 
 let expression = "";
 let result = "0";
+let currentMode = "basic";
 
 
 // ========================================
@@ -13,8 +15,11 @@ let result = "0";
 
 function updateDisplay() {
 
-    document.getElementById("result").textContent =
-        expression || "0";
+    const resultElement = document.getElementById("result");
+
+    if (resultElement) {
+        resultElement.textContent = expression || "0";
+    }
 
 }
 
@@ -30,9 +35,7 @@ function formatResult(number) {
     }
 
     return String(
-        parseFloat(
-            number.toFixed(10)
-        )
+        parseFloat(number.toFixed(10))
     );
 
 }
@@ -48,23 +51,17 @@ function addNumber(value) {
         expression = "";
     }
 
+    const lastChar = expression.slice(-1);
 
-    const lastChar =
-        expression.slice(-1);
-
-
-    // Operator
+    // Cegah operator dobel
     if (
         ["+", "-", "*", "/", "%", "^"].includes(value) &&
         ["+", "-", "*", "/", "%", "^"].includes(lastChar)
     ) {
-
         return;
-
     }
 
-
-    // Desimal
+    // Cegah titik desimal dobel
     if (value === ".") {
 
         const parts =
@@ -73,18 +70,14 @@ function addNumber(value) {
         const currentNumber =
             parts[parts.length - 1];
 
-
         if (currentNumber.includes(".")) {
             return;
         }
-
     }
-
 
     expression += value;
 
     updateDisplay();
-
 }
 
 
@@ -96,11 +89,15 @@ function clearDisplay() {
 
     expression = "";
 
-    document.getElementById("history").textContent =
-        "READY FOR CALCULATION";
+    const history =
+        document.getElementById("history");
+
+    if (history) {
+        history.textContent =
+            "READY FOR CALCULATION";
+    }
 
     updateDisplay();
-
 }
 
 
@@ -111,16 +108,13 @@ function clearDisplay() {
 function deleteNumber() {
 
     if (expression === "ERROR") {
-
         expression = "";
-
     }
 
     expression =
         expression.slice(0, -1);
 
     updateDisplay();
-
 }
 
 
@@ -130,16 +124,15 @@ function deleteNumber() {
 
 function calculate() {
 
-    if (!expression) {
+    if (!expression || expression === "ERROR") {
         return;
     }
 
+    const originalExpression = expression;
 
     try {
 
-        let calculation =
-            expression;
-
+        let calculation = expression;
 
         // Persentase
         calculation =
@@ -148,7 +141,6 @@ function calculate() {
                 "($1/100)"
             );
 
-
         // Pangkat
         calculation =
             calculation.replace(
@@ -156,50 +148,46 @@ function calculate() {
                 "**"
             );
 
-
-        /*
-         * Function digunakan setelah input
-         * dibatasi hanya karakter matematika.
-         */
-
+        // Validasi karakter
         if (
             !/^[0-9+\-*/().%\s*]+$/.test(calculation)
         ) {
-
             throw new Error("Invalid");
-
         }
 
-
-        let answer =
+        const answer =
             Function(
                 '"use strict"; return (' +
                 calculation +
                 ')'
             )();
 
-
         if (!Number.isFinite(answer)) {
             throw new Error("Invalid");
         }
 
+        const formatted =
+            formatResult(answer);
 
-        answer =
-            Number(
-                formatResult(answer)
-            );
+        const history =
+            document.getElementById("history");
 
+        if (history) {
+            history.textContent =
+                originalExpression + " =";
+        }
 
-        document.getElementById("history").textContent =
-            expression + " =";
+        expression = formatted;
 
-
-        expression =
-            String(answer);
-
+        result = formatted;
 
         updateDisplay();
 
+        // Simpan history
+        saveHistory(
+            originalExpression,
+            formatted
+        );
 
     } catch (error) {
 
@@ -248,20 +236,13 @@ function powerNumber() {
         return;
     }
 
-
-    if (
-        expression.slice(-1) === "^"
-    ) {
-
+    if (expression.slice(-1) === "^") {
         return;
-
     }
-
 
     expression += "^";
 
     updateDisplay();
-
 }
 
 
@@ -289,7 +270,7 @@ function inverseNumber() {
 
 // ========================================
 // ±
-/* ======================================== */
+// ========================================
 
 function plusMinus() {
 
@@ -297,11 +278,9 @@ function plusMinus() {
         return;
     }
 
-
     if (expression === "0") {
         return;
     }
-
 
     if (expression.startsWith("-")) {
 
@@ -315,9 +294,7 @@ function plusMinus() {
 
     }
 
-
     updateDisplay();
-
 }
 
 
@@ -506,7 +483,7 @@ function tenPowerNumber() {
 
 
 // ========================================
-// ABSOLUTE VALUE
+// ABSOLUTE
 // ========================================
 
 function absoluteNumber() {
@@ -530,48 +507,46 @@ function factorialNumber() {
         return;
     }
 
-
     try {
 
         const number =
             Number(expression);
-
 
         if (
             !Number.isInteger(number) ||
             number < 0 ||
             number > 170
         ) {
-
             throw new Error("Invalid");
-
         }
 
-
         let answer = 1;
-
 
         for (
             let i = 2;
             i <= number;
             i++
         ) {
-
             answer *= i;
-
         }
 
+        const history =
+            document.getElementById("history");
 
-        document.getElementById("history").textContent =
-            number + "!";
-
+        if (history) {
+            history.textContent =
+                number + "!";
+        }
 
         expression =
             formatResult(answer);
 
-
         updateDisplay();
 
+        saveHistory(
+            number + "!",
+            expression
+        );
 
     } catch (error) {
 
@@ -583,7 +558,7 @@ function factorialNumber() {
 
 
 // ========================================
-// RANDOM NUMBER
+// RANDOM
 // ========================================
 
 function randomNumber() {
@@ -591,14 +566,16 @@ function randomNumber() {
     const answer =
         Math.random();
 
+    const history =
+        document.getElementById("history");
 
-    document.getElementById("history").textContent =
-        "RANDOM NUMBER";
-
+    if (history) {
+        history.textContent =
+            "RANDOM NUMBER";
+    }
 
     expression =
         formatResult(answer);
-
 
     updateDisplay();
 
@@ -634,14 +611,13 @@ function addE() {
 
 
 // ========================================
-// PHI / GOLDEN RATIO
+// PHI
 // ========================================
 
 function addPhi() {
 
     const phi =
         (1 + Math.sqrt(5)) / 2;
-
 
     expression +=
         phi.toString();
@@ -652,7 +628,7 @@ function addPhi() {
 
 
 // ========================================
-// GENERIC SCIENTIFIC FUNCTION
+// SCIENTIFIC FUNCTION
 // ========================================
 
 function calculateFunction(
@@ -664,37 +640,45 @@ function calculateFunction(
         return;
     }
 
-
     try {
 
         const number =
             Number(expression);
 
-
         if (!Number.isFinite(number)) {
             throw new Error("Invalid");
         }
 
-
         const answer =
             operation(number);
-
 
         if (!Number.isFinite(answer)) {
             throw new Error("Invalid");
         }
 
+        const oldExpression =
+            expression;
 
-        document.getElementById("history").textContent =
-            label + "(" + expression + ")";
+        const history =
+            document.getElementById("history");
 
+        if (history) {
+            history.textContent =
+                label +
+                "(" +
+                oldExpression +
+                ")";
+        }
 
         expression =
             formatResult(answer);
 
-
         updateDisplay();
 
+        saveHistory(
+            label + "(" + oldExpression + ")",
+            expression
+        );
 
     } catch (error) {
 
@@ -711,29 +695,29 @@ function calculateFunction(
 
 function showError() {
 
-    expression =
-        "ERROR";
+    expression = "ERROR";
 
+    const history =
+        document.getElementById("history");
 
-    document.getElementById("history").textContent =
-        "INVALID CALCULATION";
-
+    if (history) {
+        history.textContent =
+            "INVALID CALCULATION";
+    }
 
     updateDisplay();
 
-
     setTimeout(() => {
 
-        const oldExpression = expression;
+        expression = "";
 
-expression = String(answer);
+        if (history) {
+            history.textContent =
+                "READY FOR CALCULATION";
+        }
 
-saveHistory(
-    oldExpression,
-    answer
-);
+        updateDisplay();
 
-updateDisplay();
     }, 1500);
 
 }
@@ -750,16 +734,12 @@ document.addEventListener(
         const key =
             event.key;
 
-
-        // ANGKA
         if (/[0-9]/.test(key)) {
 
             addNumber(key);
 
         }
 
-
-        // OPERATOR
         else if (
             key === "+" ||
             key === "-" ||
@@ -773,32 +753,24 @@ document.addEventListener(
 
         }
 
-
-        // DESIMAL
         else if (key === ".") {
 
             addNumber(".");
 
         }
 
-
-        // ENTER
         else if (key === "Enter") {
 
             calculate();
 
         }
 
-
-        // BACKSPACE
         else if (key === "Backspace") {
 
             deleteNumber();
 
         }
 
-
-        // ESCAPE
         else if (key === "Escape") {
 
             clearDisplay();
@@ -808,103 +780,155 @@ document.addEventListener(
     }
 );
 
-/* ========================================
-   CALCULATOR MODE
-======================================== */
 
-let currentMode = "basic";
+// ========================================
+// CALCULATOR MODE
+// ========================================
 
 function switchMode(mode) {
 
-    // ==============================
-    // SEMBUNYIKAN SEMUA MODE
-    // ==============================
+    currentMode = mode;
 
-    const modes = document.querySelectorAll('.calculator-mode');
+    // ----------------------------------------
+    // SEMBUNYIKAN SEMUA MODE
+    // ----------------------------------------
+
+    const modes =
+        document.querySelectorAll(
+            ".calculator-mode"
+        );
 
     modes.forEach(function(section) {
-        section.classList.remove('active');
-        section.style.display = 'none';
+
+        section.classList.remove("active");
+
+        // Hapus style lama
+        section.style.removeProperty("display");
+
+        // Paksa sembunyikan
+        section.style.setProperty(
+            "display",
+            "none",
+            "important"
+        );
+
     });
 
 
-    // ==============================
-    // TAMPILKAN MODE YANG DIPILIH
-    // ==============================
+    // ----------------------------------------
+    // TAMPILKAN SATU MODE SAJA
+    // ----------------------------------------
 
-    const selectedMode = document.getElementById(mode + '-mode');
+    const selectedMode =
+        document.getElementById(
+            mode + "-mode"
+        );
 
     if (selectedMode) {
-        selectedMode.classList.add('active');
-        selectedMode.style.display = 'block';
+
+        selectedMode.classList.add("active");
+
+        selectedMode.style.setProperty(
+            "display",
+            "block",
+            "important"
+        );
+
     }
 
 
-    // ==============================
+    // ----------------------------------------
     // UPDATE TOMBOL MODE
-    // ==============================
+    // ----------------------------------------
 
-    const modeButtons = document.querySelectorAll('.mode-btn');
+    const modeButtons =
+        document.querySelectorAll(
+            ".mode-btn"
+        );
 
     modeButtons.forEach(function(button) {
-        button.classList.remove('active');
-    });
 
+        button.classList.remove("active");
 
-    // Cari tombol yang sesuai dengan mode
-    modeButtons.forEach(function(button) {
+        const onclick =
+            button.getAttribute("onclick");
 
-        const onclickValue = button.getAttribute('onclick');
+        if (
+            onclick &&
+            onclick.includes(
+                `switchMode('${mode}')`
+            )
+        ) {
 
-        if (onclickValue === switchMode('${mode}')) {
-            button.classList.add('active');
+            button.classList.add("active");
+
         }
 
     });
 
 
-    // ==============================
-    // KHUSUS CONVERTER
-    // ==============================
+    // ----------------------------------------
+    // CONVERTER
+    // ----------------------------------------
 
-    if (mode === 'converter') {
+    if (mode === "converter") {
 
-        if (typeof changeConverter === 'function') {
+        if (
+            typeof changeConverter ===
+            "function"
+        ) {
+
             changeConverter();
+
         }
 
     }
 
 
-    // ==============================
-    // KHUSUS PROGRAMMER
-    // ==============================
+    // ----------------------------------------
+    // PROGRAMMER
+    // ----------------------------------------
 
-    if (mode === 'programmer') {
+    if (mode === "programmer") {
 
-        if (typeof updateProgrammer === 'function') {
+        if (
+            typeof updateProgrammer ===
+            "function"
+        ) {
+
             updateProgrammer();
+
         }
 
     }
+
 }
 
-/* ========================================
-   PROGRAMMER CALCULATOR
-======================================== */
+
+// ========================================
+// PROGRAMMER CALCULATOR
+// ========================================
 
 function getProgrammerValue() {
 
     const input =
-        document.getElementById("programmer-input");
+        document.getElementById(
+            "programmer-input"
+        );
 
-    let value = parseInt(input.value);
+    if (!input) {
+        return 0;
+    }
+
+    let value =
+        parseInt(input.value);
 
     if (isNaN(value)) {
         value = 0;
     }
 
     return value;
+
 }
 
 
@@ -913,24 +937,47 @@ function updateProgrammer() {
     const value =
         getProgrammerValue();
 
-    document.getElementById(
-        "programmer-dec"
-    ).textContent = value;
+    const dec =
+        document.getElementById(
+            "programmer-dec"
+        );
 
-    document.getElementById(
-        "programmer-bin"
-    ).textContent =
-        (value >>> 0).toString(2);
+    const bin =
+        document.getElementById(
+            "programmer-bin"
+        );
 
-    document.getElementById(
-        "programmer-hex"
-    ).textContent =
-        (value >>> 0).toString(16).toUpperCase();
+    const hex =
+        document.getElementById(
+            "programmer-hex"
+        );
 
-    document.getElementById(
-        "programmer-oct"
-    ).textContent =
-        (value >>> 0).toString(8);
+    const oct =
+        document.getElementById(
+            "programmer-oct"
+        );
+
+    if (dec) {
+        dec.textContent = value;
+    }
+
+    if (bin) {
+        bin.textContent =
+            (value >>> 0).toString(2);
+    }
+
+    if (hex) {
+        hex.textContent =
+            (value >>> 0)
+                .toString(16)
+                .toUpperCase();
+    }
+
+    if (oct) {
+        oct.textContent =
+            (value >>> 0).toString(8);
+    }
+
 }
 
 
@@ -941,43 +988,52 @@ function programmerOperation(operation) {
 
     const second =
         parseInt(
-            prompt(`Masukkan angka untuk ${operation}:`)
+            prompt(
+                `Masukkan angka untuk ${operation}:`
+            )
         );
 
     if (isNaN(second)) {
         return;
     }
 
-    let result;
+    let answer;
 
     switch (operation) {
 
         case "AND":
-            result = value & second;
+            answer = value & second;
             break;
 
         case "OR":
-            result = value | second;
+            answer = value | second;
             break;
 
         case "XOR":
-            result = value ^ second;
+            answer = value ^ second;
             break;
 
         default:
             return;
+
     }
 
-    document.getElementById(
-        "programmer-input"
-    ).value = result;
+    const input =
+        document.getElementById(
+            "programmer-input"
+        );
+
+    if (input) {
+        input.value = answer;
+    }
 
     updateProgrammer();
 
     saveHistory(
         `${value} ${operation} ${second}`,
-        result
+        answer
     );
+
 }
 
 
@@ -986,19 +1042,25 @@ function programmerNOT() {
     const value =
         getProgrammerValue();
 
-    const result =
+    const answer =
         ~value;
 
-    document.getElementById(
-        "programmer-input"
-    ).value = result;
+    const input =
+        document.getElementById(
+            "programmer-input"
+        );
+
+    if (input) {
+        input.value = answer;
+    }
 
     updateProgrammer();
 
     saveHistory(
         `NOT ${value}`,
-        result
+        answer
     );
+
 }
 
 
@@ -1020,34 +1082,51 @@ function programmerShift(direction) {
         return;
     }
 
-    let result;
+    let answer;
 
     if (direction === "left") {
-        result = value << amount;
+
+        answer =
+            value << amount;
+
     } else {
-        result = value >> amount;
+
+        answer =
+            value >> amount;
+
     }
 
-    document.getElementById(
-        "programmer-input"
-    ).value = result;
+    const input =
+        document.getElementById(
+            "programmer-input"
+        );
+
+    if (input) {
+        input.value = answer;
+    }
 
     updateProgrammer();
 
     saveHistory(
-        `${value} ${direction === "left" ? "<<" : ">>"} ${amount}`,
-        result
+        `${value} ${
+            direction === "left"
+                ? "<<"
+                : ">>"
+        } ${amount}`,
+        answer
     );
+
 }
 
 
-/* ========================================
-   CONVERTER
-======================================== */
+// ========================================
+// CONVERTER
+// ========================================
 
 const converterUnits = {
 
     length: {
+
         units: {
             Meter: 1,
             Kilometer: 1000,
@@ -1060,14 +1139,18 @@ const converterUnits = {
         },
 
         convert(value, from, to) {
+
             return value *
                 this.units[from] /
                 this.units[to];
+
         }
+
     },
 
 
     weight: {
+
         units: {
             Kilogram: 1,
             Gram: 0.001,
@@ -1078,10 +1161,13 @@ const converterUnits = {
         },
 
         convert(value, from, to) {
+
             return value *
                 this.units[from] /
                 this.units[to];
+
         }
+
     },
 
 
@@ -1098,15 +1184,24 @@ const converterUnits = {
             let celsius;
 
             if (from === "Celsius") {
+
                 celsius = value;
+
             }
 
             else if (from === "Fahrenheit") {
-                celsius = (value - 32) * 5 / 9;
+
+                celsius =
+                    (value - 32) *
+                    5 / 9;
+
             }
 
             else {
-                celsius = value - 273.15;
+
+                celsius =
+                    value - 273.15;
+
             }
 
             if (to === "Celsius") {
@@ -1114,32 +1209,43 @@ const converterUnits = {
             }
 
             if (to === "Fahrenheit") {
-                return celsius * 9 / 5 + 32;
+
+                return (
+                    celsius * 9 / 5
+                ) + 32;
+
             }
 
             return celsius + 273.15;
+
         }
+
     },
 
 
     area: {
+
         units: {
             "Square Meter": 1,
             "Square Kilometer": 1000000,
             "Square Centimeter": 0.0001,
-            "Hectare": 10000,
-            "Acre": 4046.856
+            Hectare: 10000,
+            Acre: 4046.856
         },
 
         convert(value, from, to) {
+
             return value *
                 this.units[from] /
                 this.units[to];
+
         }
+
     },
 
 
     volume: {
+
         units: {
             Liter: 1,
             Milliliter: 0.001,
@@ -1149,14 +1255,18 @@ const converterUnits = {
         },
 
         convert(value, from, to) {
+
             return value *
                 this.units[from] /
                 this.units[to];
+
         }
+
     },
 
 
     time: {
+
         units: {
             Second: 1,
             Minute: 60,
@@ -1166,14 +1276,18 @@ const converterUnits = {
         },
 
         convert(value, from, to) {
+
             return value *
                 this.units[from] /
                 this.units[to];
+
         }
+
     },
 
 
     speed: {
+
         units: {
             "Meter/Second": 1,
             "Kilometer/Hour": 0.277777778,
@@ -1182,14 +1296,18 @@ const converterUnits = {
         },
 
         convert(value, from, to) {
+
             return value *
                 this.units[from] /
                 this.units[to];
+
         }
+
     },
 
 
     data: {
+
         units: {
             Bit: 1,
             Byte: 8,
@@ -1200,14 +1318,18 @@ const converterUnits = {
         },
 
         convert(value, from, to) {
+
             return value *
                 this.units[from] /
                 this.units[to];
+
         }
+
     },
 
 
     energy: {
+
         units: {
             Joule: 1,
             Kilojoule: 1000,
@@ -1218,102 +1340,158 @@ const converterUnits = {
         },
 
         convert(value, from, to) {
+
             return value *
                 this.units[from] /
                 this.units[to];
+
         }
+
     }
 
 };
 
 
-/* ========================================
-   LOAD CONVERTER
-======================================== */
+// ========================================
+// LOAD CONVERTER
+// ========================================
 
 function changeConverter() {
 
-    const type =
+    const typeElement =
         document.getElementById(
             "converter-type"
-        ).value;
+        );
+
+    const from =
+        document.getElementById(
+            "from-unit"
+        );
+
+    const to =
+        document.getElementById(
+            "to-unit"
+        );
+
+    if (!typeElement || !from || !to) {
+        return;
+    }
+
+    const type =
+        typeElement.value;
 
     const data =
         converterUnits[type];
 
-    const from =
-        document.getElementById("from-unit");
-
-    const to =
-        document.getElementById("to-unit");
+    if (!data) {
+        return;
+    }
 
     from.innerHTML = "";
     to.innerHTML = "";
 
-    Object.keys(data.units)
-        .forEach(unit => {
+    Object.keys(data.units).forEach(unit => {
 
-            from.innerHTML +=
-                `<option value="${unit}">
-                    ${unit}
-                </option>`;
+        from.innerHTML +=
+            `<option value="${unit}">
+                ${unit}
+            </option>`;
 
-            to.innerHTML +=
-                `<option value="${unit}">
-                    ${unit}
-                </option>`;
-        });
+        to.innerHTML +=
+            `<option value="${unit}">
+                ${unit}
+            </option>`;
+
+    });
 
     if (to.options.length > 1) {
         to.selectedIndex = 1;
     }
 
     convertValue();
+
 }
 
 
+// ========================================
+// CONVERT VALUE
+// ========================================
+
 function convertValue() {
 
-    const type =
+    const typeElement =
         document.getElementById(
             "converter-type"
-        ).value;
+        );
+
+    const valueElement =
+        document.getElementById(
+            "convert-value"
+        );
+
+    const fromElement =
+        document.getElementById(
+            "from-unit"
+        );
+
+    const toElement =
+        document.getElementById(
+            "to-unit"
+        );
+
+    const resultElement =
+        document.getElementById(
+            "convert-result"
+        );
+
+    if (
+        !typeElement ||
+        !valueElement ||
+        !fromElement ||
+        !toElement ||
+        !resultElement
+    ) {
+        return;
+    }
+
+    const type =
+        typeElement.value;
 
     const value =
         parseFloat(
-            document.getElementById(
-                "convert-value"
-            ).value
+            valueElement.value
         );
 
-    const from =
-        document.getElementById(
-            "from-unit"
-        ).value;
-
-    const to =
-        document.getElementById(
-            "to-unit"
-        ).value;
-
     if (isNaN(value)) {
-        document.getElementById(
-            "convert-result"
-        ).value = "";
+
+        resultElement.value = "";
 
         return;
     }
 
-    const result =
-        converterUnits[type]
-            .convert(value, from, to);
+    const from =
+        fromElement.value;
 
-    document.getElementById(
-        "convert-result"
-    ).value =
-        formatConverterResult(result);
+    const to =
+        toElement.value;
+
+    const answer =
+        converterUnits[type]
+            .convert(
+                value,
+                from,
+                to
+            );
+
+    resultElement.value =
+        formatConverterResult(answer);
+
 }
 
+
+// ========================================
+// FORMAT CONVERTER
+// ========================================
 
 function formatConverterResult(number) {
 
@@ -1324,14 +1502,18 @@ function formatConverterResult(number) {
     return Number(
         number.toFixed(10)
     ).toString();
+
 }
 
 
-/* ========================================
-   ADVENTURE HISTORY
-======================================== */
+// ========================================
+// ADVENTURE HISTORY
+// ========================================
 
-function saveHistory(expression, result) {
+function saveHistory(
+    expression,
+    result
+) {
 
     let history =
         JSON.parse(
@@ -1342,19 +1524,18 @@ function saveHistory(expression, result) {
 
     history.unshift({
 
-        expression: String(expression),
+        expression:
+            String(expression),
 
-        result: String(result),
+        result:
+            String(result),
 
-        date: new Date().toLocaleString(
-            "id-ID"
-        )
+        date:
+            new Date().toLocaleString(
+                "id-ID"
+            )
 
     });
-
-    /*
-     * Maksimal 50 history
-     */
 
     history =
         history.slice(0, 50);
@@ -1365,8 +1546,13 @@ function saveHistory(expression, result) {
     );
 
     displayHistory();
+
 }
 
+
+// ========================================
+// DISPLAY HISTORY
+// ========================================
 
 function displayHistory() {
 
@@ -1403,18 +1589,27 @@ function displayHistory() {
             <div class="history-item">
 
                 <div class="history-expression">
-                    ${escapeHTML(item.expression)}
+                    ${escapeHTML(
+                        item.expression
+                    )}
                 </div>
 
                 <div class="history-result">
-                    = ${escapeHTML(item.result)}
+                    = ${escapeHTML(
+                        item.result
+                    )}
                 </div>
 
             </div>
 
         `).join("");
+
 }
 
+
+// ========================================
+// CLEAR HISTORY
+// ========================================
 
 function clearHistory() {
 
@@ -1432,12 +1627,13 @@ function clearHistory() {
     );
 
     displayHistory();
+
 }
 
 
-/* ========================================
-   SECURITY
-======================================== */
+// ========================================
+// SECURITY
+// ========================================
 
 function escapeHTML(value) {
 
@@ -1447,24 +1643,32 @@ function escapeHTML(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
 
 
-/* ========================================
-   INITIALIZE
-======================================== */
+// ========================================
+// INITIALIZE
+// ========================================
 
 document.addEventListener(
     "DOMContentLoaded",
     function() {
 
+        // Pastikan hanya BASIC yang tampil
         switchMode("basic");
 
+        // Converter
         changeConverter();
 
+        // Programmer
         updateProgrammer();
 
+        // History
         displayHistory();
+
+        // Display awal
+        updateDisplay();
 
     }
 );
