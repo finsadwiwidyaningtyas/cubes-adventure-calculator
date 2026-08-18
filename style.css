@@ -1,2364 +1,1432 @@
-// =========================================================
-// CUBES ADVENTURE KNIGHT
-// FUTURISTIC CALCULATOR
-// SCRIPT.JS - FULL VERSION
-// BASIC + SCIENTIFIC + PROGRAMMER + CONVERTER
-// + CUBE KNIGHT INTERACTION
-// =========================================================
+/* =========================================================
+   CUBES ADVENTURE KNIGHT CALCULATOR
+   FULL STYLE.CSS
+   Animasi ringan + Cube Knight kecil
+   ========================================================= */
 
-let expression = "";
-let result = "0";
-let currentMode = "basic";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+:root {
+    --bg-main: #020b18;
+    --bg-secondary: #06182b;
+    --panel: rgba(5, 25, 43, 0.88);
 
-// =========================================================
-// CUBE KNIGHT
-// =========================================================
+    --cyan: #20e8ff;
+    --cyan-soft: #69f3ff;
+    --blue: #168dcc;
+    --blue-dark: #073653;
 
-function knightReact(type = "normal") {
+    --text: #e9fcff;
+    --text-soft: #8db8c9;
 
-    const knight = document.getElementById("cube-knight");
+    --danger: #ff5277;
+    --success: #54ffc7;
 
-    if (!knight) {
-        return;
+    --shadow: 0 0 20px rgba(32, 232, 255, 0.18);
+}
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(16, 116, 160, 0.18),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #010812 0%,
+            #031426 50%,
+            #010914 100%
+        );
+
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   BACKGROUND GRID
+   ========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(32, 232, 255, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(32, 232, 255, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 50px 50px;
+
+    pointer-events: none;
+    z-index: -5;
+}
+
+/* =========================================================
+   FLOATING CUBES
+   ========================================================= */
+
+.floating-cubes {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -2;
+}
+
+.floating-cubes span {
+    position: absolute;
+
+    width: 18px;
+    height: 18px;
+
+    border: 1px solid rgba(32, 232, 255, 0.3);
+
+    transform: rotate(45deg);
+
+    opacity: 0.35;
+
+    animation: cubeFloat 9s ease-in-out infinite;
+}
+
+.floating-cubes span:nth-child(1) {
+    left: 8%;
+    top: 25%;
+    animation-delay: 0s;
+}
+
+.floating-cubes span:nth-child(2) {
+    left: 82%;
+    top: 20%;
+    width: 13px;
+    height: 13px;
+    animation-delay: 2s;
+}
+
+.floating-cubes span:nth-child(3) {
+    left: 15%;
+    top: 75%;
+    width: 11px;
+    height: 11px;
+    animation-delay: 4s;
+}
+
+.floating-cubes span:nth-child(4) {
+    left: 76%;
+    top: 72%;
+    width: 16px;
+    height: 16px;
+    animation-delay: 6s;
+}
+
+@keyframes cubeFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.2;
     }
 
-    knight.classList.remove(
-        "knight-thinking",
-        "knight-success",
-        "knight-error",
-        "knight-active"
+    50% {
+        transform: translateY(-15px) rotate(65deg);
+        opacity: 0.45;
+    }
+}
+
+/* =========================================================
+   PARTICLES
+   ========================================================= */
+
+.particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -3;
+}
+
+.particles span {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    background: var(--cyan);
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 7px var(--cyan);
+
+    opacity: 0.4;
+
+    animation: particleGlow 4s ease-in-out infinite;
+}
+
+@keyframes particleGlow {
+    0%,
+    100% {
+        opacity: 0.15;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 0.55;
+        transform: scale(1.15);
+    }
+}
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.container {
+    width: min(1100px, 94%);
+    margin: 0 auto;
+    padding: 30px 0 50px;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-title {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+    color: var(--cyan-soft);
+
+    text-shadow:
+        0 0 8px rgba(32, 232, 255, 0.5),
+        0 0 25px rgba(32, 232, 255, 0.2);
+}
+
+.subtitle {
+    margin-top: 8px;
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.main-layout {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 260px;
+
+    gap: 24px;
+
+    align-items: start;
+}
+
+/* =========================================================
+   CALCULATOR PANEL
+   ========================================================= */
+
+.calculator-panel {
+    position: relative;
+
+    background: var(--panel);
+
+    border: 1px solid rgba(32, 232, 255, 0.18);
+
+    border-radius: 20px;
+
+    padding: 22px;
+
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.35),
+        inset 0 0 30px rgba(32, 232, 255, 0.025);
+
+    backdrop-filter: blur(10px);
+}
+
+/* =========================================================
+   DISPLAY
+   ========================================================= */
+
+.display {
+    position: relative;
+
+    min-height: 120px;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(1, 14, 27, 0.96),
+            rgba(4, 28, 45, 0.96)
+        );
+
+    border: 1px solid rgba(32, 232, 255, 0.25);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+        inset 0 0 20px rgba(32, 232, 255, 0.04);
+}
+
+/* DISPLAY GLOW */
+
+.display::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(32, 232, 255, 0.05),
+        transparent
     );
 
-    void knight.offsetWidth;
+    opacity: 0;
 
-    switch (type) {
+    transition: opacity 0.25s ease;
+}
 
-        case "thinking":
-            knight.classList.add("knight-thinking");
-            break;
+.display.energy-active::after {
+    opacity: 1;
+    animation: displaySweep 0.45s ease;
+}
 
-        case "success":
-            knight.classList.add("knight-success");
-            break;
-
-        case "error":
-            knight.classList.add("knight-error");
-            break;
-
-        case "active":
-            knight.classList.add("knight-active");
-            break;
-
-        default:
-            knight.classList.add("knight-active");
-            break;
+@keyframes displaySweep {
+    0% {
+        transform: translateX(-100%);
     }
 
-    setTimeout(() => {
+    100% {
+        transform: translateX(100%);
+    }
+}
 
-        knight.classList.remove(
-            "knight-thinking",
-            "knight-success",
-            "knight-error",
-            "knight-active"
+.display-expression {
+    width: 100%;
+
+    text-align: right;
+
+    color: var(--text-soft);
+
+    font-size: 15px;
+
+    min-height: 22px;
+
+    margin-bottom: 5px;
+}
+
+.display-value {
+    width: 100%;
+
+    text-align: right;
+
+    font-size: clamp(30px, 6vw, 52px);
+
+    font-weight: 700;
+
+    color: #eaffff;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    text-shadow:
+        0 0 10px rgba(32, 232, 255, 0.35);
+
+    transition:
+        transform 0.15s ease,
+        text-shadow 0.15s ease;
+}
+
+/* NUMBER TRANSITION */
+
+.display-value.number-change {
+    animation: numberChange 0.18s ease;
+}
+
+@keyframes numberChange {
+    0% {
+        transform: translateY(3px);
+        opacity: 0.65;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* =========================================================
+   CALCULATOR BUTTON GRID
+   ========================================================= */
+
+.buttons {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+button {
+    border: none;
+
+    min-height: 62px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0a2941,
+            #061a2d
         );
 
-    }, 1200);
+    border: 1px solid rgba(32, 232, 255, 0.13);
+
+    color: var(--text);
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.12s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
 }
 
+button:hover {
+    transform: translateY(-2px);
 
-// =========================================================
-// UPDATE DISPLAY
-// =========================================================
+    border-color: rgba(32, 232, 255, 0.5);
 
-function updateDisplay() {
-
-    const resultElement =
-        document.getElementById("result");
-
-    if (resultElement) {
-
-        resultElement.textContent =
-            expression || "0";
-
-    }
-
+    box-shadow:
+        0 5px 15px rgba(32, 232, 255, 0.12);
 }
 
+button:active {
+    transform: scale(0.96);
 
-// =========================================================
-// FORMAT HASIL
-// =========================================================
-
-function formatResult(number) {
-
-    if (!Number.isFinite(number)) {
-
-        throw new Error("Invalid");
-
-    }
-
-    return String(
-        parseFloat(
-            number.toFixed(10)
-        )
-    );
-
+    box-shadow:
+        inset 0 0 10px rgba(32, 232, 255, 0.15);
 }
 
+/* OPERATOR */
 
-// =========================================================
-// TAMBAH ANGKA / OPERATOR
-// =========================================================
+.operator {
+    color: var(--cyan-soft);
 
-function addNumber(value) {
+    background:
+        linear-gradient(
+            145deg,
+            #083d58,
+            #06283d
+        );
+}
 
-    knightReact("active");
+/* EQUAL */
 
-    if (expression === "ERROR") {
+.equals {
+    color: #021016;
 
-        expression = "";
+    background:
+        linear-gradient(
+            145deg,
+            #51efff,
+            #17b9dc
+        );
 
+    box-shadow:
+        0 0 15px rgba(32, 232, 255, 0.2);
+}
+
+.equals:hover {
+    box-shadow:
+        0 0 20px rgba(32, 232, 255, 0.35);
+}
+
+/* CLEAR */
+
+.clear {
+    color: #ff9eb3;
+}
+
+/* =========================================================
+   SIDE PANEL
+   ========================================================= */
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+.info-card {
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background: rgba(4, 25, 43, 0.82);
+
+    border: 1px solid rgba(32, 232, 255, 0.14);
+
+    box-shadow:
+        0 0 18px rgba(0, 0, 0, 0.2);
+}
+
+.info-card h3 {
+    color: var(--cyan-soft);
+
+    font-size: 14px;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+}
+
+.info-card p {
+    color: var(--text-soft);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+/* =========================================================
+   XP BAR
+   ========================================================= */
+
+.xp-container {
+    margin-top: 12px;
+}
+
+.xp-info {
+    display: flex;
+    justify-content: space-between;
+
+    color: var(--text-soft);
+
+    font-size: 12px;
+
+    margin-bottom: 7px;
+}
+
+.xp-bar {
+    height: 7px;
+
+    background: #041421;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.xp-fill {
+    height: 100%;
+
+    width: 0%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            #0ea8d1,
+            #5df3ff
+        );
+
+    box-shadow:
+        0 0 8px rgba(32, 232, 255, 0.5);
+
+    transition: width 0.35s ease;
+}
+
+/* =========================================================
+   CUBE KNIGHT
+   UKURAN DIKECILKAN
+   ========================================================= */
+
+.cube-knight {
+    position: relative;
+
+    width: 150px;
+    height: 190px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    pointer-events: none;
+
+    transform: scale(0.85);
+
+    transform-origin: center top;
+
+    animation: knightFloat 5s ease-in-out infinite;
+}
+
+/*
+   Penting:
+   Cube Knight tidak lagi menggunakan ukuran raksasa.
+*/
+
+@keyframes knightFloat {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            scale(0.85);
     }
 
-    const lastChar =
-        expression.slice(-1);
+    50% {
+        transform:
+            translateY(-5px)
+            scale(0.85);
+    }
+}
 
+/* =========================================================
+   KNIGHT HEAD
+   ========================================================= */
 
-    // -----------------------------------------
-    // CEGAH OPERATOR DOBEL
-    // -----------------------------------------
+.knight-head {
+    position: absolute;
 
-    if (
-        ["+", "-", "*", "/", "%", "^"].includes(value) &&
-        ["+", "-", "*", "/", "%", "^"].includes(lastChar)
-    ) {
+    top: 8px;
 
-        return;
+    width: 105px;
+    height: 105px;
 
+    background:
+        linear-gradient(
+            135deg,
+            #0b3854,
+            #062033
+        );
+
+    border: 3px solid var(--cyan);
+
+    border-radius: 8px;
+
+    transform: rotate(0deg);
+
+    box-shadow:
+        0 0 14px rgba(32, 232, 255, 0.3);
+}
+
+/* =========================================================
+   KNIGHT FACE
+   ========================================================= */
+
+.knight-eye {
+    position: absolute;
+
+    top: 38px;
+
+    width: 24px;
+    height: 8px;
+
+    background: var(--cyan-soft);
+
+    border-radius: 2px;
+
+    box-shadow:
+        0 0 8px var(--cyan),
+        0 0 16px rgba(32, 232, 255, 0.4);
+
+    animation: eyeGlow 3s ease-in-out infinite;
+}
+
+.knight-eye.left {
+    left: 18px;
+
+    transform: rotate(8deg);
+}
+
+.knight-eye.right {
+    right: 18px;
+
+    transform: rotate(-8deg);
+}
+
+@keyframes eyeGlow {
+    0%,
+    100% {
+        opacity: 0.75;
     }
 
+    50% {
+        opacity: 1;
+    }
+}
 
-    // -----------------------------------------
-    // CEGAH TITIK DOBEL
-    // -----------------------------------------
+/* =========================================================
+   KNIGHT MOUTH
+   ========================================================= */
 
-    if (value === ".") {
+.knight-mouth {
+    position: absolute;
 
-        const parts =
-            expression.split(
-                /[\+\-\*\/%\^]/
-            );
+    left: 50%;
 
-        const currentNumber =
-            parts[parts.length - 1];
+    bottom: 22px;
 
-        if (
-            currentNumber.includes(".")
-        ) {
+    width: 45px;
+    height: 3px;
 
-            return;
+    transform: translateX(-50%);
 
+    background: var(--blue);
+
+    box-shadow:
+        0 0 5px rgba(32, 232, 255, 0.3);
+}
+
+/* =========================================================
+   KNIGHT BODY / ARMOR
+   ========================================================= */
+
+.knight-body {
+    position: absolute;
+
+    top: 108px;
+
+    width: 85px;
+    height: 70px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b405e,
+            #052338
+        );
+
+    border: 2px solid #16cde9;
+
+    border-radius: 10px 10px 18px 18px;
+
+    box-shadow:
+        0 0 12px rgba(32, 232, 255, 0.18);
+}
+
+/* =========================================================
+   KNIGHT SHIELD
+   ========================================================= */
+
+.knight-shield {
+    position: absolute;
+
+    width: 38px;
+    height: 48px;
+
+    left: 0;
+
+    top: 118px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0d5677,
+            #062a43
+        );
+
+    border: 2px solid var(--cyan);
+
+    border-radius: 7px 7px 15px 15px;
+
+    transform: rotate(-8deg);
+
+    box-shadow:
+        0 0 10px rgba(32, 232, 255, 0.2);
+}
+
+.knight-shield::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 10px;
+
+    border: 1px solid rgba(105, 243, 255, 0.6);
+
+    transform: rotate(45deg);
+}
+
+/* =========================================================
+   KNIGHT SWORD
+   ========================================================= */
+
+.knight-sword {
+    position: absolute;
+
+    right: -3px;
+
+    top: 93px;
+
+    width: 9px;
+    height: 90px;
+
+    border-radius: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #78f8ff,
+            #d9ffff,
+            #20d7f1
+        );
+
+    transform:
+        rotate(18deg);
+
+    transform-origin: bottom center;
+
+    box-shadow:
+        0 0 8px rgba(32, 232, 255, 0.5);
+}
+
+/* SWORD TIP */
+
+.knight-sword::before {
+    content: "";
+
+    position: absolute;
+
+    top: -12px;
+    left: -5px;
+
+    width: 0;
+    height: 0;
+
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-bottom: 14px solid #8efaff;
+}
+
+/* SWORD HANDLE */
+
+.knight-sword::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -12px;
+
+    left: -9px;
+
+    width: 27px;
+    height: 7px;
+
+    background: #138cb1;
+
+    border-radius: 3px;
+}
+
+/* =========================================================
+   ENERGY EFFECT
+   ========================================================= */
+
+.energy-effect {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    pointer-events: none;
+
+    z-index: 10;
+
+    opacity: 0;
+}
+
+.energy-effect.active {
+    animation: energySequence 0.8s ease-out forwards;
+}
+
+@keyframes energySequence {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    15% {
+        opacity: 0.9;
+        transform: scale(1);
+    }
+
+    45% {
+        opacity: 0.75;
+    }
+
+    75% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.03);
+    }
+}
+
+.energy-text {
+    position: absolute;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: var(--cyan-soft);
+
+    text-shadow:
+        0 0 8px rgba(32, 232, 255, 0.5);
+
+    white-space: nowrap;
+
+    opacity: 0;
+}
+
+.energy-effect.active .energy-text {
+    animation: energyText 0.8s ease-out forwards;
+}
+
+@keyframes energyText {
+    0% {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    70% {
+        opacity: 0.9;
+        transform: translateY(-3px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+}
+
+/* =========================================================
+   XP EFFECT
+   ========================================================= */
+
+.xp-effect {
+    position: absolute;
+
+    right: 20px;
+    top: 15px;
+
+    color: var(--success);
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    text-shadow:
+        0 0 8px rgba(84, 255, 199, 0.5);
+}
+
+.xp-effect.show {
+    animation: xpFloat 0.7s ease-out forwards;
+}
+
+@keyframes xpFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+}
+
+/* =========================================================
+   ENERGY PULSE
+   ========================================================= */
+
+.energy-pulse {
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--cyan);
+
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+.energy-pulse.active {
+    animation: pulseSmall 0.5s ease-out;
+}
+
+@keyframes pulseSmall {
+    0% {
+        opacity: 0.7;
+
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform: scale(1.4);
+    }
+}
+
+/* =========================================================
+   LEVEL UP
+   ========================================================= */
+
+.level-up {
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.9);
+
+    padding: 16px 25px;
+
+    background:
+        rgba(3, 24, 40, 0.96);
+
+    border: 1px solid var(--cyan);
+
+    border-radius: 12px;
+
+    color: var(--cyan-soft);
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+
+    box-shadow:
+        0 0 25px rgba(32, 232, 255, 0.25);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 100;
+}
+
+.level-up.show {
+    animation: levelUpAnimation 0.9s ease-out forwards;
+}
+
+@keyframes levelUpAnimation {
+    0% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.8);
+    }
+
+    20% {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.04);
+    }
+}
+
+/* =========================================================
+   ACHIEVEMENT
+   ========================================================= */
+
+.achievement {
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: min(300px, calc(100% - 40px));
+
+    padding: 16px;
+
+    background:
+        rgba(4, 25, 42, 0.97);
+
+    border: 1px solid rgba(32, 232, 255, 0.35);
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 0 20px rgba(32, 232, 255, 0.15);
+
+    opacity: 0;
+
+    transform: translateX(30px);
+
+    pointer-events: none;
+
+    z-index: 90;
+}
+
+.achievement.show {
+    animation: achievementIn 0.55s ease-out forwards;
+}
+
+@keyframes achievementIn {
+    0% {
+        opacity: 0;
+
+        transform: translateX(30px);
+    }
+
+    20% {
+        opacity: 1;
+
+        transform: translateX(0);
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform: translateX(10px);
+    }
+}
+
+.achievement-title {
+    color: var(--cyan-soft);
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    margin-bottom: 5px;
+}
+
+.achievement-text {
+    color: var(--text-soft);
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0, 5, 12, 0.72);
+
+    backdrop-filter: blur(5px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+
+    z-index: 200;
+}
+
+.modal.active {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.modal-content {
+    width: min(450px, 100%);
+
+    padding: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #06233a,
+            #031524
+        );
+
+    border: 1px solid rgba(32, 232, 255, 0.3);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 0 35px rgba(0, 0, 0, 0.5);
+
+    transform: translateY(15px) scale(0.97);
+
+    transition:
+        transform 0.25s ease;
+}
+
+.modal.active .modal-content {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.modal-content h2 {
+    color: var(--cyan-soft);
+
+    margin-bottom: 12px;
+}
+
+.modal-content p {
+    color: var(--text-soft);
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    margin-top: 30px;
+
+    text-align: center;
+
+    color: #527487;
+
+    font-size: 12px;
+
+    letter-spacing: 1px;
+}
+
+/* =========================================================
+   PANEL SLIDE
+   ========================================================= */
+
+.panel-slide {
+    animation: panelSlide 0.45s ease-out;
+}
+
+@keyframes panelSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .side-panel {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cube-knight {
+        transform: scale(0.72);
+    }
+
+    @keyframes knightFloat {
+        0%,
+        100% {
+            transform:
+                translateY(0)
+                scale(0.72);
         }
 
+        50% {
+            transform:
+                translateY(-4px)
+                scale(0.72);
+        }
     }
-
-
-    expression += value;
-
-    updateDisplay();
-
 }
 
+@media (max-width: 520px) {
 
-// =========================================================
-// CLEAR
-// =========================================================
+    .container {
+        width: 94%;
 
-function clearDisplay() {
-
-    expression = "";
-
-    knightReact("active");
-
-    const history =
-        document.getElementById("history");
-
-    if (history) {
-
-        history.textContent =
-            "READY FOR CALCULATION";
-
+        padding-top: 18px;
     }
 
-    updateDisplay();
-
-}
-
-
-// =========================================================
-// DELETE
-// =========================================================
-
-function deleteNumber() {
-
-    knightReact("active");
-
-    if (expression === "ERROR") {
-
-        expression = "";
-
+    .calculator-panel {
+        padding: 14px;
     }
 
-    expression =
-        expression.slice(0, -1);
-
-    updateDisplay();
-
-}
-
-
-// =========================================================
-// CALCULATE
-// =========================================================
-
-function calculate() {
-
-    if (
-        !expression ||
-        expression === "ERROR"
-    ) {
-
-        return;
-
+    .buttons {
+        gap: 7px;
     }
 
-    const originalExpression =
-        expression;
+    button {
+        min-height: 54px;
 
-    knightReact("thinking");
+        font-size: 17px;
+    }
 
+    .display {
+        min-height: 105px;
 
-    try {
+        padding: 15px;
+    }
 
-        let calculation =
-            expression;
+    .display-value {
+        font-size: 32px;
+    }
 
+    .side-panel {
+        grid-template-columns: 1fr;
+    }
 
-        // -----------------------------------------
-        // PERSENTASE
-        // -----------------------------------------
+    .cube-knight {
+        transform: scale(0.65);
+    }
 
-        calculation =
-            calculation.replace(
-                /(\d+(\.\d+)?)%/g,
-                "($1/100)"
-            );
-
-
-        // -----------------------------------------
-        // PANGKAT
-        // -----------------------------------------
-
-        calculation =
-            calculation.replace(
-                /\^/g,
-                "**"
-            );
-
-
-        // -----------------------------------------
-        // VALIDASI
-        // -----------------------------------------
-
-        if (
-            !/^[0-9+\-*/().%\s*]+$/.test(
-                calculation
-            )
-        ) {
-
-            throw new Error("Invalid");
-
+    @keyframes knightFloat {
+        0%,
+        100% {
+            transform:
+                translateY(0)
+                scale(0.65);
         }
 
-
-        // -----------------------------------------
-        // HITUNG
-        // -----------------------------------------
-
-        const answer =
-            Function(
-                '"use strict"; return (' +
-                calculation +
-                ')'
-            )();
-
-
-        if (
-            !Number.isFinite(answer)
-        ) {
-
-            throw new Error("Invalid");
-
+        50% {
+            transform:
+                translateY(-3px)
+                scale(0.65);
         }
-
-
-        const formatted =
-            formatResult(answer);
-
-
-        const history =
-            document.getElementById(
-                "history"
-            );
-
-
-        if (history) {
-
-            history.textContent =
-                originalExpression + " =";
-
-        }
-
-
-        expression =
-            formatted;
-
-        result =
-            formatted;
-
-
-        updateDisplay();
-
-
-        // -----------------------------------------
-        // KNIGHT BERHASIL
-        // -----------------------------------------
-
-        knightReact("success");
-
-
-        // -----------------------------------------
-        // SIMPAN HISTORY
-        // -----------------------------------------
-
-        saveHistory(
-            originalExpression,
-            formatted
-        );
-
-
-    } catch (error) {
-
-        showError();
-
     }
-
 }
 
+/* =========================================================
+   REDUCE MOTION
+   ========================================================= */
 
-// =========================================================
-// SQUARE ROOT
-// =========================================================
+@media (prefers-reduced-motion: reduce) {
 
-function squareRoot() {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
 
-    calculateFunction(
-        Math.sqrt,
-        "√"
-    );
+        scroll-behavior: auto !important;
 
+        transition-duration: 0.01ms !important;
+    }
 }
-
-
-// =========================================================
-// X²
-// =========================================================
-
-function squareNumber() {
-
-    calculateFunction(
-        number =>
-            Math.pow(number, 2),
-        "²"
-    );
-
-}
-
-
-// =========================================================
-// Xʸ
-// =========================================================
-
-function powerNumber() {
-
-    if (!expression) {
-
-        return;
-
-    }
-
-    if (
-        expression.slice(-1) === "^"
-    ) {
-
-        return;
-
-    }
-
-    expression += "^";
-
-    knightReact("thinking");
-
-    updateDisplay();
-
-}
-
-
-// =========================================================
-// 1/X
-// =========================================================
-
-function inverseNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (number === 0) {
-
-                throw new Error(
-                    "Invalid"
-                );
-
-            }
-
-            return 1 / number;
-
-        },
-        "1/"
-    );
-
-}
-
-
-// =========================================================
-// PLUS MINUS
-// =========================================================
-
-function plusMinus() {
-
-    if (!expression) {
-
-        return;
-
-    }
-
-    if (expression === "0") {
-
-        return;
-
-    }
-
-
-    if (
-        expression.startsWith("-")
-    ) {
-
-        expression =
-            expression.substring(1);
-
-    } else {
-
-        expression =
-            "-" + expression;
-
-    }
-
-    knightReact("active");
-
-    updateDisplay();
-
-}
-
-
-// =========================================================
-// SIN
-// =========================================================
-
-function sinNumber() {
-
-    calculateFunction(
-        number =>
-            Math.sin(
-                number * Math.PI / 180
-            ),
-        "sin"
-    );
-
-}
-
-
-// =========================================================
-// COS
-// =========================================================
-
-function cosNumber() {
-
-    calculateFunction(
-        number =>
-            Math.cos(
-                number * Math.PI / 180
-            ),
-        "cos"
-    );
-
-}
-
-
-// =========================================================
-// TAN
-// =========================================================
-
-function tanNumber() {
-
-    calculateFunction(
-        number =>
-            Math.tan(
-                number * Math.PI / 180
-            ),
-        "tan"
-    );
-
-}
-
-
-// =========================================================
-// ASIN
-// =========================================================
-
-function asinNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (
-                number < -1 ||
-                number > 1
-            ) {
-
-                throw new Error(
-                    "Invalid"
-                );
-
-            }
-
-            return (
-                Math.asin(number) *
-                180 /
-                Math.PI
-            );
-
-        },
-        "asin"
-    );
-
-}
-
-
-// =========================================================
-// ACOS
-// =========================================================
-
-function acosNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (
-                number < -1 ||
-                number > 1
-            ) {
-
-                throw new Error(
-                    "Invalid"
-                );
-
-            }
-
-            return (
-                Math.acos(number) *
-                180 /
-                Math.PI
-            );
-
-        },
-        "acos"
-    );
-
-}
-
-
-// =========================================================
-// ATAN
-// =========================================================
-
-function atanNumber() {
-
-    calculateFunction(
-        number =>
-            Math.atan(number) *
-            180 /
-            Math.PI,
-        "atan"
-    );
-
-}
-
-
-// =========================================================
-// LOG
-// =========================================================
-
-function logNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (number <= 0) {
-
-                throw new Error(
-                    "Invalid"
-                );
-
-            }
-
-            return Math.log10(number);
-
-        },
-        "log"
-    );
-
-}
-
-
-// =========================================================
-// LN
-// =========================================================
-
-function lnNumber() {
-
-    calculateFunction(
-        number => {
-
-            if (number <= 0) {
-
-                throw new Error(
-                    "Invalid"
-                );
-
-            }
-
-            return Math.log(number);
-
-        },
-        "ln"
-    );
-
-}
-
-
-// =========================================================
-// Eˣ
-// =========================================================
-
-function exponentialNumber() {
-
-    calculateFunction(
-        number =>
-            Math.exp(number),
-        "e^"
-    );
-
-}
-
-
-// =========================================================
-// 10ˣ
-// =========================================================
-
-function tenPowerNumber() {
-
-    calculateFunction(
-        number =>
-            Math.pow(10, number),
-        "10^"
-    );
-
-}
-
-
-// =========================================================
-// ABS
-// =========================================================
-
-function absoluteNumber() {
-
-    calculateFunction(
-        number =>
-            Math.abs(number),
-        "abs"
-    );
-
-}
-
-
-// =========================================================
-// FACTORIAL
-// =========================================================
-
-function factorialNumber() {
-
-    if (!expression) {
-
-        return;
-
-    }
-
-
-    try {
-
-        const number =
-            Number(expression);
-
-
-        if (
-            !Number.isInteger(number) ||
-            number < 0 ||
-            number > 170
-        ) {
-
-            throw new Error(
-                "Invalid"
-            );
-
-        }
-
-
-        let answer = 1;
-
-
-        for (
-            let i = 2;
-            i <= number;
-            i++
-        ) {
-
-            answer *= i;
-
-        }
-
-
-        const history =
-            document.getElementById(
-                "history"
-            );
-
-
-        if (history) {
-
-            history.textContent =
-                number + "!";
-
-        }
-
-
-        expression =
-            formatResult(answer);
-
-
-        updateDisplay();
-
-
-        knightReact("success");
-
-
-        saveHistory(
-            number + "!",
-            expression
-        );
-
-
-    } catch (error) {
-
-        showError();
-
-    }
-
-}
-
-
-// =========================================================
-// RANDOM
-// =========================================================
-
-function randomNumber() {
-
-    const answer =
-        Math.random();
-
-
-    const history =
-        document.getElementById(
-            "history"
-        );
-
-
-    if (history) {
-
-        history.textContent =
-            "RANDOM NUMBER";
-
-    }
-
-
-    expression =
-        formatResult(answer);
-
-
-    updateDisplay();
-
-
-    knightReact("success");
-
-}
-
-
-// =========================================================
-// PI
-// =========================================================
-
-function addPi() {
-
-    expression +=
-        Math.PI.toString();
-
-    knightReact("active");
-
-    updateDisplay();
-
-}
-
-
-// =========================================================
-// E
-// =========================================================
-
-function addE() {
-
-    expression +=
-        Math.E.toString();
-
-    knightReact("active");
-
-    updateDisplay();
-
-}
-
-
-// =========================================================
-// PHI
-// =========================================================
-
-function addPhi() {
-
-    const phi =
-        (1 + Math.sqrt(5)) / 2;
-
-
-    expression +=
-        phi.toString();
-
-
-    knightReact("active");
-
-    updateDisplay();
-
-}
-
-
-// =========================================================
-// SCIENTIFIC FUNCTION
-// =========================================================
-
-function calculateFunction(
-    operation,
-    label
-) {
-
-    if (!expression) {
-
-        return;
-
-    }
-
-
-    try {
-
-        const number =
-            Number(expression);
-
-
-        if (
-            !Number.isFinite(number)
-        ) {
-
-            throw new Error(
-                "Invalid"
-            );
-
-        }
-
-
-        const answer =
-            operation(number);
-
-
-        if (
-            !Number.isFinite(answer)
-        ) {
-
-            throw new Error(
-                "Invalid"
-            );
-
-        }
-
-
-        const oldExpression =
-            expression;
-
-
-        const history =
-            document.getElementById(
-                "history"
-            );
-
-
-        if (history) {
-
-            history.textContent =
-                label +
-                "(" +
-                oldExpression +
-                ")";
-
-        }
-
-
-        expression =
-            formatResult(answer);
-
-
-        updateDisplay();
-
-
-        knightReact("success");
-
-
-        saveHistory(
-            label +
-            "(" +
-            oldExpression +
-            ")",
-            expression
-        );
-
-
-    } catch (error) {
-
-        showError();
-
-    }
-
-}
-
-
-// =========================================================
-// ERROR
-// =========================================================
-
-function showError() {
-
-    expression =
-        "ERROR";
-
-
-    knightReact("error");
-
-
-    const history =
-        document.getElementById(
-            "history"
-        );
-
-
-    if (history) {
-
-        history.textContent =
-            "INVALID CALCULATION";
-
-    }
-
-
-    updateDisplay();
-
-
-    setTimeout(() => {
-
-        expression = "";
-
-
-        if (history) {
-
-            history.textContent =
-                "READY FOR CALCULATION";
-
-        }
-
-
-        updateDisplay();
-
-    }, 1500);
-
-}
-
-
-// =========================================================
-// KEYBOARD
-// =========================================================
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        const key =
-            event.key;
-
-
-        if (
-            /[0-9]/.test(key)
-        ) {
-
-            addNumber(key);
-
-        }
-
-        else if (
-            key === "+" ||
-            key === "-" ||
-            key === "*" ||
-            key === "/" ||
-            key === "%" ||
-            key === "^"
-        ) {
-
-            addNumber(key);
-
-        }
-
-        else if (
-            key === "."
-        ) {
-
-            addNumber(".");
-
-        }
-
-        else if (
-            key === "Enter"
-        ) {
-
-            event.preventDefault();
-
-            calculate();
-
-        }
-
-        else if (
-            key === "Backspace"
-        ) {
-
-            deleteNumber();
-
-        }
-
-        else if (
-            key === "Escape"
-        ) {
-
-            clearDisplay();
-
-        }
-
-    }
-);
-
-
-// =========================================================
-// CALCULATOR MODE
-// =========================================================
-
-function switchMode(mode) {
-
-    currentMode =
-        mode;
-
-
-    // -----------------------------------------
-    // SEMBUNYIKAN SEMUA MODE
-    // -----------------------------------------
-
-    const modes =
-        document.querySelectorAll(
-            ".calculator-mode"
-        );
-
-
-    modes.forEach(
-        function(section) {
-
-            section.classList.remove(
-                "active"
-            );
-
-
-            section.style.removeProperty(
-                "display"
-            );
-
-
-            section.style.setProperty(
-                "display",
-                "none",
-                "important"
-            );
-
-        }
-    );
-
-
-    // -----------------------------------------
-    // TAMPILKAN MODE TERPILIH
-    // -----------------------------------------
-
-    const selectedMode =
-        document.getElementById(
-            mode + "-mode"
-        );
-
-
-    if (selectedMode) {
-
-        selectedMode.classList.add(
-            "active"
-        );
-
-
-        selectedMode.style.setProperty(
-            "display",
-            "block",
-            "important"
-        );
-
-    }
-
-
-    // -----------------------------------------
-    // UPDATE BUTTON
-    // -----------------------------------------
-
-    const modeButtons =
-        document.querySelectorAll(
-            ".mode-btn"
-        );
-
-
-    modeButtons.forEach(
-        function(button) {
-
-            button.classList.remove(
-                "active"
-            );
-
-
-            const onclick =
-                button.getAttribute(
-                    "onclick"
-                );
-
-
-            if (
-                onclick &&
-                onclick.includes(
-                    `switchMode('${mode}')`
-                )
-            ) {
-
-                button.classList.add(
-                    "active"
-                );
-
-            }
-
-        }
-    );
-
-
-    // -----------------------------------------
-    // CONVERTER
-    // -----------------------------------------
-
-    if (
-        mode === "converter"
-    ) {
-
-        if (
-            typeof changeConverter ===
-            "function"
-        ) {
-
-            changeConverter();
-
-        }
-
-    }
-
-
-    // -----------------------------------------
-    // PROGRAMMER
-    // -----------------------------------------
-
-    if (
-        mode === "programmer"
-    ) {
-
-        if (
-            typeof updateProgrammer ===
-            "function"
-        ) {
-
-            updateProgrammer();
-
-        }
-
-    }
-
-
-    knightReact("active");
-
-}
-
-
-// =========================================================
-// PROGRAMMER CALCULATOR
-// =========================================================
-
-function getProgrammerValue() {
-
-    const input =
-        document.getElementById(
-            "programmer-input"
-        );
-
-
-    if (!input) {
-
-        return 0;
-
-    }
-
-
-    let value =
-        parseInt(
-            input.value
-        );
-
-
-    if (
-        isNaN(value)
-    ) {
-
-        value = 0;
-
-    }
-
-
-    return value;
-
-}
-
-
-// =========================================================
-// UPDATE PROGRAMMER
-// =========================================================
-
-function updateProgrammer() {
-
-    const value =
-        getProgrammerValue();
-
-
-    const dec =
-        document.getElementById(
-            "programmer-dec"
-        );
-
-
-    const bin =
-        document.getElementById(
-            "programmer-bin"
-        );
-
-
-    const hex =
-        document.getElementById(
-            "programmer-hex"
-        );
-
-
-    const oct =
-        document.getElementById(
-            "programmer-oct"
-        );
-
-
-    if (dec) {
-
-        dec.textContent =
-            value;
-
-    }
-
-
-    if (bin) {
-
-        bin.textContent =
-            (value >>> 0)
-                .toString(2);
-
-    }
-
-
-    if (hex) {
-
-        hex.textContent =
-            (value >>> 0)
-                .toString(16)
-                .toUpperCase();
-
-    }
-
-
-    if (oct) {
-
-        oct.textContent =
-            (value >>> 0)
-                .toString(8);
-
-    }
-
-}
-
-
-// =========================================================
-// PROGRAMMER OPERATION
-// =========================================================
-
-function programmerOperation(
-    operation
-) {
-
-    const value =
-        getProgrammerValue();
-
-
-    const second =
-        parseInt(
-            prompt(
-                `Masukkan angka untuk ${operation}:`
-            )
-        );
-
-
-    if (
-        isNaN(second)
-    ) {
-
-        return;
-
-    }
-
-
-    let answer;
-
-
-    switch (operation) {
-
-        case "AND":
-
-            answer =
-                value & second;
-
-            break;
-
-
-        case "OR":
-
-            answer =
-                value | second;
-
-            break;
-
-
-        case "XOR":
-
-            answer =
-                value ^ second;
-
-            break;
-
-
-        default:
-
-            return;
-
-    }
-
-
-    const input =
-        document.getElementById(
-            "programmer-input"
-        );
-
-
-    if (input) {
-
-        input.value =
-            answer;
-
-    }
-
-
-    updateProgrammer();
-
-
-    knightReact("success");
-
-
-    saveHistory(
-        `${value} ${operation} ${second}`,
-        answer
-    );
-
-}
-
-
-// =========================================================
-// PROGRAMMER NOT
-// =========================================================
-
-function programmerNOT() {
-
-    const value =
-        getProgrammerValue();
-
-
-    const answer =
-        ~value;
-
-
-    const input =
-        document.getElementById(
-            "programmer-input"
-        );
-
-
-    if (input) {
-
-        input.value =
-            answer;
-
-    }
-
-
-    updateProgrammer();
-
-
-    knightReact("success");
-
-
-    saveHistory(
-        `NOT ${value}`,
-        answer
-    );
-
-}
-
-
-// =========================================================
-// PROGRAMMER SHIFT
-// =========================================================
-
-function programmerShift(
-    direction
-) {
-
-    const value =
-        getProgrammerValue();
-
-
-    const amount =
-        parseInt(
-            prompt(
-                direction === "left"
-                    ? "Berapa bit SHIFT LEFT?"
-                    : "Berapa bit SHIFT RIGHT?"
-            )
-        );
-
-
-    if (
-        isNaN(amount)
-    ) {
-
-        return;
-
-    }
-
-
-    let answer;
-
-
-    if (
-        direction === "left"
-    ) {
-
-        answer =
-            value << amount;
-
-    }
-
-    else {
-
-        answer =
-            value >> amount;
-
-    }
-
-
-    const input =
-        document.getElementById(
-            "programmer-input"
-        );
-
-
-    if (input) {
-
-        input.value =
-            answer;
-
-    }
-
-
-    updateProgrammer();
-
-
-    knightReact("success");
-
-
-    saveHistory(
-        `${value} ${
-            direction === "left"
-                ? "<<"
-                : ">>"
-        } ${amount}`,
-        answer
-    );
-
-}
-
-
-// =========================================================
-// CONVERTER DATA
-// =========================================================
-
-const converterUnits = {
-
-    length: {
-
-        units: {
-
-            Meter: 1,
-            Kilometer: 1000,
-            Centimeter: 0.01,
-            Millimeter: 0.001,
-            Mile: 1609.344,
-            Yard: 0.9144,
-            Foot: 0.3048,
-            Inch: 0.0254
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            return (
-                value *
-                this.units[from] /
-                this.units[to]
-            );
-
-        }
-
-    },
-
-
-    weight: {
-
-        units: {
-
-            Kilogram: 1,
-            Gram: 0.001,
-            Milligram: 0.000001,
-            Ton: 1000,
-            Pound: 0.45359237,
-            Ounce: 0.0283495
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            return (
-                value *
-                this.units[from] /
-                this.units[to]
-            );
-
-        }
-
-    },
-
-
-    temperature: {
-
-        units: {
-
-            Celsius: "C",
-            Fahrenheit: "F",
-            Kelvin: "K"
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            let celsius;
-
-
-            if (
-                from === "Celsius"
-            ) {
-
-                celsius =
-                    value;
-
-            }
-
-            else if (
-                from === "Fahrenheit"
-            ) {
-
-                celsius =
-                    (value - 32) *
-                    5 / 9;
-
-            }
-
-            else {
-
-                celsius =
-                    value - 273.15;
-
-            }
-
-
-            if (
-                to === "Celsius"
-            ) {
-
-                return celsius;
-
-            }
-
-
-            if (
-                to === "Fahrenheit"
-            ) {
-
-                return (
-                    celsius * 9 / 5
-                ) + 32;
-
-            }
-
-
-            return (
-                celsius + 273.15
-            );
-
-        }
-
-    },
-
-
-    area: {
-
-        units: {
-
-            "Square Meter": 1,
-            "Square Kilometer": 1000000,
-            "Square Centimeter": 0.0001,
-            Hectare: 10000,
-            Acre: 4046.856
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            return (
-                value *
-                this.units[from] /
-                this.units[to]
-            );
-
-        }
-
-    },
-
-
-    volume: {
-
-        units: {
-
-            Liter: 1,
-            Milliliter: 0.001,
-            "Cubic Meter": 1000,
-            "Cubic Centimeter": 0.001,
-            Gallon: 3.78541
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            return (
-                value *
-                this.units[from] /
-                this.units[to]
-            );
-
-        }
-
-    },
-
-
-    time: {
-
-        units: {
-
-            Second: 1,
-            Minute: 60,
-            Hour: 3600,
-            Day: 86400,
-            Week: 604800
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            return (
-                value *
-                this.units[from] /
-                this.units[to]
-            );
-
-        }
-
-    },
-
-
-    speed: {
-
-        units: {
-
-            "Meter/Second": 1,
-            "Kilometer/Hour": 0.277777778,
-            "Mile/Hour": 0.44704,
-            Knot: 0.514444
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            return (
-                value *
-                this.units[from] /
-                this.units[to]
-            );
-
-        }
-
-    },
-
-
-    data: {
-
-        units: {
-
-            Bit: 1,
-            Byte: 8,
-            KB: 8192,
-            MB: 8388608,
-            GB: 8589934592,
-            TB: 8796093022208
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            return (
-                value *
-                this.units[from] /
-                this.units[to]
-            );
-
-        }
-
-    },
-
-
-    energy: {
-
-        units: {
-
-            Joule: 1,
-            Kilojoule: 1000,
-            Calorie: 4.184,
-            Kilocalorie: 4184,
-            "Watt Hour": 3600,
-            "Kilowatt Hour": 3600000
-
-        },
-
-
-        convert(
-            value,
-            from,
-            to
-        ) {
-
-            return (
-                value *
-                this.units[from] /
-                this.units[to]
-            );
-
-        }
-
-    }
-
-};
-
-
-// =========================================================
-// LOAD CONVERTER
-// =========================================================
-
-function changeConverter() {
-
-    const typeElement =
-        document.getElementById(
-            "converter-type"
-        );
-
-
-    const from =
-        document.getElementById(
-            "from-unit"
-        );
-
-
-    const to =
-        document.getElementById(
-            "to-unit"
-        );
-
-
-    if (
-        !typeElement ||
-        !from ||
-        !to
-    ) {
-
-        return;
-
-    }
-
-
-    const type =
-        typeElement.value;
-
-
-    const data =
-        converterUnits[type];
-
-
-    if (!data) {
-
-        return;
-
-    }
-
-
-    from.innerHTML = "";
-
-    to.innerHTML = "";
-
-
-    Object.keys(
-        data.units
-    ).forEach(
-        unit => {
-
-            from.innerHTML +=
-                `<option value="${unit}">
-                    ${unit}
-                </option>`;
-
-
-            to.innerHTML +=
-                `<option value="${unit}">
-                    ${unit}
-                </option>`;
-
-        }
-    );
-
-
-    if (
-        to.options.length > 1
-    ) {
-
-        to.selectedIndex =
-            1;
-
-    }
-
-
-    convertValue();
-
-}
-
-
-// =========================================================
-// CONVERT VALUE
-// =========================================================
-
-function convertValue() {
-
-    const typeElement =
-        document.getElementById(
-            "converter-type"
-        );
-
-
-    const valueElement =
-        document.getElementById(
-            "convert-value"
-        );
-
-
-    const fromElement =
-        document.getElementById(
-            "from-unit"
-        );
-
-
-    const toElement =
-        document.getElementById(
-            "to-unit"
-        );
-
-
-    const resultElement =
-        document.getElementById(
-            "convert-result"
-        );
-
-
-    if (
-        !typeElement ||
-        !valueElement ||
-        !fromElement ||
-        !toElement ||
-        !resultElement
-    ) {
-
-        return;
-
-    }
-
-
-    const type =
-        typeElement.value;
-
-
-    const value =
-        parseFloat(
-            valueElement.value
-        );
-
-
-    if (
-        isNaN(value)
-    ) {
-
-        resultElement.value =
-            "";
-
-        return;
-
-    }
-
-
-    const from =
-        fromElement.value;
-
-
-    const to =
-        toElement.value;
-
-
-    const answer =
-        converterUnits[type]
-            .convert(
-                value,
-                from,
-                to
-            );
-
-
-    resultElement.value =
-        formatConverterResult(
-            answer
-        );
-
-
-    knightReact("active");
-
-}
-
-
-// =========================================================
-// FORMAT CONVERTER
-// =========================================================
-
-function formatConverterResult(
-    number
-) {
-
-    if (
-        !Number.isFinite(number)
-    ) {
-
-        return "ERROR";
-
-    }
-
-
-    return Number(
-        number.toFixed(10)
-    ).toString();
-
-}
-
-
-// =========================================================
-// ADVENTURE HISTORY
-// =========================================================
-
-function saveHistory(
-    expression,
-    result
-) {
-
-    let history =
-        JSON.parse(
-            localStorage.getItem(
-                "cubesAdventureHistory"
-            )
-        ) || [];
-
-
-    history.unshift({
-
-        expression:
-            String(expression),
-
-        result:
-            String(result),
-
-        date:
-            new Date()
-                .toLocaleString(
-                    "id-ID"
-                )
-
-    });
-
-
-    history =
-        history.slice(
-            0,
-            50
-        );
-
-
-    localStorage.setItem(
-        "cubesAdventureHistory",
-        JSON.stringify(history)
-    );
-
-
-    displayHistory();
-
-}
-
-
-// =========================================================
-// DISPLAY HISTORY
-// =========================================================
-
-function displayHistory() {
-
-    const container =
-        document.getElementById(
-            "history-list"
-        );
-
-
-    if (!container) {
-
-        return;
-
-    }
-
-
-    const history =
-        JSON.parse(
-            localStorage.getItem(
-                "cubesAdventureHistory"
-            )
-        ) || [];
-
-
-    if (
-        history.length === 0
-    ) {
-
-        container.innerHTML = `
-
-            <div class="empty-history">
-                Belum ada petualangan...
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        history.map(
-            item => `
-
-                <div class="history-item">
-
-                    <div class="history-expression">
-
-                        ${escapeHTML(
-                            item.expression
-                        )}
-
-                    </div>
-
-                    <div class="history-result">
-
-                        = ${escapeHTML(
-                            item.result
-                        )}
-
-                    </div>
-
-                </div>
-
-            `
-        ).join("");
-
-}
-
-
-// =========================================================
-// CLEAR HISTORY
-// =========================================================
-
-function clearHistory() {
-
-    const confirmClear =
-        confirm(
-            "Hapus semua Adventure History?"
-        );
-
-
-    if (!confirmClear) {
-
-        return;
-
-    }
-
-
-    localStorage.removeItem(
-        "cubesAdventureHistory"
-    );
-
-
-    displayHistory();
-
-
-    knightReact("active");
-
-}
-
-
-// =========================================================
-// SECURITY
-// =========================================================
-
-function escapeHTML(value) {
-
-    return String(value)
-
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-
-        .replace(
-            /</g,
-            "&lt;"
-        )
-
-        .replace(
-            />/g,
-            "&gt;"
-        )
-
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-// =========================================================
-// INITIALIZE
-// =========================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
-
-        // BASIC
-        switchMode(
-            "basic"
-        );
-
-
-        // CONVERTER
-        changeConverter();
-
-
-        // PROGRAMMER
-        updateProgrammer();
-
-
-        // HISTORY
-        displayHistory();
-
-
-        // DISPLAY
-        updateDisplay();
-
-
-        // CUBE KNIGHT
-        knightReact(
-            "normal"
-        );
-
-    }
-);
