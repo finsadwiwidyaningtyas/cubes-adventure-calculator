@@ -1348,3 +1348,15 @@ img {
 #converter-mode.active {
     display: block !important;
 }
+
+/* =========================================
+   FIX MODE AGAR TIDAK DOUBLE
+========================================= */
+
+.calculator-mode {
+    display: none !important;
+}
+
+.calculator-mode.active {
+    display: block !important;
+}
