@@ -1,8 +1,14 @@
 /* =========================================================
-   CUBES ADVENTURE KNIGHT CALCULATOR
-   FULL STYLE.CSS
-   Animasi ringan + Cube Knight kecil
-   ========================================================= */
+   CUBES ADVENTURE KNIGHT
+   FUTURISTIC CALCULATOR
+   STYLE.CSS - FULL VERSION
+   + CUBE KNIGHT MASCOT
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
 
 * {
     margin: 0;
@@ -10,1423 +16,3002 @@
     box-sizing: border-box;
 }
 
+
 :root {
-    --bg-main: #020b18;
-    --bg-secondary: #06182b;
-    --panel: rgba(5, 25, 43, 0.88);
 
-    --cyan: #20e8ff;
-    --cyan-soft: #69f3ff;
-    --blue: #168dcc;
-    --blue-dark: #073653;
+    --bg: #010914;
 
-    --text: #e9fcff;
-    --text-soft: #8db8c9;
+    --panel: #031525;
 
-    --danger: #ff5277;
-    --success: #54ffc7;
+    --panel2: #061e34;
 
-    --shadow: 0 0 20px rgba(32, 232, 255, 0.18);
+    --cyan: #24d9ff;
+
+    --cyan-light: #72efff;
+
+    --blue: #078fe5;
+
+    --blue-dark: #075278;
+
+    --white: #f1fbff;
+
+    --muted: #6c91a5;
+
+    --border: rgba(30, 190, 255, 0.35);
+
 }
+
 
 /* =========================================================
    BODY
-   ========================================================= */
+========================================================= */
 
 body {
+
     min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-    color: var(--text);
+
+    padding: 20px 15px;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color: var(--white);
 
     background:
+
         radial-gradient(
             circle at 50% 20%,
-            rgba(16, 116, 160, 0.18),
+            rgba(0, 142, 255, 0.13),
             transparent 38%
         ),
-        linear-gradient(
-            135deg,
-            #010812 0%,
-            #031426 50%,
-            #010914 100%
-        );
+
+        radial-gradient(
+            circle at 10% 80%,
+            rgba(0, 115, 255, 0.07),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 70%,
+            rgba(0, 200, 255, 0.05),
+            transparent 25%
+        ),
+
+        #010914;
 
     overflow-x: hidden;
+
 }
 
-/* =========================================================
-   BACKGROUND GRID
-   ========================================================= */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-
-    background-image:
-        linear-gradient(
-            rgba(32, 232, 255, 0.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(32, 232, 255, 0.035) 1px,
-            transparent 1px
-        );
-
-    background-size: 50px 50px;
-
-    pointer-events: none;
-    z-index: -5;
-}
 
 /* =========================================================
-   FLOATING CUBES
-   ========================================================= */
+   BACKGROUND CUBES
+========================================================= */
 
-.floating-cubes {
+.cube {
+
     position: fixed;
-    inset: 0;
+
+    width: 100px;
+
+    height: 100px;
+
+    border:
+        1px solid
+        rgba(0, 145, 255, 0.18);
+
+    transform: rotate(30deg);
+
     pointer-events: none;
-    overflow: hidden;
+
     z-index: -2;
+
+    animation:
+        backgroundCubeFloat
+        8s
+        ease-in-out
+        infinite;
+
 }
 
-.floating-cubes span {
+
+.cube::after {
+
+    content: "";
+
     position: absolute;
 
-    width: 18px;
-    height: 18px;
+    inset: 15px;
 
-    border: 1px solid rgba(32, 232, 255, 0.3);
+    border:
+        1px solid
+        rgba(0, 200, 255, 0.08);
+
+}
+
+
+.cube-1 {
+
+    left: 35px;
+
+    top: 220px;
+
+    width: 120px;
+
+    height: 120px;
+
+}
+
+
+.cube-2 {
+
+    right: 40px;
+
+    top: 180px;
+
+    width: 70px;
+
+    height: 70px;
 
     transform: rotate(45deg);
 
-    opacity: 0.35;
+    animation-delay: -2s;
 
-    animation: cubeFloat 9s ease-in-out infinite;
 }
 
-.floating-cubes span:nth-child(1) {
-    left: 8%;
-    top: 25%;
-    animation-delay: 0s;
+
+.cube-3 {
+
+    right: 80px;
+
+    top: 440px;
+
+    width: 110px;
+
+    height: 110px;
+
+    transform: rotate(20deg);
+
+    animation-delay: -4s;
+
 }
 
-.floating-cubes span:nth-child(2) {
-    left: 82%;
-    top: 20%;
-    width: 13px;
-    height: 13px;
-    animation-delay: 2s;
+
+.cube-4 {
+
+    left: 30px;
+
+    bottom: 230px;
+
+    width: 55px;
+
+    height: 55px;
+
+    transform: rotate(25deg);
+
+    animation-delay: -6s;
+
 }
 
-.floating-cubes span:nth-child(3) {
-    left: 15%;
-    top: 75%;
-    width: 11px;
-    height: 11px;
-    animation-delay: 4s;
-}
 
-.floating-cubes span:nth-child(4) {
-    left: 76%;
-    top: 72%;
-    width: 16px;
-    height: 16px;
-    animation-delay: 6s;
-}
+@keyframes backgroundCubeFloat {
 
-@keyframes cubeFloat {
     0%,
     100% {
-        transform: translateY(0) rotate(45deg);
-        opacity: 0.2;
+
+        opacity: 0.5;
+
+        transform:
+            translateY(0)
+            rotate(30deg);
+
     }
 
     50% {
-        transform: translateY(-15px) rotate(65deg);
-        opacity: 0.45;
+
+        opacity: 1;
+
+        transform:
+            translateY(-20px)
+            rotate(42deg);
+
     }
+
 }
+
 
 /* =========================================================
-   PARTICLES
-   ========================================================= */
+   CUBE KNIGHT
+========================================================= */
 
-.particles {
+.cube-knight {
+
     position: fixed;
-    inset: 0;
+
+    right: 18px;
+
+    bottom: 35px;
+
+    width: 180px;
+
+    height: 250px;
+
+    z-index: 5;
+
     pointer-events: none;
-    z-index: -3;
+
+    transform-origin: center bottom;
+
+    animation:
+        knightFloat
+        4s
+        ease-in-out
+        infinite;
+
 }
 
-.particles span {
+
+/* =========================================================
+   KNIGHT GLOW
+========================================================= */
+
+.knight-glow {
+
     position: absolute;
 
-    width: 3px;
-    height: 3px;
+    width: 125px;
 
-    background: var(--cyan);
+    height: 125px;
+
+    left: 27px;
+
+    top: 40px;
+
     border-radius: 50%;
 
-    box-shadow:
-        0 0 7px var(--cyan);
+    background:
+        radial-gradient(
+            circle,
+            rgba(36, 217, 255, 0.17),
+            transparent 70%
+        );
 
-    opacity: 0.4;
+    filter: blur(12px);
 
-    animation: particleGlow 4s ease-in-out infinite;
+    animation:
+        knightGlowPulse
+        2.5s
+        ease-in-out
+        infinite;
+
 }
 
-@keyframes particleGlow {
+
+/* =========================================================
+   KNIGHT SVG
+========================================================= */
+
+.knight-svg {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: visible;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(0, 190, 255, 0.35)
+        );
+
+}
+
+
+/* =========================================================
+   KNIGHT FLOAT
+========================================================= */
+
+@keyframes knightFloat {
+
     0%,
     100% {
-        opacity: 0.15;
-        transform: scale(0.8);
+
+        transform:
+            translateY(0)
+            rotate(-1deg);
+
     }
 
     50% {
-        opacity: 0.55;
-        transform: scale(1.15);
+
+        transform:
+            translateY(-13px)
+            rotate(1deg);
+
     }
+
 }
+
+
+@keyframes knightGlowPulse {
+
+    0%,
+    100% {
+
+        opacity: 0.45;
+
+        transform: scale(0.9);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        transform: scale(1.12);
+
+    }
+
+}
+
 
 /* =========================================================
-   MAIN CONTAINER
-   ========================================================= */
+   KNIGHT EYES
+========================================================= */
 
-.container {
-    width: min(1100px, 94%);
-    margin: 0 auto;
-    padding: 30px 0 50px;
+.knight-eye {
+
+    animation:
+        eyePulse
+        1.4s
+        ease-in-out
+        infinite;
+
 }
+
+
+@keyframes eyePulse {
+
+    0%,
+    100% {
+
+        opacity: 0.55;
+
+        filter:
+            drop-shadow(
+                0 0 2px
+                #24d9ff
+            );
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        filter:
+            drop-shadow(
+                0 0 10px
+                #24d9ff
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT SWORD
+========================================================= */
+
+.knight-sword {
+
+    transform-origin: 205px 270px;
+
+    animation:
+        swordIdle
+        3s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes swordIdle {
+
+    0%,
+    100% {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    50% {
+
+        transform:
+            rotate(-5deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT SHIELD
+========================================================= */
+
+.knight-shield {
+
+    transform-origin: 43px 270px;
+
+    animation:
+        shieldIdle
+        3.5s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes shieldIdle {
+
+    0%,
+    100% {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    50% {
+
+        transform:
+            rotate(4deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   CUBE KNIGHT REACTION
+========================================================= */
+
+/* Saat tombol kalkulator ditekan */
+
+.cube-knight.knight-action {
+
+    animation:
+        knightAttack
+        0.55s
+        ease-out;
+
+}
+
+
+/* Saat melakukan perhitungan */
+
+.cube-knight.knight-calculate {
+
+    animation:
+        knightCalculate
+        0.8s
+        ease-out;
+
+}
+
+
+/* Saat terjadi error */
+
+.cube-knight.knight-error {
+
+    animation:
+        knightError
+        0.7s
+        ease-out;
+
+}
+
+
+/* Saat mode berganti */
+
+.cube-knight.knight-mode {
+
+    animation:
+        knightModeChange
+        0.65s
+        ease-out;
+
+}
+
+
+/* =========================================================
+   KNIGHT ACTION ANIMATION
+========================================================= */
+
+@keyframes knightAttack {
+
+    0% {
+
+        transform:
+            translateY(0)
+            rotate(0deg)
+            scale(1);
+
+    }
+
+    35% {
+
+        transform:
+            translateY(-15px)
+            rotate(-6deg)
+            scale(1.04);
+
+    }
+
+    65% {
+
+        transform:
+            translateY(4px)
+            rotate(5deg)
+            scale(0.98);
+
+    }
+
+    100% {
+
+        transform:
+            translateY(0)
+            rotate(0deg)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT CALCULATE
+========================================================= */
+
+@keyframes knightCalculate {
+
+    0% {
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+    25% {
+
+        transform:
+            translateY(-25px)
+            scale(1.08);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-10px)
+            scale(1.12);
+
+    }
+
+    75% {
+
+        transform:
+            translateY(-18px)
+            scale(1.05);
+
+    }
+
+    100% {
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT ERROR
+========================================================= */
+
+@keyframes knightError {
+
+    0% {
+
+        transform:
+            translateX(0);
+
+    }
+
+    20% {
+
+        transform:
+            translateX(-10px)
+            rotate(-5deg);
+
+    }
+
+    40% {
+
+        transform:
+            translateX(10px)
+            rotate(5deg);
+
+    }
+
+    60% {
+
+        transform:
+            translateX(-8px)
+            rotate(-4deg);
+
+    }
+
+    80% {
+
+        transform:
+            translateX(7px)
+            rotate(4deg);
+
+    }
+
+    100% {
+
+        transform:
+            translateX(0)
+            rotate(0deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT MODE CHANGE
+========================================================= */
+
+@keyframes knightModeChange {
+
+    0% {
+
+        transform:
+            scale(1)
+            rotate(0deg);
+
+        filter:
+            brightness(1);
+
+    }
+
+    50% {
+
+        transform:
+            scale(1.15)
+            rotate(8deg);
+
+        filter:
+            brightness(1.8)
+            drop-shadow(
+                0 0 18px
+                rgba(36, 217, 255, 0.9)
+            );
+
+    }
+
+    100% {
+
+        transform:
+            scale(1)
+            rotate(0deg);
+
+        filter:
+            brightness(1);
+
+    }
+
+}
+
 
 /* =========================================================
    HEADER
-   ========================================================= */
+========================================================= */
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
+.top-header {
 
-.logo-title {
-    font-size: clamp(28px, 5vw, 48px);
-    font-weight: 900;
+    width:
+        min(
+            1350px,
+            100%
+        );
 
-    letter-spacing: 3px;
+    height: 90px;
 
-    color: var(--cyan-soft);
+    margin:
+        0 auto 25px;
 
-    text-shadow:
-        0 0 8px rgba(32, 232, 255, 0.5),
-        0 0 25px rgba(32, 232, 255, 0.2);
-}
+    padding:
+        10px 28px;
 
-.subtitle {
-    margin-top: 8px;
-
-    color: var(--text-soft);
-
-    font-size: 14px;
-    letter-spacing: 2px;
-}
-
-/* =========================================================
-   LAYOUT
-   ========================================================= */
-
-.main-layout {
     display: grid;
 
-    grid-template-columns: minmax(0, 1fr) 260px;
+    grid-template-columns:
+        100px
+        1fr
+        100px;
 
-    gap: 24px;
+    align-items: center;
 
-    align-items: start;
-}
+    border:
+        1px solid
+        rgba(0, 195, 255, 0.45);
 
-/* =========================================================
-   CALCULATOR PANEL
-   ========================================================= */
-
-.calculator-panel {
-    position: relative;
-
-    background: var(--panel);
-
-    border: 1px solid rgba(32, 232, 255, 0.18);
-
-    border-radius: 20px;
-
-    padding: 22px;
-
-    box-shadow:
-        0 0 30px rgba(0, 0, 0, 0.35),
-        inset 0 0 30px rgba(32, 232, 255, 0.025);
-
-    backdrop-filter: blur(10px);
-}
-
-/* =========================================================
-   DISPLAY
-   ========================================================= */
-
-.display {
-    position: relative;
-
-    min-height: 120px;
-
-    padding: 20px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
+    border-radius: 8px;
 
     background:
         linear-gradient(
-            145deg,
-            rgba(1, 14, 27, 0.96),
-            rgba(4, 28, 45, 0.96)
+            90deg,
+            rgba(1, 20, 36, 0.96),
+            rgba(2, 17, 31, 0.98),
+            rgba(1, 20, 36, 0.96)
         );
 
-    border: 1px solid rgba(32, 232, 255, 0.25);
+    box-shadow:
+        0 0 25px
+        rgba(0, 150, 255, 0.1);
 
-    border-radius: 14px;
+    position: relative;
 
     overflow: hidden;
 
-    box-shadow:
-        inset 0 0 20px rgba(32, 232, 255, 0.04);
 }
 
-/* DISPLAY GLOW */
 
-.display::after {
+/* HEADER TOP LIGHT */
+
+.top-header::before {
+
     content: "";
 
     position: absolute;
 
-    inset: 0;
+    left: 30px;
 
-    pointer-events: none;
+    right: 30px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(32, 232, 255, 0.05),
-        transparent
-    );
+    top: 0;
 
-    opacity: 0;
+    height: 1px;
 
-    transition: opacity 0.25s ease;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--cyan),
+            transparent
+        );
+
 }
 
-.display.energy-active::after {
-    opacity: 1;
-    animation: displaySweep 0.45s ease;
+
+/* HEADER DECORATION */
+
+.top-header::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+
+    height: 180px;
+
+    right: -100px;
+
+    top: -100px;
+
+    border:
+        1px solid
+        rgba(36, 217, 255, 0.15);
+
+    transform:
+        rotate(45deg);
+
 }
 
-@keyframes displaySweep {
-    0% {
-        transform: translateX(-100%);
-    }
 
-    100% {
-        transform: translateX(100%);
-    }
+/* =========================================================
+   BRAND SIDE
+========================================================= */
+
+.brand-side {
+
+    width: 90px;
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        flex-start;
+
+    overflow: hidden;
+
+    flex-shrink: 0;
+
 }
 
-.display-expression {
-    width: 100%;
 
-    text-align: right;
+.brand-side.right {
 
-    color: var(--text-soft);
+    justify-content:
+        flex-end;
 
-    font-size: 15px;
-
-    min-height: 22px;
-
-    margin-bottom: 5px;
 }
 
-.display-value {
-    width: 100%;
 
-    text-align: right;
+/* =========================================================
+   HEADER LOGO
+========================================================= */
 
-    font-size: clamp(30px, 6vw, 52px);
+.header-logo {
+
+    width:
+        52px !important;
+
+    height:
+        52px !important;
+
+    min-width:
+        52px !important;
+
+    min-height:
+        52px !important;
+
+    max-width:
+        52px !important;
+
+    max-height:
+        52px !important;
+
+    display:
+        block !important;
+
+    object-fit:
+        contain !important;
+
+    object-position:
+        center !important;
+
+    border-radius:
+        8px;
+
+    flex-shrink: 0;
+
+}
+
+
+/* =========================================================
+   SCHOOL BRAND
+========================================================= */
+
+.school-brand {
+
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+}
+
+
+.school-brand .header-logo {
+
+    width:
+        50px !important;
+
+    height:
+        50px !important;
+
+    min-width:
+        50px !important;
+
+    min-height:
+        50px !important;
+
+    max-width:
+        50px !important;
+
+    max-height:
+        50px !important;
+
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.title-brand {
+
+    text-align: center;
+
+    white-space: nowrap;
+
+}
+
+
+.main-title {
+
+    font-size: 34px;
+
+    font-weight: 900;
+
+    letter-spacing: 8px;
+
+    line-height: 1;
+
+    color: #f4fcff;
+
+    text-shadow:
+        0 0 12px
+        rgba(20, 200, 255, 0.8);
+
+}
+
+
+.main-title span {
+
+    color:
+        var(--cyan);
+
+    margin-right: 5px;
+
+}
+
+
+.sub-title {
+
+    margin-top: 8px;
+
+    color:
+        var(--cyan);
+
+    font-size: 11px;
 
     font-weight: 700;
 
-    color: #eaffff;
+    letter-spacing: 6px;
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    text-shadow:
-        0 0 10px rgba(32, 232, 255, 0.35);
-
-    transition:
-        transform 0.15s ease,
-        text-shadow 0.15s ease;
 }
 
-/* NUMBER TRANSITION */
-
-.display-value.number-change {
-    animation: numberChange 0.18s ease;
-}
-
-@keyframes numberChange {
-    0% {
-        transform: translateY(3px);
-        opacity: 0.65;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
 
 /* =========================================================
-   CALCULATOR BUTTON GRID
-   ========================================================= */
+   MAIN WRAPPER
+========================================================= */
 
-.buttons {
+.main-wrapper {
+
+    width:
+        min(
+            950px,
+            100%
+        );
+
+    margin:
+        0 auto;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-bar {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    padding:
+        0 20px 12px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+.system-online {
+
+    color:
+        #47e76a;
+
+}
+
+
+.online-dot {
+
+    display:
+        inline-block;
+
+    width: 10px;
+
+    height: 10px;
+
+    margin-right: 7px;
+
+    border-radius: 50%;
+
+    background:
+        #52ec6d;
+
+    box-shadow:
+        0 0 10px
+        rgba(70, 255, 100, 0.8);
+
+    animation:
+        onlinePulse
+        1.5s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes onlinePulse {
+
+    0%,
+    100% {
+
+        opacity: 0.6;
+
+        box-shadow:
+            0 0 5px
+            rgba(70, 255, 100, 0.5);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        box-shadow:
+            0 0 15px
+            rgba(70, 255, 100, 1);
+
+    }
+
+}
+
+
+.energy {
+
+    color:
+        var(--cyan);
+
+}
+
+
+.energy span {
+
+    margin-left: 5px;
+
+    font-size: 20px;
+
+}
+
+
+/* =========================================================
+   MODE BAR
+========================================================= */
+
+.mode-bar {
+
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 10px;
 
-    margin-top: 18px;
+    margin-bottom: 15px;
+
+    padding: 7px;
+
+    border:
+        1px solid
+        rgba(0, 165, 255, 0.2);
+
+    border-radius: 10px;
+
+    background:
+        rgba(1, 16, 29, 0.9);
+
 }
 
-button {
-    border: none;
 
-    min-height: 62px;
+.mode-btn {
 
-    border-radius: 12px;
+    height: 45px;
+
+    border:
+        1px solid
+        rgba(0, 155, 255, 0.35);
+
+    border-radius: 8px;
+
+    background:
+        transparent;
+
+    color:
+        #9ab4c2;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        0.2s;
+
+}
+
+
+.mode-btn:hover {
+
+    color:
+        white;
+
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 10px
+        rgba(0, 180, 255, 0.1);
+
+}
+
+
+.mode-btn.active {
+
+    color:
+        white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #078fe5,
+            #086bc1
+        );
+
+    border-color:
+        rgba(70, 220, 255, 0.9);
+
+    box-shadow:
+        0 0 15px
+        rgba(0, 160, 255, 0.25);
+
+}
+
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.workspace {
+
+    display: grid;
+
+    grid-template-columns:
+        1.15fr 0.85fr;
+
+    gap: 15px;
+
+    align-items:
+        stretch;
+
+}
+
+
+/* =========================================================
+   CALCULATOR PANEL
+========================================================= */
+
+.calculator-panel {
+
+    padding: 18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 15px;
 
     background:
         linear-gradient(
             145deg,
-            #0a2941,
-            #061a2d
+            rgba(4, 29, 50, 0.98),
+            rgba(1, 15, 28, 0.98)
         );
 
-    border: 1px solid rgba(32, 232, 255, 0.13);
+    box-shadow:
+        0 0 30px
+        rgba(0, 140, 255, 0.08);
 
-    color: var(--text);
+    position: relative;
 
-    font-size: 19px;
+}
+
+
+/* =========================================================
+   DISPLAY
+========================================================= */
+
+.display {
+
+    height: 115px;
+
+    margin-bottom: 15px;
+
+    padding: 17px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-end;
+
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #020d19,
+            #031a2c
+        );
+
+    border:
+        1px solid
+        rgba(20, 180, 255, 0.28);
+
+    box-shadow:
+        inset 0 0 20px
+        rgba(0, 130, 255, 0.06);
+
+    overflow: hidden;
+
+}
+
+
+#history {
+
+    width: 100%;
+
+    text-align: left;
+
+    color:
+        #66899b;
+
+    font-size: 11px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow:
+        ellipsis;
+
+}
+
+
+#result {
+
+    width: 100%;
+
+    text-align: right;
+
+    color:
+        white;
+
+    font-size: 42px;
+
+    font-weight: 500;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow:
+        ellipsis;
+
+    text-shadow:
+        0 0 12px
+        rgba(70, 225, 255, 0.6);
+
+    transition:
+        0.2s;
+
+}
+
+
+/* =========================================================
+   RESULT ACTIVE EFFECT
+========================================================= */
+
+#result.result-active {
+
+    color:
+        var(--cyan-light);
+
+    text-shadow:
+        0 0 18px
+        rgba(36, 217, 255, 0.9);
+
+}
+
+
+/* =========================================================
+   CALCULATOR MODE
+========================================================= */
+
+.calculator-mode {
+
+    display: none;
+
+}
+
+
+.calculator-mode.active {
+
+    display: block;
+
+}
+
+
+/* =========================================================
+   BASIC / SCIENTIFIC BUTTON GRID
+========================================================= */
+
+.buttons {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.buttons button {
+
+    width: 100%;
+
+    height: 58px;
+
+    border-radius: 11px;
+
+    border:
+        1px solid
+        rgba(0, 160, 225, 0.28);
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b2e4b,
+            #08223a
+        );
+
+    color:
+        #f1faff;
+
+    font-size: 18px;
 
     font-weight: 700;
 
     cursor: pointer;
 
     transition:
-        transform 0.12s ease,
-        border-color 0.15s ease,
-        box-shadow 0.15s ease,
-        background 0.15s ease;
+        transform 0.15s,
+        border-color 0.15s,
+        box-shadow 0.15s,
+        background 0.15s;
+
 }
 
-button:hover {
-    transform: translateY(-2px);
 
-    border-color: rgba(32, 232, 255, 0.5);
+.buttons button:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(50, 215, 255, 0.7);
 
     box-shadow:
-        0 5px 15px rgba(32, 232, 255, 0.12);
-}
-
-button:active {
-    transform: scale(0.96);
-
-    box-shadow:
-        inset 0 0 10px rgba(32, 232, 255, 0.15);
-}
-
-/* OPERATOR */
-
-.operator {
-    color: var(--cyan-soft);
+        0 0 12px
+        rgba(20, 190, 255, 0.15);
 
     background:
         linear-gradient(
             145deg,
-            #083d58,
-            #06283d
+            #12476b,
+            #0b2e4b
         );
+
 }
 
-/* EQUAL */
 
-.equals {
-    color: #021016;
+.buttons button:active {
+
+    transform:
+        scale(0.96);
+
+}
+
+
+.buttons .special {
+
+    color:
+        var(--cyan);
+
+}
+
+
+.buttons .operator {
+
+    color:
+        var(--cyan);
 
     background:
         linear-gradient(
             145deg,
-            #51efff,
-            #17b9dc
+            #075278,
+            #063b5c
         );
 
-    box-shadow:
-        0 0 15px rgba(32, 232, 255, 0.2);
 }
 
-.equals:hover {
-    box-shadow:
-        0 0 20px rgba(32, 232, 255, 0.35);
+
+.buttons .clear-btn {
+
+    color:
+        #ff4e61;
+
 }
 
-/* CLEAR */
 
-.clear {
-    color: #ff9eb3;
-}
+.buttons .equal {
 
-/* =========================================================
-   SIDE PANEL
-   ========================================================= */
-
-.side-panel {
-    display: flex;
-    flex-direction: column;
-
-    gap: 16px;
-}
-
-.info-card {
-    padding: 18px;
-
-    border-radius: 16px;
-
-    background: rgba(4, 25, 43, 0.82);
-
-    border: 1px solid rgba(32, 232, 255, 0.14);
-
-    box-shadow:
-        0 0 18px rgba(0, 0, 0, 0.2);
-}
-
-.info-card h3 {
-    color: var(--cyan-soft);
-
-    font-size: 14px;
-
-    letter-spacing: 1px;
-
-    margin-bottom: 12px;
-}
-
-.info-card p {
-    color: var(--text-soft);
-
-    font-size: 13px;
-
-    line-height: 1.6;
-}
-
-/* =========================================================
-   XP BAR
-   ========================================================= */
-
-.xp-container {
-    margin-top: 12px;
-}
-
-.xp-info {
-    display: flex;
-    justify-content: space-between;
-
-    color: var(--text-soft);
-
-    font-size: 12px;
-
-    margin-bottom: 7px;
-}
-
-.xp-bar {
-    height: 7px;
-
-    background: #041421;
-
-    border-radius: 10px;
-
-    overflow: hidden;
-}
-
-.xp-fill {
-    height: 100%;
-
-    width: 0%;
-
-    border-radius: inherit;
-
-    background:
-        linear-gradient(
-            90deg,
-            #0ea8d1,
-            #5df3ff
-        );
-
-    box-shadow:
-        0 0 8px rgba(32, 232, 255, 0.5);
-
-    transition: width 0.35s ease;
-}
-
-/* =========================================================
-   CUBE KNIGHT
-   UKURAN DIKECILKAN
-   ========================================================= */
-
-.cube-knight {
-    position: relative;
-
-    width: 150px;
-    height: 190px;
-
-    margin: 0 auto;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: flex-start;
-
-    pointer-events: none;
-
-    transform: scale(0.85);
-
-    transform-origin: center top;
-
-    animation: knightFloat 5s ease-in-out infinite;
-}
-
-/*
-   Penting:
-   Cube Knight tidak lagi menggunakan ukuran raksasa.
-*/
-
-@keyframes knightFloat {
-    0%,
-    100% {
-        transform:
-            translateY(0)
-            scale(0.85);
-    }
-
-    50% {
-        transform:
-            translateY(-5px)
-            scale(0.85);
-    }
-}
-
-/* =========================================================
-   KNIGHT HEAD
-   ========================================================= */
-
-.knight-head {
-    position: absolute;
-
-    top: 8px;
-
-    width: 105px;
-    height: 105px;
+    color:
+        white;
 
     background:
         linear-gradient(
             135deg,
-            #0b3854,
-            #062033
+            #079ff1,
+            #0871ce
         );
 
-    border: 3px solid var(--cyan);
+    border-color:
+        rgba(70, 220, 255, 0.8);
+
+    box-shadow:
+        0 0 14px
+        rgba(0, 150, 255, 0.25);
+
+}
+
+
+/* =========================================================
+   ZERO
+========================================================= */
+
+.buttons .zero {
+
+    grid-column:
+        span 2;
+
+}
+
+
+/* =========================================================
+   SCIENTIFIC
+========================================================= */
+
+.scientific-buttons {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 8px;
+
+}
+
+
+.scientific-buttons button {
+
+    min-width: 0;
+
+}
+
+
+/* =========================================================
+   PROGRAMMER
+========================================================= */
+
+.programmer-display {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.programmer-display div {
+
+    min-width: 0;
+
+    padding: 11px;
 
     border-radius: 8px;
 
-    transform: rotate(0deg);
-
-    box-shadow:
-        0 0 14px rgba(32, 232, 255, 0.3);
-}
-
-/* =========================================================
-   KNIGHT FACE
-   ========================================================= */
-
-.knight-eye {
-    position: absolute;
-
-    top: 38px;
-
-    width: 24px;
-    height: 8px;
-
-    background: var(--cyan-soft);
-
-    border-radius: 2px;
-
-    box-shadow:
-        0 0 8px var(--cyan),
-        0 0 16px rgba(32, 232, 255, 0.4);
-
-    animation: eyeGlow 3s ease-in-out infinite;
-}
-
-.knight-eye.left {
-    left: 18px;
-
-    transform: rotate(8deg);
-}
-
-.knight-eye.right {
-    right: 18px;
-
-    transform: rotate(-8deg);
-}
-
-@keyframes eyeGlow {
-    0%,
-    100% {
-        opacity: 0.75;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-/* =========================================================
-   KNIGHT MOUTH
-   ========================================================= */
-
-.knight-mouth {
-    position: absolute;
-
-    left: 50%;
-
-    bottom: 22px;
-
-    width: 45px;
-    height: 3px;
-
-    transform: translateX(-50%);
-
-    background: var(--blue);
-
-    box-shadow:
-        0 0 5px rgba(32, 232, 255, 0.3);
-}
-
-/* =========================================================
-   KNIGHT BODY / ARMOR
-   ========================================================= */
-
-.knight-body {
-    position: absolute;
-
-    top: 108px;
-
-    width: 85px;
-    height: 70px;
-
     background:
-        linear-gradient(
-            145deg,
-            #0b405e,
-            #052338
-        );
+        #041a2c;
 
-    border: 2px solid #16cde9;
+    border:
+        1px solid
+        rgba(0, 170, 230, 0.25);
 
-    border-radius: 10px 10px 18px 18px;
-
-    box-shadow:
-        0 0 12px rgba(32, 232, 255, 0.18);
 }
 
-/* =========================================================
-   KNIGHT SHIELD
-   ========================================================= */
 
-.knight-shield {
-    position: absolute;
+.programmer-display span {
 
-    width: 38px;
-    height: 48px;
+    display: block;
 
-    left: 0;
+    margin-bottom: 4px;
 
-    top: 118px;
+    color:
+        #64889a;
 
-    background:
-        linear-gradient(
-            145deg,
-            #0d5677,
-            #062a43
-        );
+    font-size: 9px;
 
-    border: 2px solid var(--cyan);
-
-    border-radius: 7px 7px 15px 15px;
-
-    transform: rotate(-8deg);
-
-    box-shadow:
-        0 0 10px rgba(32, 232, 255, 0.2);
 }
 
-.knight-shield::after {
-    content: "";
 
-    position: absolute;
+.programmer-display strong {
 
-    inset: 10px;
+    display: block;
 
-    border: 1px solid rgba(105, 243, 255, 0.6);
-
-    transform: rotate(45deg);
-}
-
-/* =========================================================
-   KNIGHT SWORD
-   ========================================================= */
-
-.knight-sword {
-    position: absolute;
-
-    right: -3px;
-
-    top: 93px;
-
-    width: 9px;
-    height: 90px;
-
-    border-radius: 4px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #78f8ff,
-            #d9ffff,
-            #20d7f1
-        );
-
-    transform:
-        rotate(18deg);
-
-    transform-origin: bottom center;
-
-    box-shadow:
-        0 0 8px rgba(32, 232, 255, 0.5);
-}
-
-/* SWORD TIP */
-
-.knight-sword::before {
-    content: "";
-
-    position: absolute;
-
-    top: -12px;
-    left: -5px;
-
-    width: 0;
-    height: 0;
-
-    border-left: 9px solid transparent;
-    border-right: 9px solid transparent;
-    border-bottom: 14px solid #8efaff;
-}
-
-/* SWORD HANDLE */
-
-.knight-sword::after {
-    content: "";
-
-    position: absolute;
-
-    bottom: -12px;
-
-    left: -9px;
-
-    width: 27px;
-    height: 7px;
-
-    background: #138cb1;
-
-    border-radius: 3px;
-}
-
-/* =========================================================
-   ENERGY EFFECT
-   ========================================================= */
-
-.energy-effect {
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    pointer-events: none;
-
-    z-index: 10;
-
-    opacity: 0;
-}
-
-.energy-effect.active {
-    animation: energySequence 0.8s ease-out forwards;
-}
-
-@keyframes energySequence {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    15% {
-        opacity: 0.9;
-        transform: scale(1);
-    }
-
-    45% {
-        opacity: 0.75;
-    }
-
-    75% {
-        opacity: 0.5;
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(1.03);
-    }
-}
-
-.energy-text {
-    position: absolute;
-
-    font-size: 14px;
-
-    font-weight: 800;
-
-    letter-spacing: 2px;
-
-    color: var(--cyan-soft);
-
-    text-shadow:
-        0 0 8px rgba(32, 232, 255, 0.5);
-
-    white-space: nowrap;
-
-    opacity: 0;
-}
-
-.energy-effect.active .energy-text {
-    animation: energyText 0.8s ease-out forwards;
-}
-
-@keyframes energyText {
-    0% {
-        opacity: 0;
-        transform: translateY(12px);
-    }
-
-    20% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    70% {
-        opacity: 0.9;
-        transform: translateY(-3px);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-}
-
-/* =========================================================
-   XP EFFECT
-   ========================================================= */
-
-.xp-effect {
-    position: absolute;
-
-    right: 20px;
-    top: 15px;
-
-    color: var(--success);
+    color:
+        var(--cyan);
 
     font-size: 15px;
 
-    font-weight: 800;
+    word-break:
+        break-all;
 
-    opacity: 0;
-
-    pointer-events: none;
-
-    text-shadow:
-        0 0 8px rgba(84, 255, 199, 0.5);
 }
 
-.xp-effect.show {
-    animation: xpFloat 0.7s ease-out forwards;
-}
 
-@keyframes xpFloat {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
+#programmer-input {
 
-    20% {
-        opacity: 1;
-    }
+    width: 100%;
 
-    100% {
-        opacity: 0;
-        transform: translateY(-25px);
-    }
-}
+    margin-bottom: 10px;
 
-/* =========================================================
-   ENERGY PULSE
-   ========================================================= */
+    padding: 12px;
 
-.energy-pulse {
-    position: absolute;
+    border:
+        1px solid
+        var(--border);
 
-    width: 80px;
-    height: 80px;
+    border-radius: 8px;
 
-    border-radius: 50%;
-
-    border: 1px solid var(--cyan);
-
-    pointer-events: none;
-
-    opacity: 0;
-}
-
-.energy-pulse.active {
-    animation: pulseSmall 0.5s ease-out;
-}
-
-@keyframes pulseSmall {
-    0% {
-        opacity: 0.7;
-
-        transform: scale(0.6);
-    }
-
-    100% {
-        opacity: 0;
-
-        transform: scale(1.4);
-    }
-}
-
-/* =========================================================
-   LEVEL UP
-   ========================================================= */
-
-.level-up {
-    position: fixed;
-
-    left: 50%;
-    top: 50%;
-
-    transform:
-        translate(-50%, -50%)
-        scale(0.9);
-
-    padding: 16px 25px;
+    outline: none;
 
     background:
-        rgba(3, 24, 40, 0.96);
+        #020c17;
 
-    border: 1px solid var(--cyan);
+    color:
+        white;
 
-    border-radius: 12px;
+    text-align:
+        right;
 
-    color: var(--cyan-soft);
+    font-size: 18px;
 
-    font-size: 20px;
+}
 
-    font-weight: 900;
 
-    letter-spacing: 2px;
+.programmer-input-active {
 
     box-shadow:
-        0 0 25px rgba(32, 232, 255, 0.25);
+        0 0 15px
+        rgba(36, 217, 255, 0.25);
 
-    opacity: 0;
-
-    pointer-events: none;
-
-    z-index: 100;
 }
 
-.level-up.show {
-    animation: levelUpAnimation 0.9s ease-out forwards;
+
+.programmer-buttons {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 8px;
+
 }
 
-@keyframes levelUpAnimation {
-    0% {
-        opacity: 0;
 
-        transform:
-            translate(-50%, -50%)
-            scale(0.8);
-    }
+.programmer-buttons button {
 
-    20% {
-        opacity: 1;
+    min-height: 50px;
 
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-    }
+    border:
+        1px solid
+        var(--border);
 
-    70% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-
-        transform:
-            translate(-50%, -50%)
-            scale(1.04);
-    }
-}
-
-/* =========================================================
-   ACHIEVEMENT
-   ========================================================= */
-
-.achievement {
-    position: fixed;
-
-    right: 20px;
-    bottom: 20px;
-
-    width: min(300px, calc(100% - 40px));
-
-    padding: 16px;
-
-    background:
-        rgba(4, 25, 42, 0.97);
-
-    border: 1px solid rgba(32, 232, 255, 0.35);
-
-    border-radius: 12px;
-
-    box-shadow:
-        0 0 20px rgba(32, 232, 255, 0.15);
-
-    opacity: 0;
-
-    transform: translateX(30px);
-
-    pointer-events: none;
-
-    z-index: 90;
-}
-
-.achievement.show {
-    animation: achievementIn 0.55s ease-out forwards;
-}
-
-@keyframes achievementIn {
-    0% {
-        opacity: 0;
-
-        transform: translateX(30px);
-    }
-
-    20% {
-        opacity: 1;
-
-        transform: translateX(0);
-    }
-
-    80% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-
-        transform: translateX(10px);
-    }
-}
-
-.achievement-title {
-    color: var(--cyan-soft);
-
-    font-size: 14px;
-
-    font-weight: 800;
-
-    margin-bottom: 5px;
-}
-
-.achievement-text {
-    color: var(--text-soft);
-
-    font-size: 12px;
-
-    line-height: 1.5;
-}
-
-/* =========================================================
-   MODAL
-   ========================================================= */
-
-.modal {
-    position: fixed;
-
-    inset: 0;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-
-    background:
-        rgba(0, 5, 12, 0.72);
-
-    backdrop-filter: blur(5px);
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        opacity 0.2s ease,
-        visibility 0.2s ease;
-
-    z-index: 200;
-}
-
-.modal.active {
-    opacity: 1;
-
-    visibility: visible;
-}
-
-.modal-content {
-    width: min(450px, 100%);
-
-    padding: 25px;
+    border-radius: 8px;
 
     background:
         linear-gradient(
             145deg,
-            #06233a,
-            #031524
+            #0a304c,
+            #08263d
         );
 
-    border: 1px solid rgba(32, 232, 255, 0.3);
+    color:
+        var(--cyan);
 
-    border-radius: 18px;
+    cursor:
+        pointer;
 
-    box-shadow:
-        0 0 35px rgba(0, 0, 0, 0.5);
-
-    transform: translateY(15px) scale(0.97);
+    font-weight:
+        700;
 
     transition:
-        transform 0.25s ease;
+        0.15s;
+
 }
 
-.modal.active .modal-content {
+
+.programmer-buttons button:hover {
+
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 10px
+        rgba(0, 180, 255, 0.15);
+
     transform:
-        translateY(0)
-        scale(1);
+        translateY(-2px);
+
 }
 
-.modal-content h2 {
-    color: var(--cyan-soft);
 
-    margin-bottom: 12px;
+/* =========================================================
+   CONVERTER
+========================================================= */
+
+.converter-box {
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background:
+        #041a2c;
+
+    border:
+        1px solid
+        var(--border);
+
 }
 
-.modal-content p {
-    color: var(--text-soft);
 
-    line-height: 1.6;
+.converter-box label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        #6d91a3;
+
+    font-size: 10px;
+
+}
+
+
+.converter-box select,
+.converter-box input {
+
+    width: 100%;
+
+    padding: 11px;
+
+    border:
+        1px solid
+        rgba(0, 170, 230, 0.3);
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background:
+        #020d19;
+
+    color:
+        white;
+
+    font-family:
+        inherit;
+
+}
+
+
+.converter-box select:focus,
+.converter-box input:focus {
+
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 8px
+        rgba(0, 180, 255, 0.12);
+
+}
+
+
+.converter-inputs {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 35px 1fr;
+
+    gap: 8px;
+
+    align-items:
+        end;
+
+    margin-top: 12px;
+
+}
+
+
+.converter-inputs input {
+
+    margin-bottom: 6px;
+
+}
+
+
+.convert-arrow {
+
+    display: flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    height: 40px;
+
+    color:
+        var(--cyan);
+
+    font-size: 20px;
+
+    animation:
+        arrowPulse
+        2s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes arrowPulse {
+
+    0%,
+    100% {
+
+        opacity:
+            0.5;
+
+    }
+
+    50% {
+
+        opacity:
+            1;
+
+        text-shadow:
+            0 0 10px
+            var(--cyan);
+
+    }
+
+}
+
+
+/* =========================================================
+   HISTORY PANEL
+========================================================= */
+
+.history-panel {
+
+    min-height: 100%;
+
+    padding: 18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(3, 25, 44, 0.98),
+            rgba(1, 14, 26, 0.98)
+        );
+
+    box-shadow:
+        0 0 25px
+        rgba(0, 150, 255, 0.07);
+
+    overflow:
+        hidden;
+
+}
+
+
+.history-title {
+
+    display: flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    padding-bottom: 12px;
+
+    margin-bottom: 10px;
+
+    border-bottom:
+        1px solid
+        rgba(0, 175, 255, 0.18);
+
+}
+
+
+.history-title h2 {
+
+    font-size: 15px;
+
+    letter-spacing: 1px;
+
+    color:
+        white;
+
+}
+
+
+.history-title button {
+
+    padding:
+        7px 11px;
+
+    border:
+        1px solid
+        rgba(0, 190, 255, 0.4);
+
+    border-radius: 6px;
+
+    background:
+        transparent;
+
+    color:
+        var(--cyan);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    cursor:
+        pointer;
+
+}
+
+
+.history-title button:hover {
+
+    background:
+        rgba(0, 160, 255, 0.1);
+
+}
+
+
+#history-list {
+
+    max-height: 500px;
+
+    overflow-y:
+        auto;
+
+    padding-right: 3px;
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+#history-list::-webkit-scrollbar {
+
+    width: 5px;
+
+}
+
+
+#history-list::-webkit-scrollbar-track {
+
+    background:
+        #020d19;
+
+}
+
+
+#history-list::-webkit-scrollbar-thumb {
+
+    background:
+        #075278;
+
+    border-radius:
+        10px;
+
+}
+
+
+/* =========================================================
+   HISTORY ITEM
+========================================================= */
+
+.history-item {
+
+    margin-bottom: 9px;
+
+    padding: 13px;
+
+    border-left:
+        3px solid
+        var(--cyan);
+
+    border-top:
+        1px solid
+        rgba(0, 160, 255, 0.2);
+
+    border-right:
+        1px solid
+        rgba(0, 160, 255, 0.2);
+
+    border-bottom:
+        1px solid
+        rgba(0, 160, 255, 0.2);
+
+    border-radius: 7px;
+
+    background:
+        rgba(4, 29, 48, 0.85);
+
+    transition:
+        0.2s;
+
+}
+
+
+.history-item:hover {
+
+    transform:
+        translateX(3px);
+
+    border-left-color:
+        #72efff;
+
+    box-shadow:
+        0 0 12px
+        rgba(0, 190, 255, 0.08);
+
+}
+
+
+.history-expression {
+
+    color:
+        #d5ebf4;
 
     font-size: 14px;
+
+    word-break:
+        break-word;
+
 }
+
+
+.history-result {
+
+    margin-top: 5px;
+
+    color:
+        var(--cyan);
+
+    font-size: 19px;
+
+    font-weight: 800;
+
+    word-break:
+        break-word;
+
+}
+
+
+.empty-history {
+
+    padding:
+        35px 10px;
+
+    text-align:
+        center;
+
+    color:
+        #537588;
+
+    font-size: 11px;
+
+}
+
+
+/* =========================================================
+   KNIGHT STATUS
+========================================================= */
+
+.knight-status {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    margin-top: 12px;
+
+    padding:
+        11px 13px;
+
+    border:
+        1px solid
+        rgba(0, 160, 230, 0.25);
+
+    border-radius: 7px;
+
+    color:
+        #6f9aad;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    background:
+        rgba(3, 24, 40, 0.7);
+
+}
+
+
+.knight-status span:first-child {
+
+    color:
+        var(--cyan);
+
+}
+
+
+#knight-message {
+
+    transition:
+        0.2s;
+
+}
+
+
+.knight-message-active {
+
+    color:
+        var(--cyan-light) !important;
+
+    text-shadow:
+        0 0 8px
+        rgba(36, 217, 255, 0.7);
+
+}
+
+
+/* =========================================================
+   TEAM
+========================================================= */
+
+.team-section {
+
+    width:
+        min(
+            950px,
+            100%
+        );
+
+    margin:
+        25px auto 15px;
+
+    text-align:
+        center;
+
+}
+
+
+.team-section h2 {
+
+    margin-bottom:
+        12px;
+
+    color:
+        var(--cyan);
+
+    font-size:
+        15px;
+
+    letter-spacing:
+        4px;
+
+}
+
+
+.team-list {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap:
+        10px;
+
+}
+
+
+.member {
+
+    padding:
+        11px;
+
+    border:
+        1px solid
+        rgba(0, 170, 230, 0.25);
+
+    border-radius:
+        7px;
+
+    background:
+        rgba(3, 25, 42, 0.8);
+
+    color:
+        #b6d0dc;
+
+    font-size:
+        11px;
+
+    transition:
+        0.2s;
+
+}
+
+
+.member:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 15px
+        rgba(0, 180, 255, 0.1);
+
+}
+
+
+.member span {
+
+    display:
+        inline-block;
+
+    margin-right:
+        8px;
+
+    color:
+        var(--cyan);
+
+    font-weight:
+        900;
+
+}
+
 
 /* =========================================================
    FOOTER
-   ========================================================= */
+========================================================= */
 
 footer {
-    margin-top: 30px;
 
-    text-align: center;
+    width:
+        100%;
 
-    color: #527487;
+    padding:
+        15px;
 
-    font-size: 12px;
+    text-align:
+        center;
 
-    letter-spacing: 1px;
+    border-top:
+        1px solid
+        rgba(0, 175, 255, 0.3);
+
+    color:
+        #4f7488;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        2px;
+
 }
+
+
+footer strong {
+
+    color:
+        var(--cyan);
+
+    font-size:
+        12px;
+
+}
+
+
+footer small {
+
+    color:
+        #3c5e70;
+
+}
+
 
 /* =========================================================
-   PANEL SLIDE
-   ========================================================= */
+   GLOBAL IMAGE FIX
+========================================================= */
 
-.panel-slide {
-    animation: panelSlide 0.45s ease-out;
+img {
+
+    max-width:
+        100%;
+
 }
 
-@keyframes panelSlide {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
+
+.top-header img.header-logo {
+
+    width:
+        52px !important;
+
+    height:
+        52px !important;
+
+    min-width:
+        52px !important;
+
+    min-height:
+        52px !important;
+
+    max-width:
+        52px !important;
+
+    max-height:
+        52px !important;
+
+    object-fit:
+        contain !important;
+
+    display:
+        block !important;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .cube-knight {
+
+        right:
+            5px;
+
+        bottom:
+            20px;
+
+        width:
+            145px;
+
+        height:
+            205px;
+
+        opacity:
+            0.8;
+
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
+
+
+/* =========================================================
+   MOBILE TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .workspace {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .history-panel {
+
+        min-height:
+            300px;
+
+    }
+
+
+    .top-header {
+
+        grid-template-columns:
+            70px 1fr 70px;
+
+        padding:
+            8px 12px;
+
+    }
+
+
+    .brand-side {
+
+        width:
+            65px;
+
+    }
+
+
+    .header-logo,
+    .top-header img.header-logo {
+
+        width:
+            45px !important;
+
+        height:
+            45px !important;
+
+        min-width:
+            45px !important;
+
+        min-height:
+            45px !important;
+
+        max-width:
+            45px !important;
+
+        max-height:
+            45px !important;
+
+    }
+
+
+    .school-brand {
+
+        gap:
+            8px;
+
+    }
+
+
+    .school-brand .header-logo {
+
+        width:
+            42px !important;
+
+        height:
+            42px !important;
+
+        min-width:
+            42px !important;
+
+        min-height:
+            42px !important;
+
+        max-width:
+            42px !important;
+
+        max-height:
+            42px !important;
+
+    }
+
+
+    .main-title {
+
+        font-size:
+            23px;
+
+        letter-spacing:
+            4px;
+
+    }
+
+
+    .sub-title {
+
+        font-size:
+            7px;
+
+        letter-spacing:
+            3px;
+
+    }
+
+
+    .cube-knight {
+
+        right:
+            5px;
+
+        bottom:
+            15px;
+
+        width:
+            125px;
+
+        height:
+            180px;
+
+        opacity:
+            0.65;
+
+    }
+
+}
+
 
 /* =========================================================
    MOBILE
-   ========================================================= */
+========================================================= */
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
 
-    .main-layout {
-        grid-template-columns: 1fr;
+    body {
+
+        padding:
+            10px;
+
     }
 
-    .side-panel {
-        display: grid;
 
-        grid-template-columns: repeat(2, 1fr);
+    .top-header {
+
+        height:
+            75px;
+
+        grid-template-columns:
+            45px 1fr 45px;
+
+        padding:
+            6px 8px;
+
+        margin-bottom:
+            15px;
+
     }
 
-    .cube-knight {
-        transform: scale(0.72);
+
+    .brand-side {
+
+        width:
+            42px;
+
+        height:
+            60px;
+
     }
 
-    @keyframes knightFloat {
-        0%,
-        100% {
-            transform:
-                translateY(0)
-                scale(0.72);
-        }
 
-        50% {
-            transform:
-                translateY(-4px)
-                scale(0.72);
-        }
+    .header-logo,
+    .top-header img.header-logo {
+
+        width:
+            35px !important;
+
+        height:
+            35px !important;
+
+        min-width:
+            35px !important;
+
+        min-height:
+            35px !important;
+
+        max-width:
+            35px !important;
+
+        max-height:
+            35px !important;
+
     }
-}
 
-@media (max-width: 520px) {
 
-    .container {
-        width: 94%;
+    .school-brand {
 
-        padding-top: 18px;
+        gap:
+            5px;
+
     }
+
+
+    .school-brand .header-logo {
+
+        width:
+            32px !important;
+
+        height:
+            32px !important;
+
+        min-width:
+            32px !important;
+
+        min-height:
+            32px !important;
+
+        max-width:
+            32px !important;
+
+        max-height:
+            32px !important;
+
+    }
+
+
+    .main-title {
+
+        font-size:
+            18px;
+
+        letter-spacing:
+            2px;
+
+    }
+
+
+    .sub-title {
+
+        margin-top:
+            4px;
+
+        font-size:
+            6px;
+
+        letter-spacing:
+            2px;
+
+    }
+
+
+    .status-bar {
+
+        padding:
+            0 5px 10px;
+
+        font-size:
+            9px;
+
+    }
+
+
+    .energy span {
+
+        font-size:
+            14px;
+
+    }
+
+
+    .mode-bar {
+
+        gap:
+            4px;
+
+        padding:
+            5px;
+
+    }
+
+
+    .mode-btn {
+
+        height:
+            40px;
+
+        font-size:
+            8px;
+
+    }
+
+
+    .workspace {
+
+        display:
+            block;
+
+    }
+
 
     .calculator-panel {
-        padding: 14px;
+
+        padding:
+            12px;
+
     }
 
-    .buttons {
-        gap: 7px;
+
+    .history-panel {
+
+        margin-top:
+            12px;
+
     }
 
-    button {
-        min-height: 54px;
-
-        font-size: 17px;
-    }
 
     .display {
-        min-height: 105px;
 
-        padding: 15px;
+        height:
+            100px;
+
+        padding:
+            14px;
+
     }
 
-    .display-value {
-        font-size: 32px;
+
+    #result {
+
+        font-size:
+            35px;
+
     }
 
-    .side-panel {
-        grid-template-columns: 1fr;
+
+    .buttons {
+
+        gap:
+            5px;
+
     }
+
+
+    .buttons button {
+
+        height:
+            52px;
+
+        font-size:
+            16px;
+
+        border-radius:
+            9px;
+
+    }
+
+
+    .scientific-buttons {
+
+        gap:
+            5px;
+
+    }
+
+
+    .scientific-buttons button {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .programmer-buttons {
+
+        gap:
+            5px;
+
+    }
+
+
+    .programmer-buttons button {
+
+        min-height:
+            45px;
+
+        font-size:
+            11px;
+
+    }
+
+
+    .converter-inputs {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            10px;
+
+    }
+
+
+    .convert-arrow {
+
+        height:
+            25px;
+
+    }
+
+
+    .knight-status {
+
+        font-size:
+            7px;
+
+        gap:
+            10px;
+
+    }
+
+
+    .team-list {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+
+    .member {
+
+        font-size:
+            10px;
+
+    }
+
+
+    /* Cube Knight mobile */
 
     .cube-knight {
-        transform: scale(0.65);
+
+        position:
+            fixed;
+
+        right:
+            -25px;
+
+        bottom:
+            8px;
+
+        width:
+            100px;
+
+        height:
+            145px;
+
+        opacity:
+            0.48;
+
+        z-index:
+            4;
+
     }
 
-    @keyframes knightFloat {
-        0%,
-        100% {
-            transform:
-                translateY(0)
-                scale(0.65);
-        }
 
-        50% {
-            transform:
-                translateY(-3px)
-                scale(0.65);
-        }
+    .knight-glow {
+
+        transform:
+            scale(0.7);
+
     }
+
 }
 
+
 /* =========================================================
-   REDUCE MOTION
-   ========================================================= */
+   VERY SMALL SCREEN
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .main-title {
+
+        font-size:
+            15px;
+
+        letter-spacing:
+            1px;
+
+    }
+
+
+    .sub-title {
+
+        font-size:
+            5px;
+
+        letter-spacing:
+            1px;
+
+    }
+
+
+    .school-brand .header-logo {
+
+        display:
+            none !important;
+
+    }
+
+
+    .buttons button {
+
+        height:
+            48px;
+
+        font-size:
+            14px;
+
+    }
+
+
+    .scientific-buttons button {
+
+        font-size:
+            11px;
+
+    }
+
+
+    .team-list {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .cube-knight {
+
+        width:
+            85px;
+
+        height:
+            125px;
+
+        right:
+            -25px;
+
+        bottom:
+            5px;
+
+        opacity:
+            0.35;
+
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
+    .cube,
+    .cube-knight,
+    .knight-glow,
+    .knight-eye,
+    .knight-sword,
+    .knight-shield,
+    .online-dot,
+    .convert-arrow {
 
-        scroll-behavior: auto !important;
+        animation:
+            none !important;
 
-        transition-duration: 0.01ms !important;
     }
+
 }
