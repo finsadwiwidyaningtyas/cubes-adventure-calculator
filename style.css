@@ -543,3 +543,386 @@ button sup {
     background: rgba(42, 203, 255, 0.3);
     color: white;
 }
+/* ========================================
+   CALCULATOR MODES
+======================================== */
+
+.calculator-modes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+
+    margin-bottom: 18px;
+    padding: 6px;
+
+    background: rgba(2, 15, 30, 0.8);
+    border: 1px solid rgba(50, 200, 255, 0.2);
+    border-radius: 15px;
+}
+
+.mode-btn {
+    min-height: 42px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #6e9bb5;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+}
+
+.mode-btn:hover {
+    color: #52ddff;
+    background: rgba(26, 112, 155, 0.2);
+}
+
+.mode-btn.active {
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #087fca,
+            #07518d
+        );
+
+    box-shadow:
+        0 0 15px rgba(23, 177, 255, 0.3);
+}
+
+/* ========================================
+   MODE PANEL
+======================================== */
+
+.mode-panel {
+    display: none;
+
+    animation: modeAppear 0.25s ease;
+}
+
+.mode-panel.active {
+    display: block;
+}
+
+@keyframes modeAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+/* ========================================
+   PROGRAMMER
+======================================== */
+
+.programmer-display {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
+
+    margin-bottom: 12px;
+}
+
+.programmer-display div {
+    padding: 13px;
+
+    border-radius: 12px;
+
+    background: rgba(3, 24, 43, 0.9);
+
+    border: 1px solid rgba(45, 192, 255, 0.18);
+}
+
+.programmer-display span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 9px;
+    letter-spacing: 1px;
+
+    color: #6b9bb7;
+}
+
+.programmer-display strong {
+    display: block;
+
+    font-size: 16px;
+
+    color: #5ee2ff;
+
+    word-break: break-all;
+}
+
+.programmer-input {
+    margin-bottom: 12px;
+}
+
+.programmer-input input {
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(50, 200, 255, 0.3);
+
+    background: #020f1d;
+
+    color: white;
+
+    font-size: 20px;
+    text-align: right;
+
+    outline: none;
+}
+
+.programmer-input input:focus {
+    border-color: #38d9ff;
+
+    box-shadow:
+        0 0 15px rgba(36, 201, 255, 0.2);
+}
+
+.programmer-buttons {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 9px;
+}
+
+.programmer-buttons button {
+    min-height: 52px;
+}
+
+/* ========================================
+   CONVERTER
+======================================== */
+
+.converter-box {
+    padding: 18px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(8, 38, 63, 0.95),
+            rgba(3, 20, 35, 0.95)
+        );
+
+    border: 1px solid rgba(44, 198, 255, 0.2);
+}
+
+.converter-box > label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #74a9c2;
+
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.converter-box select,
+.converter-box input {
+    width: 100%;
+
+    padding: 13px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(53, 200, 255, 0.22);
+
+    background: #061a2c;
+
+    color: white;
+
+    outline: none;
+}
+
+.converter-box select {
+    cursor: pointer;
+}
+
+.converter-box select:focus,
+.converter-box input:focus {
+    border-color: #36d8ff;
+}
+
+.converter-inputs {
+    display: grid;
+
+    grid-template-columns: 1fr 35px 1fr;
+
+    align-items: end;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.converter-inputs label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 10px;
+
+    color: #70a0b9;
+}
+
+.converter-inputs input {
+    margin-bottom: 7px;
+}
+
+.convert-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 45px;
+
+    color: #45dcff;
+
+    font-size: 22px;
+}
+
+/* ========================================
+   ADVENTURE HISTORY
+======================================== */
+
+.adventure-history {
+    width: min(430px, 100%);
+
+    margin-top: 18px;
+    padding: 18px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(7, 29, 49, 0.95),
+            rgba(2, 15, 27, 0.95)
+        );
+
+    border: 1px solid rgba(46, 190, 255, 0.2);
+
+    box-shadow:
+        0 0 25px rgba(0, 140, 255, 0.07);
+}
+
+.history-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 14px;
+}
+
+.history-header h2 {
+    font-size: 16px;
+
+    color: #ecfaff;
+
+    text-shadow:
+        0 0 8px rgba(47, 211, 255, 0.3);
+}
+
+.history-header button {
+    min-height: 34px;
+
+    padding: 0 12px;
+
+    font-size: 10px;
+
+    color: #ff6b7b;
+
+    border-radius: 8px;
+}
+
+/* History item */
+
+.history-item {
+    padding: 12px 14px;
+
+    margin-bottom: 8px;
+
+    border-left: 2px solid #1caee6;
+    border-radius: 8px;
+
+    background: rgba(7, 39, 63, 0.65);
+}
+
+.history-expression {
+    font-size: 14px;
+
+    color: #a9d5e8;
+}
+
+.history-result {
+    margin-top: 4px;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    color: #53ddff;
+}
+
+.empty-history {
+    padding: 18px;
+
+    text-align: center;
+
+    color: #5e8196;
+
+    font-size: 12px;
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 500px) {
+
+    .calculator-modes {
+        gap: 4px;
+    }
+
+    .mode-btn {
+        font-size: 9px;
+        letter-spacing: 0;
+    }
+
+    .converter-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .convert-arrow {
+        height: 25px;
+        transform: rotate(90deg);
+    }
+
+    .programmer-display {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
