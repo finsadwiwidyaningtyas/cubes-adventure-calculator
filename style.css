@@ -505,8 +505,17 @@ body {
    MODES
 ===================================== */
 
+/* =========================================
+   MODE KALKULATOR
+   HANYA MODE ACTIVE YANG DITAMPILKAN
+========================================= */
+
 .calculator-mode {
-    display: none;
+    display: none !important;
+}
+
+.calculator-mode.active {
+    display: block !important;
 }
 
 .calculator-mode.active {
@@ -1322,4 +1331,20 @@ img {
 .top-header img.header-logo {
     position: static !important;
     transform: none !important;
+}
+
+/* FIX MODE KALKULATOR DOUBLE */
+
+#basic-mode,
+#scientific-mode,
+#programmer-mode,
+#converter-mode {
+    display: none !important;
+}
+
+#basic-mode.active,
+#scientific-mode.active,
+#programmer-mode.active,
+#converter-mode.active {
+    display: block !important;
 }
