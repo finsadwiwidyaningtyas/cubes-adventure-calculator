@@ -192,3 +192,146 @@ document.addEventListener("keydown", function(event) {
     }
 
 });
+// ================================
+// SCIENTIFIC CALCULATOR
+// ================================
+
+// Akar kuadrat
+function squareRoot() {
+
+    if (!expression) return;
+
+    try {
+
+        let number = Number(expression);
+
+        if (number < 0) {
+            throw new Error("Invalid");
+        }
+
+        let answer = Math.sqrt(number);
+
+        document.getElementById("history").textContent =
+            "√" + expression;
+
+        expression = String(
+            parseFloat(answer.toFixed(10))
+        );
+
+        updateDisplay();
+
+    } catch (error) {
+
+        showError();
+    }
+}
+
+
+// Kuadrat
+function squareNumber() {
+
+    if (!expression) return;
+
+    try {
+
+        let number = Number(expression);
+
+        let answer = Math.pow(number, 2);
+
+        document.getElementById("history").textContent =
+            expression + "²";
+
+        expression = String(
+            parseFloat(answer.toFixed(10))
+        );
+
+        updateDisplay();
+
+    } catch (error) {
+
+        showError();
+    }
+}
+
+
+// Kebalikan angka
+function inverseNumber() {
+
+    if (!expression) return;
+
+    try {
+
+        let number = Number(expression);
+
+        if (number === 0) {
+            throw new Error("Invalid");
+        }
+
+        let answer = 1 / number;
+
+        document.getElementById("history").textContent =
+            "1/" + expression;
+
+        expression = String(
+            parseFloat(answer.toFixed(10))
+        );
+
+        updateDisplay();
+
+    } catch (error) {
+
+        showError();
+    }
+}
+
+
+// Positif / negatif
+function plusMinus() {
+
+    if (!expression) return;
+
+    if (expression === "0") return;
+
+    if (expression.startsWith("-")) {
+
+        expression = expression.substring(1);
+
+    } else {
+
+        expression = "-" + expression;
+    }
+
+    updateDisplay();
+}
+
+
+// Pi
+function addPi() {
+
+    expression += Math.PI;
+
+    updateDisplay();
+}
+
+
+// Menampilkan error
+function showError() {
+
+    expression = "ERROR";
+
+    document.getElementById("history").textContent =
+        "INVALID CALCULATION";
+
+    updateDisplay();
+
+    setTimeout(() => {
+
+        expression = "";
+
+        document.getElementById("history").textContent =
+            "READY FOR CALCULATION";
+
+        updateDisplay();
+
+    }, 1500);
+}
