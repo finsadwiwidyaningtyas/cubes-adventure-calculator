@@ -12,113 +12,656 @@
 
 <body>
 
-    <!-- BACKGROUND CUBES -->
+    <!-- =====================================================
+         BACKGROUND CUBES
+    ====================================================== -->
+
     <div class="cube cube-1"></div>
     <div class="cube cube-2"></div>
     <div class="cube cube-3"></div>
     <div class="cube cube-4"></div>
 
 
-<!-- ================= HEADER ================= -->
+    <!-- =====================================================
+         CUBE KNIGHT DECORATIVE MASCOT
+    ====================================================== -->
 
-<header class="top-header">
+    <div id="cube-knight" class="cube-knight" aria-label="Cube Knight">
 
-    <!-- LOGO KELOMPOK -->
-    <div class="brand-side">
+        <div class="knight-glow"></div>
 
-        <img
-            src="img/logo-kelompok.jpeg"
-            alt="Logo Kelompok"
-            class="header-logo kelompok-logo"
-            style="
-                width: 65px !important;
-                height: 65px !important;
-                max-width: 65px !important;
-                max-height: 65px !important;
-                min-width: 65px !important;
-                min-height: 65px !important;
-                object-fit: contain !important;
-                display: block !important;
-            "
+        <svg
+            class="knight-svg"
+            viewBox="0 0 260 360"
+            xmlns="http://www.w3.org/2000/svg"
         >
+
+            <!-- =========================
+                 GLOW FILTER
+            ========================== -->
+
+            <defs>
+
+                <filter id="knightGlow">
+                    <feGaussianBlur
+                        stdDeviation="3"
+                        result="blur"
+                    />
+
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+
+                <linearGradient
+                    id="armorGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+                    <stop
+                        offset="0%"
+                        stop-color="#164f72"
+                    />
+
+                    <stop
+                        offset="50%"
+                        stop-color="#092c48"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#041725"
+                    />
+                </linearGradient>
+
+                <linearGradient
+                    id="shieldGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+                    <stop
+                        offset="0%"
+                        stop-color="#20dfff"
+                    />
+
+                    <stop
+                        offset="50%"
+                        stop-color="#087dc5"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#05365c"
+                    />
+                </linearGradient>
+
+                <linearGradient
+                    id="swordGradient"
+                    x1="0"
+                    y1="0"
+                    x2="1"
+                    y2="1"
+                >
+                    <stop
+                        offset="0%"
+                        stop-color="#ffffff"
+                    />
+
+                    <stop
+                        offset="50%"
+                        stop-color="#73eaff"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stop-color="#1598d5"
+                    />
+                </linearGradient>
+
+            </defs>
+
+
+            <!-- =========================
+                 SHADOW
+            ========================== -->
+
+            <ellipse
+                cx="130"
+                cy="345"
+                rx="75"
+                ry="10"
+                fill="rgba(0,0,0,0.55)"
+            />
+
+
+            <!-- =========================
+                 CAPE / BACK ARMOR
+            ========================== -->
+
+            <path
+                d="
+                    M75 195
+                    L185 195
+                    L205 310
+                    L55 310
+                    Z
+                "
+                fill="#031522"
+                stroke="#128fc6"
+                stroke-width="3"
+            />
+
+            <path
+                d="
+                    M75 205
+                    L185 205
+                    L190 295
+                    L70 295
+                    Z
+                "
+                fill="#062a43"
+                opacity="0.7"
+            />
+
+
+            <!-- =========================
+                 BODY ARMOR
+            ========================== -->
+
+            <path
+                d="
+                    M82 180
+                    L178 180
+                    L194 285
+                    L66 285
+                    Z
+                "
+                fill="url(#armorGradient)"
+                stroke="#20dfff"
+                stroke-width="3"
+            />
+
+            <!-- Chest Core -->
+
+            <polygon
+                points="
+                    130,205
+                    154,220
+                    154,248
+                    130,263
+                    106,248
+                    106,220
+                "
+                fill="#031725"
+                stroke="#24d9ff"
+                stroke-width="3"
+                filter="url(#knightGlow)"
+            />
+
+            <circle
+                cx="130"
+                cy="234"
+                r="7"
+                fill="#55edff"
+                filter="url(#knightGlow)"
+            />
+
+
+            <!-- =========================
+                 LEFT ARM
+            ========================== -->
+
+            <path
+                d="
+                    M82 195
+                    L55 210
+                    L38 275
+                    L63 285
+                    L90 225
+                "
+                fill="url(#armorGradient)"
+                stroke="#159bd1"
+                stroke-width="3"
+            />
+
+
+            <!-- =========================
+                 RIGHT ARM
+            ========================== -->
+
+            <path
+                d="
+                    M178 195
+                    L205 210
+                    L220 270
+                    L195 282
+                    L170 225
+                "
+                fill="url(#armorGradient)"
+                stroke="#159bd1"
+                stroke-width="3"
+            />
+
+
+            <!-- =========================
+                 LEFT LEG
+            ========================== -->
+
+            <path
+                d="
+                    M72 275
+                    L122 275
+                    L118 325
+                    L70 325
+                "
+                fill="#062b45"
+                stroke="#20bce9"
+                stroke-width="3"
+            />
+
+            <!-- =========================
+                 RIGHT LEG
+            ========================== -->
+
+            <path
+                d="
+                    M138 275
+                    L188 275
+                    L190 325
+                    L142 325
+                "
+                fill="#062b45"
+                stroke="#20bce9"
+                stroke-width="3"
+            />
+
+
+            <!-- =========================
+                 BOOTS
+            ========================== -->
+
+            <path
+                d="
+                    M65 315
+                    L118 315
+                    L125 337
+                    L58 337
+                    Z
+                "
+                fill="#04121f"
+                stroke="#158dbd"
+                stroke-width="3"
+            />
+
+            <path
+                d="
+                    M142 315
+                    L195 315
+                    L202 337
+                    L135 337
+                    Z
+                "
+                fill="#04121f"
+                stroke="#158dbd"
+                stroke-width="3"
+            />
+
+
+            <!-- =========================
+                 NECK
+            ========================== -->
+
+            <rect
+                x="105"
+                y="157"
+                width="50"
+                height="35"
+                rx="7"
+                fill="#071d30"
+                stroke="#159bd1"
+                stroke-width="3"
+            />
+
+
+            <!-- =========================
+                 CUBE HEAD
+            ========================== -->
+
+            <polygon
+                points="
+                    70,55
+                    130,30
+                    190,55
+                    190,140
+                    130,170
+                    70,140
+                "
+                fill="#082b45"
+                stroke="#24d9ff"
+                stroke-width="4"
+                filter="url(#knightGlow)"
+            />
+
+            <!-- Head front -->
+
+            <polygon
+                points="
+                    70,55
+                    130,80
+                    130,170
+                    70,140
+                "
+                fill="#0a3857"
+            />
+
+            <!-- Head right -->
+
+            <polygon
+                points="
+                    130,80
+                    190,55
+                    190,140
+                    130,170
+                "
+                fill="#06263e"
+            />
+
+            <!-- Top cube face -->
+
+            <polygon
+                points="
+                    70,55
+                    130,30
+                    190,55
+                    130,80
+                "
+                fill="#0d4668"
+            />
+
+
+            <!-- =========================
+                 CUBE DETAILS
+            ========================== -->
+
+            <path
+                d="M82 61 L130 42 L177 61"
+                fill="none"
+                stroke="#4de8ff"
+                stroke-width="2"
+                opacity="0.6"
+            />
+
+            <path
+                d="M82 128 L130 148 L178 128"
+                fill="none"
+                stroke="#0ca8dc"
+                stroke-width="2"
+                opacity="0.5"
+            />
+
+
+            <!-- =========================
+                 LEFT GLOWING EYE
+            ========================== -->
+
+            <polygon
+                class="knight-eye"
+                points="
+                    84,91
+                    113,99
+                    113,113
+                    84,105
+                "
+                fill="#65f4ff"
+                filter="url(#knightGlow)"
+            />
+
+
+            <!-- =========================
+                 RIGHT GLOWING EYE
+            ========================== -->
+
+            <polygon
+                class="knight-eye"
+                points="
+                    147,99
+                    176,91
+                    176,105
+                    147,113
+                "
+                fill="#65f4ff"
+                filter="url(#knightGlow)"
+            />
+
+
+            <!-- =========================
+                 FACE LINE
+            ========================== -->
+
+            <path
+                d="
+                    M101 130
+                    L130 140
+                    L159 130
+                "
+                fill="none"
+                stroke="#159acb"
+                stroke-width="3"
+            />
+
+
+            <!-- =========================
+                 SWORD
+            ========================== -->
+
+            <g class="knight-sword">
+
+                <!-- Blade -->
+
+                <polygon
+                    points="
+                        205,260
+                        236,105
+                        247,90
+                        239,135
+                        220,275
+                    "
+                    fill="url(#swordGradient)"
+                    stroke="#65efff"
+                    stroke-width="3"
+                    filter="url(#knightGlow)"
+                />
+
+                <!-- Sword edge -->
+
+                <line
+                    x1="236"
+                    y1="105"
+                    x2="205"
+                    y2="260"
+                    stroke="#ffffff"
+                    stroke-width="2"
+                    opacity="0.8"
+                />
+
+                <!-- Guard -->
+
+                <line
+                    x1="190"
+                    y1="267"
+                    x2="228"
+                    y2="278"
+                    stroke="#24d9ff"
+                    stroke-width="8"
+                    stroke-linecap="round"
+                />
+
+                <!-- Handle -->
+
+                <line
+                    x1="210"
+                    y1="273"
+                    x2="202"
+                    y2="309"
+                    stroke="#102d42"
+                    stroke-width="9"
+                    stroke-linecap="round"
+                />
+
+                <!-- Handle glow -->
+
+                <line
+                    x1="207"
+                    y1="276"
+                    x2="201"
+                    y2="307"
+                    stroke="#1bb9e9"
+                    stroke-width="3"
+                />
+
+            </g>
+
+
+            <!-- =========================
+                 SHIELD
+            ========================== -->
+
+            <g class="knight-shield">
+
+                <path
+                    d="
+                        M20 210
+                        L60 225
+                        L60 280
+                        Q40 310 20 320
+                        Q0 310 -20 280
+                        L-20 225
+                        Z
+                    "
+                    transform="translate(43,0)"
+                    fill="url(#shieldGradient)"
+                    stroke="#24d9ff"
+                    stroke-width="3"
+                    filter="url(#knightGlow)"
+                />
+
+                <!-- Shield symbol -->
+
+                <polygon
+                    points="
+                        43,240
+                        58,248
+                        58,267
+                        43,277
+                        28,267
+                        28,248
+                    "
+                    fill="#031b2c"
+                    stroke="#72efff"
+                    stroke-width="2"
+                />
+
+                <path
+                    d="
+                        M43 244
+                        L43 272
+                    "
+                    stroke="#5deaff"
+                    stroke-width="2"
+                />
+
+                <path
+                    d="
+                        M30 254
+                        L56 254
+                    "
+                    stroke="#5deaff"
+                    stroke-width="2"
+                />
+
+            </g>
+
+        </svg>
 
     </div>
 
 
-    <!-- JUDUL TENGAH -->
-    <div class="school-brand">
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
 
-        <img
-            src="img/logo-smkn.jpeg"
-            alt="Logo SMKN"
-            class="header-logo school-logo"
-            style="
-                width: 55px !important;
-                height: 55px !important;
-                max-width: 55px !important;
-                max-height: 55px !important;
-                object-fit: contain !important;
-                display: block !important;
-            "
-        >
+    <header class="top-header">
 
+        <!-- LOGO KELOMPOK -->
 
-        <div class="title-brand">
+        <div class="brand-side">
 
-            <div class="main-title">
-                <span>◆</span>
-                CUBES
-            </div>
-
-            <div class="sub-title">
-                ADVENTURE KNIGHT
-            </div>
+            <img
+                src="img/logo-kelompok.jpeg"
+                alt="Logo Kelompok"
+                class="header-logo kelompok-logo"
+            >
 
         </div>
 
 
-        <img
-            src="img/logo-rpl.jpeg"
-            alt="Logo RPL"
-            class="header-logo school-logo"
-            style="
-                width: 55px !important;
-                height: 55px !important;
-                max-width: 55px !important;
-                max-height: 55px !important;
-                object-fit: contain !important;
-                display: block !important;
-            "
-        >
+        <!-- JUDUL TENGAH -->
 
-    </div>
+        <div class="school-brand">
+
+            <img
+                src="img/logo-smkn.jpeg"
+                alt="Logo SMKN"
+                class="header-logo school-logo"
+            >
 
 
-    <!-- LOGO MOKO -->
-    <div class="brand-side right">
+            <div class="title-brand">
 
-        <img
-            src="img/logo-moko.jpeg"
-            alt="Logo MOKO"
-            class="header-logo moko-logo"
-            style="
-                width: 65px !important;
-                height: 65px !important;
-                max-width: 65px !important;
-                max-height: 65px !important;
-                min-width: 65px !important;
-                min-height: 65px !important;
-                object-fit: contain !important;
-                display: block !important;
-            "
-        >
+                <div class="main-title">
+                    <span>◆</span>
+                    CUBES
+                </div>
 
-    </div>
+                <div class="sub-title">
+                    ADVENTURE KNIGHT
+                </div>
 
-</header>
+            </div>
 
 
-    <!-- ================= MAIN ================= -->
+            <img
+                src="img/logo-rpl.jpeg"
+                alt="Logo RPL"
+                class="header-logo school-logo"
+            >
+
+        </div>
+
+
+        <!-- LOGO MOKO -->
+
+        <div class="brand-side right">
+
+            <img
+                src="img/logo-moko.jpeg"
+                alt="Logo MOKO"
+                class="header-logo moko-logo"
+            >
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
     <main class="main-wrapper">
 
@@ -128,20 +671,29 @@
         <div class="status-bar">
 
             <div class="system-online">
+
                 <span class="online-dot"></span>
+
                 SYSTEM ONLINE
+
             </div>
 
+
             <div class="energy">
-                ENERGY 100%
+
+                ENERGY
+                <span id="energy-value">100%</span>
+
                 <span>⚡</span>
+
             </div>
 
         </div>
 
 
-
-        <!-- MODE -->
+        <!-- =================================================
+             MODE
+        ================================================== -->
 
         <div class="mode-bar">
 
@@ -152,6 +704,7 @@
                 BASIC
             </button>
 
+
             <button
                 class="mode-btn"
                 onclick="switchMode('scientific')"
@@ -159,12 +712,14 @@
                 SCIENTIFIC
             </button>
 
+
             <button
                 class="mode-btn"
                 onclick="switchMode('programmer')"
             >
                 PROGRAMMER
             </button>
+
 
             <button
                 class="mode-btn"
@@ -176,13 +731,16 @@
         </div>
 
 
-
-        <!-- ================= WORKSPACE ================= -->
+        <!-- =================================================
+             WORKSPACE
+        ================================================== -->
 
         <div class="workspace">
 
 
-            <!-- ============ CALCULATOR ============ -->
+            <!-- =============================================
+                 CALCULATOR
+            ============================================== -->
 
             <div class="calculator-panel">
 
@@ -202,8 +760,9 @@
                 </div>
 
 
-
-                <!-- ================= BASIC ================= -->
+                <!-- =========================================
+                     BASIC
+                ========================================== -->
 
                 <section
                     id="basic-mode"
@@ -219,6 +778,7 @@
                             AC
                         </button>
 
+
                         <button
                             class="special"
                             onclick="deleteNumber()"
@@ -226,12 +786,14 @@
                             DEL
                         </button>
 
+
                         <button
                             class="special"
                             onclick="plusMinus()"
                         >
                             ±
                         </button>
+
 
                         <button
                             class="operator"
@@ -248,13 +810,16 @@
                             ÷
                         </button>
 
+
                         <button onclick="addNumber('7')">
                             7
                         </button>
 
+
                         <button onclick="addNumber('8')">
                             8
                         </button>
+
 
                         <button onclick="addNumber('9')">
                             9
@@ -268,13 +833,16 @@
                             ×
                         </button>
 
+
                         <button onclick="addNumber('4')">
                             4
                         </button>
 
+
                         <button onclick="addNumber('5')">
                             5
                         </button>
+
 
                         <button onclick="addNumber('6')">
                             6
@@ -288,13 +856,16 @@
                             −
                         </button>
 
+
                         <button onclick="addNumber('1')">
                             1
                         </button>
 
+
                         <button onclick="addNumber('2')">
                             2
                         </button>
+
 
                         <button onclick="addNumber('3')">
                             3
@@ -308,6 +879,7 @@
                             +
                         </button>
 
+
                         <button
                             class="zero"
                             onclick="addNumber('0')"
@@ -315,9 +887,11 @@
                             0
                         </button>
 
+
                         <button onclick="addNumber('.')">
                             .
                         </button>
+
 
                         <button
                             class="equal"
@@ -331,8 +905,9 @@
                 </section>
 
 
-
-                <!-- ================= SCIENTIFIC ================= -->
+                <!-- =========================================
+                     SCIENTIFIC
+                ========================================== -->
 
                 <section
                     id="scientific-mode"
@@ -341,12 +916,14 @@
 
                     <div class="buttons scientific-buttons">
 
+
                         <button
                             class="special"
                             onclick="squareRoot()"
                         >
                             √
                         </button>
+
 
                         <button
                             class="special"
@@ -355,12 +932,14 @@
                             x²
                         </button>
 
+
                         <button
                             class="special"
                             onclick="powerNumber()"
                         >
                             xʸ
                         </button>
+
 
                         <button
                             class="special"
@@ -377,6 +956,7 @@
                             sin
                         </button>
 
+
                         <button
                             class="special"
                             onclick="cosNumber()"
@@ -384,12 +964,14 @@
                             cos
                         </button>
 
+
                         <button
                             class="special"
                             onclick="tanNumber()"
                         >
                             tan
                         </button>
+
 
                         <button
                             class="special"
@@ -406,6 +988,7 @@
                             asin
                         </button>
 
+
                         <button
                             class="special"
                             onclick="acosNumber()"
@@ -413,12 +996,14 @@
                             acos
                         </button>
 
+
                         <button
                             class="special"
                             onclick="atanNumber()"
                         >
                             atan
                         </button>
+
 
                         <button
                             class="special"
@@ -435,6 +1020,7 @@
                             log
                         </button>
 
+
                         <button
                             class="special"
                             onclick="lnNumber()"
@@ -442,12 +1028,14 @@
                             ln
                         </button>
 
+
                         <button
                             class="special"
                             onclick="exponentialNumber()"
                         >
                             eˣ
                         </button>
+
 
                         <button
                             class="special"
@@ -464,6 +1052,7 @@
                             π
                         </button>
 
+
                         <button
                             class="special"
                             onclick="addE()"
@@ -471,12 +1060,14 @@
                             e
                         </button>
 
+
                         <button
                             class="special"
                             onclick="addPhi()"
                         >
                             φ
                         </button>
+
 
                         <button
                             class="special"
@@ -493,6 +1084,7 @@
                             AC
                         </button>
 
+
                         <button
                             class="special"
                             onclick="deleteNumber()"
@@ -500,12 +1092,14 @@
                             DEL
                         </button>
 
+
                         <button
                             class="special"
                             onclick="plusMinus()"
                         >
                             ±
                         </button>
+
 
                         <button
                             class="operator"
@@ -522,13 +1116,16 @@
                             ÷
                         </button>
 
+
                         <button onclick="addNumber('7')">
                             7
                         </button>
 
+
                         <button onclick="addNumber('8')">
                             8
                         </button>
+
 
                         <button onclick="addNumber('9')">
                             9
@@ -542,13 +1139,16 @@
                             ×
                         </button>
 
+
                         <button onclick="addNumber('4')">
                             4
                         </button>
 
+
                         <button onclick="addNumber('5')">
                             5
                         </button>
+
 
                         <button onclick="addNumber('6')">
                             6
@@ -562,13 +1162,16 @@
                             −
                         </button>
 
+
                         <button onclick="addNumber('1')">
                             1
                         </button>
 
+
                         <button onclick="addNumber('2')">
                             2
                         </button>
+
 
                         <button onclick="addNumber('3')">
                             3
@@ -582,6 +1185,7 @@
                             +
                         </button>
 
+
                         <button
                             class="zero"
                             onclick="addNumber('0')"
@@ -589,9 +1193,11 @@
                             0
                         </button>
 
+
                         <button onclick="addNumber('.')">
                             .
                         </button>
+
 
                         <button
                             class="equal"
@@ -605,8 +1211,9 @@
                 </section>
 
 
-
-                <!-- ================= PROGRAMMER ================= -->
+                <!-- =========================================
+                     PROGRAMMER
+                ========================================== -->
 
                 <section
                     id="programmer-mode"
@@ -617,22 +1224,33 @@
 
                         <div>
                             <span>DEC</span>
-                            <strong id="programmer-dec">0</strong>
+                            <strong id="programmer-dec">
+                                0
+                            </strong>
                         </div>
+
 
                         <div>
                             <span>BIN</span>
-                            <strong id="programmer-bin">0</strong>
+                            <strong id="programmer-bin">
+                                0
+                            </strong>
                         </div>
+
 
                         <div>
                             <span>HEX</span>
-                            <strong id="programmer-hex">0</strong>
+                            <strong id="programmer-hex">
+                                0
+                            </strong>
                         </div>
+
 
                         <div>
                             <span>OCT</span>
-                            <strong id="programmer-oct">0</strong>
+                            <strong id="programmer-oct">
+                                0
+                            </strong>
                         </div>
 
                     </div>
@@ -648,27 +1266,44 @@
 
                     <div class="programmer-buttons">
 
-                        <button onclick="programmerOperation('AND')">
+                        <button
+                            onclick="programmerOperation('AND')"
+                        >
                             AND
                         </button>
 
-                        <button onclick="programmerOperation('OR')">
+
+                        <button
+                            onclick="programmerOperation('OR')"
+                        >
                             OR
                         </button>
 
-                        <button onclick="programmerOperation('XOR')">
+
+                        <button
+                            onclick="programmerOperation('XOR')"
+                        >
                             XOR
                         </button>
 
-                        <button onclick="programmerNOT()">
+
+                        <button
+                            onclick="programmerNOT()"
+                        >
                             NOT
                         </button>
 
-                        <button onclick="programmerShift('left')">
+
+                        <button
+                            onclick="programmerShift('left')"
+                        >
                             SHIFT LEFT
                         </button>
 
-                        <button onclick="programmerShift('right')">
+
+                        <button
+                            onclick="programmerShift('right')"
+                        >
                             SHIFT RIGHT
                         </button>
 
@@ -677,8 +1312,9 @@
                 </section>
 
 
-
-                <!-- ================= CONVERTER ================= -->
+                <!-- =========================================
+                     CONVERTER
+                ========================================== -->
 
                 <section
                     id="converter-mode"
@@ -690,6 +1326,7 @@
                         <label>
                             Jenis Converter
                         </label>
+
 
                         <select
                             id="converter-type"
@@ -739,7 +1376,10 @@
 
                             <div>
 
-                                <label>Dari</label>
+                                <label>
+                                    Dari
+                                </label>
+
 
                                 <input
                                     type="number"
@@ -747,6 +1387,7 @@
                                     value="1"
                                     oninput="convertValue()"
                                 >
+
 
                                 <select
                                     id="from-unit"
@@ -763,13 +1404,17 @@
 
                             <div>
 
-                                <label>Ke</label>
+                                <label>
+                                    Ke
+                                </label>
+
 
                                 <input
                                     type="text"
                                     id="convert-result"
                                     readonly
                                 >
+
 
                                 <select
                                     id="to-unit"
@@ -785,7 +1430,9 @@
                 </section>
 
 
-                <!-- KNIGHT STATUS -->
+                <!-- =========================================
+                     KNIGHT STATUS
+                ========================================== -->
 
                 <div class="knight-status">
 
@@ -793,7 +1440,8 @@
                         ⚔ KNIGHT CALCULATOR
                     </span>
 
-                    <span>
+
+                    <span id="knight-message">
                         CALCULATION MODE: ACTIVE
                     </span>
 
@@ -802,8 +1450,9 @@
             </div>
 
 
-
-            <!-- ============ HISTORY ============ -->
+            <!-- =============================================
+                 HISTORY
+            ============================================== -->
 
             <aside class="history-panel">
 
@@ -812,6 +1461,7 @@
                     <h2>
                         ⚔️ ADVENTURE HISTORY
                     </h2>
+
 
                     <button onclick="clearHistory()">
                         CLEAR
@@ -835,8 +1485,9 @@
     </main>
 
 
-
-    <!-- ================= TEAM ================= -->
+    <!-- =====================================================
+         TEAM
+    ====================================================== -->
 
     <section class="team-section">
 
@@ -852,15 +1503,18 @@
                 Finsa Dwi W.T
             </div>
 
+
             <div class="member">
                 <span>02</span>
                 Talitha Nur S
             </div>
 
+
             <div class="member">
                 <span>03</span>
                 Nazwa Agustina R
             </div>
+
 
             <div class="member">
                 <span>04</span>
@@ -872,8 +1526,9 @@
     </section>
 
 
-
-    <!-- ================= FOOTER ================= -->
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
 
     <footer>
 
@@ -893,6 +1548,10 @@
 
     </footer>
 
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
 
     <script src="script.js"></script>
 
