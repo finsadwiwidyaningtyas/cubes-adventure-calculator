@@ -1360,3 +1360,47 @@ img {
 .calculator-mode.active {
     display: block !important;
 }
+
+/* =========================================
+   FIX TOMBOL KALKULATOR
+========================================= */
+
+/* Mode yang tidak aktif disembunyikan */
+.calculator-mode {
+    display: none !important;
+}
+
+/* Mode aktif wajib tampil */
+.calculator-mode.active {
+    display: block !important;
+}
+
+/* Tombol kalkulator wajib tampil */
+.calculator-mode.active .buttons {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* GRID BASIC */
+#basic-mode.active .buttons {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+}
+
+/* GRID SCIENTIFIC */
+#scientific-mode.active .scientific-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10px !important;
+}
+
+/* Tombol */
+.calculator-mode.active .buttons button {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 55px !important;
+}
