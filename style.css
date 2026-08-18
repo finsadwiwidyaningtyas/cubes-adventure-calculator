@@ -2,7 +2,12 @@
    CUBES ADVENTURE KNIGHT
    FUTURISTIC CALCULATOR
    STYLE.CSS - FULL VERSION
-   + ANIMATION SYSTEM
+   + CUBE KNIGHT MASCOT
+========================================================= */
+
+
+/* =========================================================
+   GLOBAL RESET
 ========================================================= */
 
 * {
@@ -11,31 +16,40 @@
     box-sizing: border-box;
 }
 
+
 :root {
+
     --bg: #010914;
+
     --panel: #031525;
+
     --panel2: #061e34;
 
     --cyan: #24d9ff;
+
+    --cyan-light: #72efff;
+
     --blue: #078fe5;
+
     --blue-dark: #075278;
 
     --white: #f1fbff;
+
     --muted: #6c91a5;
 
-    --green: #47e76a;
-    --red: #ff4e61;
-    --yellow: #ffd84d;
-
     --border: rgba(30, 190, 255, 0.35);
+
 }
+
 
 /* =========================================================
    BODY
 ========================================================= */
 
 body {
+
     min-height: 100vh;
+
     padding: 20px 15px;
 
     font-family:
@@ -46,188 +60,706 @@ body {
     color: var(--white);
 
     background:
+
         radial-gradient(
             circle at 50% 20%,
             rgba(0, 142, 255, 0.13),
             transparent 38%
         ),
+
         radial-gradient(
             circle at 10% 80%,
             rgba(0, 115, 255, 0.07),
             transparent 30%
         ),
+
+        radial-gradient(
+            circle at 90% 70%,
+            rgba(0, 200, 255, 0.05),
+            transparent 25%
+        ),
+
         #010914;
 
     overflow-x: hidden;
+
 }
+
 
 /* =========================================================
    BACKGROUND CUBES
 ========================================================= */
 
 .cube {
+
     position: fixed;
 
     width: 100px;
+
     height: 100px;
 
-    border: 1px solid rgba(0, 145, 255, 0.18);
+    border:
+        1px solid
+        rgba(0, 145, 255, 0.18);
 
     transform: rotate(30deg);
 
     pointer-events: none;
 
-    z-index: -1;
+    z-index: -2;
 
     animation:
-        floatingCube 8s ease-in-out infinite,
-        cubeGlow 4s ease-in-out infinite;
+        backgroundCubeFloat
+        8s
+        ease-in-out
+        infinite;
+
 }
 
+
 .cube::after {
+
     content: "";
 
     position: absolute;
 
     inset: 15px;
 
-    border: 1px solid rgba(0, 200, 255, 0.08);
+    border:
+        1px solid
+        rgba(0, 200, 255, 0.08);
+
 }
 
-.cube::before {
-    content: "";
-
-    position: absolute;
-
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: var(--cyan);
-
-    box-shadow:
-        0 0 10px var(--cyan),
-        0 0 20px rgba(0, 210, 255, 0.4);
-
-    animation: particleGlow 2s ease-in-out infinite;
-}
 
 .cube-1 {
+
     left: 35px;
+
     top: 220px;
 
     width: 120px;
+
     height: 120px;
 
-    animation-delay: 0s;
 }
 
+
 .cube-2 {
+
     right: 40px;
+
     top: 180px;
 
     width: 70px;
+
     height: 70px;
 
     transform: rotate(45deg);
 
-    animation-delay: 1.5s;
+    animation-delay: -2s;
+
 }
 
+
 .cube-3 {
+
     right: 80px;
+
     top: 440px;
 
     width: 110px;
+
     height: 110px;
 
     transform: rotate(20deg);
 
-    animation-delay: 3s;
+    animation-delay: -4s;
+
 }
 
+
 .cube-4 {
+
     left: 30px;
+
     bottom: 230px;
 
     width: 55px;
+
     height: 55px;
 
     transform: rotate(25deg);
 
-    animation-delay: 4.5s;
+    animation-delay: -6s;
+
 }
+
+
+@keyframes backgroundCubeFloat {
+
+    0%,
+    100% {
+
+        opacity: 0.5;
+
+        transform:
+            translateY(0)
+            rotate(30deg);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        transform:
+            translateY(-20px)
+            rotate(42deg);
+
+    }
+
+}
+
 
 /* =========================================================
-   FLOATING CUBE ANIMATION
+   CUBE KNIGHT
 ========================================================= */
 
-@keyframes floatingCube {
+.cube-knight {
+
+    position: fixed;
+
+    right: 18px;
+
+    bottom: 35px;
+
+    width: 180px;
+
+    height: 250px;
+
+    z-index: 5;
+
+    pointer-events: none;
+
+    transform-origin: center bottom;
+
+    animation:
+        knightFloat
+        4s
+        ease-in-out
+        infinite;
+
+}
+
+
+/* =========================================================
+   KNIGHT GLOW
+========================================================= */
+
+.knight-glow {
+
+    position: absolute;
+
+    width: 125px;
+
+    height: 125px;
+
+    left: 27px;
+
+    top: 40px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(36, 217, 255, 0.17),
+            transparent 70%
+        );
+
+    filter: blur(12px);
+
+    animation:
+        knightGlowPulse
+        2.5s
+        ease-in-out
+        infinite;
+
+}
+
+
+/* =========================================================
+   KNIGHT SVG
+========================================================= */
+
+.knight-svg {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: visible;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(0, 190, 255, 0.35)
+        );
+
+}
+
+
+/* =========================================================
+   KNIGHT FLOAT
+========================================================= */
+
+@keyframes knightFloat {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0)
+            rotate(-1deg);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-13px)
+            rotate(1deg);
+
+    }
+
+}
+
+
+@keyframes knightGlowPulse {
+
+    0%,
+    100% {
+
+        opacity: 0.45;
+
+        transform: scale(0.9);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        transform: scale(1.12);
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT EYES
+========================================================= */
+
+.knight-eye {
+
+    animation:
+        eyePulse
+        1.4s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes eyePulse {
+
+    0%,
+    100% {
+
+        opacity: 0.55;
+
+        filter:
+            drop-shadow(
+                0 0 2px
+                #24d9ff
+            );
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        filter:
+            drop-shadow(
+                0 0 10px
+                #24d9ff
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT SWORD
+========================================================= */
+
+.knight-sword {
+
+    transform-origin: 205px 270px;
+
+    animation:
+        swordIdle
+        3s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes swordIdle {
+
+    0%,
+    100% {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    50% {
+
+        transform:
+            rotate(-5deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT SHIELD
+========================================================= */
+
+.knight-shield {
+
+    transform-origin: 43px 270px;
+
+    animation:
+        shieldIdle
+        3.5s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes shieldIdle {
+
+    0%,
+    100% {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    50% {
+
+        transform:
+            rotate(4deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   CUBE KNIGHT REACTION
+========================================================= */
+
+/* Saat tombol kalkulator ditekan */
+
+.cube-knight.knight-action {
+
+    animation:
+        knightAttack
+        0.55s
+        ease-out;
+
+}
+
+
+/* Saat melakukan perhitungan */
+
+.cube-knight.knight-calculate {
+
+    animation:
+        knightCalculate
+        0.8s
+        ease-out;
+
+}
+
+
+/* Saat terjadi error */
+
+.cube-knight.knight-error {
+
+    animation:
+        knightError
+        0.7s
+        ease-out;
+
+}
+
+
+/* Saat mode berganti */
+
+.cube-knight.knight-mode {
+
+    animation:
+        knightModeChange
+        0.65s
+        ease-out;
+
+}
+
+
+/* =========================================================
+   KNIGHT ACTION ANIMATION
+========================================================= */
+
+@keyframes knightAttack {
 
     0% {
+
         transform:
             translateY(0)
-            rotate(30deg);
+            rotate(0deg)
+            scale(1);
+
+    }
+
+    35% {
+
+        transform:
+            translateY(-15px)
+            rotate(-6deg)
+            scale(1.04);
+
+    }
+
+    65% {
+
+        transform:
+            translateY(4px)
+            rotate(5deg)
+            scale(0.98);
+
+    }
+
+    100% {
+
+        transform:
+            translateY(0)
+            rotate(0deg)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT CALCULATE
+========================================================= */
+
+@keyframes knightCalculate {
+
+    0% {
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+    25% {
+
+        transform:
+            translateY(-25px)
+            scale(1.08);
+
     }
 
     50% {
+
+        transform:
+            translateY(-10px)
+            scale(1.12);
+
+    }
+
+    75% {
+
         transform:
             translateY(-18px)
-            rotate(38deg);
+            scale(1.05);
+
     }
 
     100% {
+
         transform:
             translateY(0)
-            rotate(30deg);
+            scale(1);
+
     }
+
 }
 
-@keyframes cubeGlow {
 
-    0%,
+/* =========================================================
+   KNIGHT ERROR
+========================================================= */
+
+@keyframes knightError {
+
+    0% {
+
+        transform:
+            translateX(0);
+
+    }
+
+    20% {
+
+        transform:
+            translateX(-10px)
+            rotate(-5deg);
+
+    }
+
+    40% {
+
+        transform:
+            translateX(10px)
+            rotate(5deg);
+
+    }
+
+    60% {
+
+        transform:
+            translateX(-8px)
+            rotate(-4deg);
+
+    }
+
+    80% {
+
+        transform:
+            translateX(7px)
+            rotate(4deg);
+
+    }
+
     100% {
-        opacity: 0.45;
+
+        transform:
+            translateX(0)
+            rotate(0deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   KNIGHT MODE CHANGE
+========================================================= */
+
+@keyframes knightModeChange {
+
+    0% {
+
+        transform:
+            scale(1)
+            rotate(0deg);
+
+        filter:
+            brightness(1);
+
     }
 
     50% {
-        opacity: 0.9;
+
+        transform:
+            scale(1.15)
+            rotate(8deg);
+
+        filter:
+            brightness(1.8)
+            drop-shadow(
+                0 0 18px
+                rgba(36, 217, 255, 0.9)
+            );
+
     }
-}
 
-@keyframes particleGlow {
-
-    0%,
     100% {
-        opacity: 0.3;
-        transform: scale(0.8);
+
+        transform:
+            scale(1)
+            rotate(0deg);
+
+        filter:
+            brightness(1);
+
     }
 
-    50% {
-        opacity: 1;
-        transform: scale(1.3);
-    }
 }
+
 
 /* =========================================================
    HEADER
 ========================================================= */
 
 .top-header {
-    width: min(1350px, 100%);
+
+    width:
+        min(
+            1350px,
+            100%
+        );
+
     height: 90px;
 
-    margin: 0 auto 25px;
-    padding: 10px 28px;
+    margin:
+        0 auto 25px;
+
+    padding:
+        10px 28px;
 
     display: grid;
 
-    grid-template-columns: 100px 1fr 100px;
+    grid-template-columns:
+        100px
+        1fr
+        100px;
 
     align-items: center;
 
-    border: 1px solid rgba(0, 195, 255, 0.45);
+    border:
+        1px solid
+        rgba(0, 195, 255, 0.45);
+
     border-radius: 8px;
 
     background:
@@ -239,22 +771,28 @@ body {
         );
 
     box-shadow:
-        0 0 25px rgba(0, 150, 255, 0.1);
+        0 0 25px
+        rgba(0, 150, 255, 0.1);
 
     position: relative;
 
     overflow: hidden;
 
-    animation: panelSlide 0.7s ease-out both;
 }
 
+
+/* HEADER TOP LIGHT */
+
 .top-header::before {
+
     content: "";
 
     position: absolute;
 
     left: 30px;
+
     right: 30px;
+
     top: 0;
 
     height: 1px;
@@ -267,158 +805,165 @@ body {
             transparent
         );
 
-    animation: scanLine 4s linear infinite;
 }
 
+
+/* HEADER DECORATION */
+
 .top-header::after {
+
     content: "";
 
     position: absolute;
 
-    width: 80px;
-    height: 100%;
+    width: 180px;
 
-    top: 0;
-    left: -120px;
+    height: 180px;
 
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(36, 217, 255, 0.08),
-            transparent
-        );
+    right: -100px;
 
-    transform: skewX(-20deg);
+    top: -100px;
 
-    animation: headerScan 6s ease-in-out infinite;
+    border:
+        1px solid
+        rgba(36, 217, 255, 0.15);
+
+    transform:
+        rotate(45deg);
+
 }
+
 
 /* =========================================================
-   HEADER ANIMATION
-========================================================= */
-
-@keyframes scanLine {
-
-    0% {
-        opacity: 0.3;
-    }
-
-    50% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0.3;
-    }
-}
-
-@keyframes headerScan {
-
-    0% {
-        left: -120px;
-    }
-
-    60% {
-        left: 110%;
-    }
-
-    100% {
-        left: 110%;
-    }
-}
-
-/* =========================================================
-   LOGO
+   BRAND SIDE
 ========================================================= */
 
 .brand-side {
+
     width: 90px;
+
     height: 70px;
 
     display: flex;
+
     align-items: center;
-    justify-content: flex-start;
+
+    justify-content:
+        flex-start;
 
     overflow: hidden;
 
     flex-shrink: 0;
+
 }
+
 
 .brand-side.right {
-    justify-content: flex-end;
+
+    justify-content:
+        flex-end;
+
 }
 
+
+/* =========================================================
+   HEADER LOGO
+========================================================= */
+
 .header-logo {
-    width: 52px !important;
-    height: 52px !important;
 
-    min-width: 52px !important;
-    min-height: 52px !important;
+    width:
+        52px !important;
 
-    max-width: 52px !important;
-    max-height: 52px !important;
+    height:
+        52px !important;
 
-    display: block !important;
+    min-width:
+        52px !important;
 
-    object-fit: contain !important;
-    object-position: center !important;
+    min-height:
+        52px !important;
 
-    border-radius: 8px;
+    max-width:
+        52px !important;
+
+    max-height:
+        52px !important;
+
+    display:
+        block !important;
+
+    object-fit:
+        contain !important;
+
+    object-position:
+        center !important;
+
+    border-radius:
+        8px;
 
     flex-shrink: 0;
 
-    transition:
-        transform 0.25s ease,
-        filter 0.25s ease;
 }
 
-.header-logo:hover {
-    transform: scale(1.08);
 
-    filter:
-        drop-shadow(
-            0 0 8px rgba(36, 217, 255, 0.7)
-        );
-}
+/* =========================================================
+   SCHOOL BRAND
+========================================================= */
 
 .school-brand {
+
     min-width: 0;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 18px;
+
 }
+
 
 .school-brand .header-logo {
-    width: 50px !important;
-    height: 50px !important;
 
-    min-width: 50px !important;
-    min-height: 50px !important;
+    width:
+        50px !important;
 
-    max-width: 50px !important;
-    max-height: 50px !important;
+    height:
+        50px !important;
+
+    min-width:
+        50px !important;
+
+    min-height:
+        50px !important;
+
+    max-width:
+        50px !important;
+
+    max-height:
+        50px !important;
+
 }
 
-.top-header img {
-    object-fit: contain !important;
-}
 
 /* =========================================================
    TITLE
 ========================================================= */
 
 .title-brand {
+
     text-align: center;
 
     white-space: nowrap;
+
 }
 
+
 .main-title {
+
     font-size: 34px;
 
     font-weight: 900;
@@ -430,208 +975,203 @@ body {
     color: #f4fcff;
 
     text-shadow:
-        0 0 12px rgba(20, 200, 255, 0.8);
+        0 0 12px
+        rgba(20, 200, 255, 0.8);
 
-    animation:
-        titleGlow 3s ease-in-out infinite;
 }
+
 
 .main-title span {
-    color: var(--cyan);
+
+    color:
+        var(--cyan);
 
     margin-right: 5px;
+
 }
 
+
 .sub-title {
+
     margin-top: 8px;
 
-    color: var(--cyan);
+    color:
+        var(--cyan);
 
     font-size: 11px;
 
     font-weight: 700;
 
     letter-spacing: 6px;
+
 }
 
-@keyframes titleGlow {
-
-    0%,
-    100% {
-        text-shadow:
-            0 0 8px rgba(20, 200, 255, 0.5);
-    }
-
-    50% {
-        text-shadow:
-            0 0 18px rgba(20, 220, 255, 0.9);
-    }
-}
 
 /* =========================================================
    MAIN WRAPPER
 ========================================================= */
 
 .main-wrapper {
-    width: min(950px, 100%);
 
-    margin: 0 auto;
+    width:
+        min(
+            950px,
+            100%
+        );
 
-    animation:
-        panelSlide 0.8s ease-out 0.1s both;
+    margin:
+        0 auto;
+
 }
+
 
 /* =========================================================
    STATUS
 ========================================================= */
 
 .status-bar {
+
     display: flex;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
+
     align-items: center;
 
-    padding: 0 20px 12px;
+    padding:
+        0 20px 12px;
 
     font-size: 13px;
 
     font-weight: 700;
+
 }
+
 
 .system-online {
-    color: var(--green);
+
+    color:
+        #47e76a;
+
 }
 
+
 .online-dot {
-    display: inline-block;
+
+    display:
+        inline-block;
 
     width: 10px;
+
     height: 10px;
 
     margin-right: 7px;
 
     border-radius: 50%;
 
-    background: #52ec6d;
+    background:
+        #52ec6d;
 
     box-shadow:
-        0 0 10px rgba(70, 255, 100, 0.8);
+        0 0 10px
+        rgba(70, 255, 100, 0.8);
 
     animation:
-        energyPulse 1.8s ease-in-out infinite;
+        onlinePulse
+        1.5s
+        ease-in-out
+        infinite;
+
 }
+
+
+@keyframes onlinePulse {
+
+    0%,
+    100% {
+
+        opacity: 0.6;
+
+        box-shadow:
+            0 0 5px
+            rgba(70, 255, 100, 0.5);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        box-shadow:
+            0 0 15px
+            rgba(70, 255, 100, 1);
+
+    }
+
+}
+
 
 .energy {
-    color: var(--cyan);
 
-    transition:
-        transform 0.25s ease,
-        text-shadow 0.25s ease;
+    color:
+        var(--cyan);
+
 }
 
+
 .energy span {
+
     margin-left: 5px;
 
     font-size: 20px;
 
-    display: inline-block;
 }
 
-.energy.energy-pulse {
-    animation:
-        energyPulseStrong 0.55s ease-out;
-}
-
-.energy.energy-pulse span {
-    animation:
-        energyIconPulse 0.55s ease-out;
-}
-
-/* =========================================================
-   ENERGY ANIMATION
-========================================================= */
-
-@keyframes energyPulse {
-
-    0%,
-    100% {
-        box-shadow:
-            0 0 7px rgba(70, 255, 100, 0.6);
-    }
-
-    50% {
-        box-shadow:
-            0 0 15px rgba(70, 255, 100, 1);
-    }
-}
-
-@keyframes energyPulseStrong {
-
-    0% {
-        transform: scale(1);
-        text-shadow: none;
-    }
-
-    40% {
-        transform: scale(1.08);
-        text-shadow:
-            0 0 12px var(--cyan),
-            0 0 25px rgba(36, 217, 255, 0.6);
-    }
-
-    100% {
-        transform: scale(1);
-        text-shadow: none;
-    }
-}
-
-@keyframes energyIconPulse {
-
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.3) rotate(-8deg);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
 
 /* =========================================================
    MODE BAR
 ========================================================= */
 
 .mode-bar {
+
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 10px;
 
     margin-bottom: 15px;
+
     padding: 7px;
 
-    border: 1px solid rgba(0, 165, 255, 0.2);
+    border:
+        1px solid
+        rgba(0, 165, 255, 0.2);
 
     border-radius: 10px;
 
     background:
         rgba(1, 16, 29, 0.9);
+
 }
 
+
 .mode-btn {
+
     height: 45px;
 
-    border: 1px solid rgba(0, 155, 255, 0.35);
+    border:
+        1px solid
+        rgba(0, 155, 255, 0.35);
 
     border-radius: 8px;
 
-    background: transparent;
+    background:
+        transparent;
 
-    color: #9ab4c2;
+    color:
+        #9ab4c2;
 
     font-size: 13px;
 
@@ -640,30 +1180,30 @@ body {
     cursor: pointer;
 
     transition:
-        transform 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+        0.2s;
+
 }
+
 
 .mode-btn:hover {
-    color: white;
 
-    border-color: var(--cyan);
+    color:
+        white;
 
-    transform: translateY(-1px);
+    border-color:
+        var(--cyan);
 
     box-shadow:
-        0 0 10px rgba(36, 217, 255, 0.12);
+        0 0 10px
+        rgba(0, 180, 255, 0.1);
+
 }
 
-.mode-btn:active {
-    transform: scale(0.97);
-}
 
 .mode-btn.active {
-    color: white;
+
+    color:
+        white;
 
     background:
         linear-gradient(
@@ -676,31 +1216,42 @@ body {
         rgba(70, 220, 255, 0.9);
 
     box-shadow:
-        0 0 15px rgba(0, 160, 255, 0.25);
+        0 0 15px
+        rgba(0, 160, 255, 0.25);
+
 }
+
 
 /* =========================================================
    WORKSPACE
 ========================================================= */
 
 .workspace {
+
     display: grid;
 
-    grid-template-columns: 1.15fr 0.85fr;
+    grid-template-columns:
+        1.15fr 0.85fr;
 
     gap: 15px;
 
-    align-items: stretch;
+    align-items:
+        stretch;
+
 }
+
 
 /* =========================================================
    CALCULATOR PANEL
 ========================================================= */
 
 .calculator-panel {
+
     padding: 18px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
     border-radius: 15px;
 
@@ -712,40 +1263,35 @@ body {
         );
 
     box-shadow:
-        0 0 30px rgba(0, 140, 255, 0.08);
+        0 0 30px
+        rgba(0, 140, 255, 0.08);
 
-    animation:
-        panelSlide 0.8s ease-out 0.2s both;
+    position: relative;
 
-    transition:
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
 }
 
-.calculator-panel:hover {
-    border-color:
-        rgba(36, 217, 255, 0.48);
-
-    box-shadow:
-        0 0 35px rgba(0, 150, 255, 0.11);
-}
 
 /* =========================================================
    DISPLAY
 ========================================================= */
 
 .display {
+
     height: 115px;
 
     margin-bottom: 15px;
+
     padding: 17px;
 
     display: flex;
 
     flex-direction: column;
 
-    justify-content: space-between;
-    align-items: flex-end;
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-end;
 
     border-radius: 11px;
 
@@ -756,33 +1302,27 @@ body {
             #031a2c
         );
 
-    border: 1px solid rgba(20, 180, 255, 0.28);
+    border:
+        1px solid
+        rgba(20, 180, 255, 0.28);
 
     box-shadow:
-        inset 0 0 20px rgba(0, 130, 255, 0.06);
+        inset 0 0 20px
+        rgba(0, 130, 255, 0.06);
 
     overflow: hidden;
 
-    transition:
-        box-shadow 0.3s ease,
-        border-color 0.3s ease;
 }
 
-.display.calculation-active {
-    border-color:
-        rgba(36, 217, 255, 0.8);
-
-    box-shadow:
-        inset 0 0 25px rgba(0, 170, 255, 0.1),
-        0 0 18px rgba(36, 217, 255, 0.12);
-}
 
 #history {
+
     width: 100%;
 
     text-align: left;
 
-    color: #66899b;
+    color:
+        #66899b;
 
     font-size: 11px;
 
@@ -790,15 +1330,20 @@ body {
 
     white-space: nowrap;
 
-    text-overflow: ellipsis;
+    text-overflow:
+        ellipsis;
+
 }
 
+
 #result {
+
     width: 100%;
 
     text-align: right;
 
-    color: white;
+    color:
+        white;
 
     font-size: 42px;
 
@@ -808,92 +1353,86 @@ body {
 
     white-space: nowrap;
 
-    text-overflow: ellipsis;
+    text-overflow:
+        ellipsis;
 
     text-shadow:
-        0 0 12px rgba(70, 225, 255, 0.6);
+        0 0 12px
+        rgba(70, 225, 255, 0.6);
 
     transition:
-        transform 0.18s ease,
-        text-shadow 0.2s ease,
-        opacity 0.18s ease;
+        0.2s;
+
 }
 
+
 /* =========================================================
-   NUMBER TRANSITION
+   RESULT ACTIVE EFFECT
 ========================================================= */
 
-#result.number-change {
-    animation:
-        numberTransition 0.22s ease-out;
+#result.result-active {
+
+    color:
+        var(--cyan-light);
+
+    text-shadow:
+        0 0 18px
+        rgba(36, 217, 255, 0.9);
+
 }
 
-@keyframes numberTransition {
-
-    0% {
-        opacity: 0.55;
-        transform: translateY(3px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 /* =========================================================
-   MODE KALKULATOR
+   CALCULATOR MODE
 ========================================================= */
 
 .calculator-mode {
+
     display: none;
+
 }
+
 
 .calculator-mode.active {
+
     display: block;
 
-    animation:
-        modeSlide 0.28s ease-out;
 }
 
-@keyframes modeSlide {
-
-    0% {
-        opacity: 0;
-        transform: translateY(7px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 /* =========================================================
    BASIC / SCIENTIFIC BUTTON GRID
 ========================================================= */
 
 .buttons {
+
     width: 100%;
 
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 8px;
+
 }
 
+
 /* =========================================================
-   TOMBOL
+   BUTTON
 ========================================================= */
 
 .buttons button {
+
     width: 100%;
+
     height: 58px;
 
     border-radius: 11px;
 
-    border: 1px solid rgba(0, 160, 225, 0.28);
+    border:
+        1px solid
+        rgba(0, 160, 225, 0.28);
 
     background:
         linear-gradient(
@@ -902,7 +1441,8 @@ body {
             #08223a
         );
 
-    color: #f1faff;
+    color:
+        #f1faff;
 
     font-size: 18px;
 
@@ -911,24 +1451,25 @@ body {
     cursor: pointer;
 
     transition:
-        transform 0.15s ease,
-        border-color 0.15s ease,
-        box-shadow 0.15s ease,
-        background 0.15s ease;
+        transform 0.15s,
+        border-color 0.15s,
+        box-shadow 0.15s,
+        background 0.15s;
+
 }
 
-/* =========================================================
-   BUTTON HOVER
-========================================================= */
 
 .buttons button:hover {
-    transform: translateY(-2px);
+
+    transform:
+        translateY(-2px);
 
     border-color:
         rgba(50, 215, 255, 0.7);
 
     box-shadow:
-        0 0 12px rgba(20, 190, 255, 0.15);
+        0 0 12px
+        rgba(20, 190, 255, 0.15);
 
     background:
         linear-gradient(
@@ -936,30 +1477,30 @@ body {
             #12476b,
             #0b2e4b
         );
+
 }
 
-/* =========================================================
-   BUTTON PRESS
-========================================================= */
 
 .buttons button:active {
+
     transform:
-        scale(0.94)
-        translateY(1px);
+        scale(0.96);
 
-    box-shadow:
-        0 0 5px rgba(20, 190, 255, 0.08);
-
-    transition:
-        transform 0.05s ease;
 }
+
 
 .buttons .special {
-    color: var(--cyan);
+
+    color:
+        var(--cyan);
+
 }
 
+
 .buttons .operator {
-    color: var(--cyan);
+
+    color:
+        var(--cyan);
 
     background:
         linear-gradient(
@@ -967,14 +1508,22 @@ body {
             #075278,
             #063b5c
         );
+
 }
+
 
 .buttons .clear-btn {
-    color: var(--red);
+
+    color:
+        #ff4e61;
+
 }
 
+
 .buttons .equal {
-    color: white;
+
+    color:
+        white;
 
     background:
         linear-gradient(
@@ -987,167 +1536,170 @@ body {
         rgba(70, 220, 255, 0.8);
 
     box-shadow:
-        0 0 14px rgba(0, 150, 255, 0.25);
+        0 0 14px
+        rgba(0, 150, 255, 0.25);
+
 }
 
-.buttons .equal:hover {
-    box-shadow:
-        0 0 20px rgba(0, 180, 255, 0.38);
-}
 
 /* =========================================================
-   EQUAL CALCULATION EFFECT
-========================================================= */
-
-.buttons .equal.calculating {
-    animation:
-        equalPulse 0.55s ease-out;
-}
-
-@keyframes equalPulse {
-
-    0% {
-        box-shadow:
-            0 0 10px rgba(0, 150, 255, 0.2);
-    }
-
-    40% {
-        box-shadow:
-            0 0 25px rgba(36, 217, 255, 0.65);
-    }
-
-    100% {
-        box-shadow:
-            0 0 14px rgba(0, 150, 255, 0.25);
-    }
-}
-
-/* =========================================================
-   ZERO BUTTON
+   ZERO
 ========================================================= */
 
 .buttons .zero {
-    grid-column: span 2;
+
+    grid-column:
+        span 2;
+
 }
+
 
 /* =========================================================
    SCIENTIFIC
 ========================================================= */
 
 .scientific-buttons {
+
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns:
+        repeat(4, 1fr);
 
     gap: 8px;
+
 }
 
+
 .scientific-buttons button {
+
     min-width: 0;
+
 }
+
 
 /* =========================================================
    PROGRAMMER
 ========================================================= */
 
 .programmer-display {
+
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 8px;
 
     margin-bottom: 10px;
+
 }
 
+
 .programmer-display div {
+
     min-width: 0;
 
     padding: 11px;
 
     border-radius: 8px;
 
-    background: #041a2c;
+    background:
+        #041a2c;
 
-    border: 1px solid rgba(0, 170, 230, 0.25);
+    border:
+        1px solid
+        rgba(0, 170, 230, 0.25);
 
-    transition:
-        transform 0.2s ease,
-        border-color 0.2s ease;
 }
 
-.programmer-display div:hover {
-    transform: translateY(-2px);
-
-    border-color:
-        rgba(36, 217, 255, 0.5);
-}
 
 .programmer-display span {
+
     display: block;
 
     margin-bottom: 4px;
 
-    color: #64889a;
+    color:
+        #64889a;
 
     font-size: 9px;
+
 }
 
+
 .programmer-display strong {
+
     display: block;
 
-    color: var(--cyan);
+    color:
+        var(--cyan);
 
     font-size: 15px;
 
-    word-break: break-all;
+    word-break:
+        break-all;
+
 }
 
+
 #programmer-input {
+
     width: 100%;
 
     margin-bottom: 10px;
 
     padding: 12px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
     border-radius: 8px;
 
     outline: none;
 
-    background: #020c17;
+    background:
+        #020c17;
 
-    color: white;
+    color:
+        white;
 
-    text-align: right;
+    text-align:
+        right;
 
     font-size: 18px;
 
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
 }
 
-#programmer-input:focus {
-    border-color: var(--cyan);
+
+.programmer-input-active {
 
     box-shadow:
-        0 0 12px rgba(36, 217, 255, 0.12);
+        0 0 15px
+        rgba(36, 217, 255, 0.25);
+
 }
+
 
 .programmer-buttons {
+
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:
+        repeat(2, 1fr);
 
     gap: 8px;
+
 }
 
+
 .programmer-buttons button {
+
     min-height: 50px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
     border-radius: 8px;
 
@@ -1158,143 +1710,197 @@ body {
             #08263d
         );
 
-    color: var(--cyan);
+    color:
+        var(--cyan);
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    font-weight: 700;
+    font-weight:
+        700;
 
     transition:
-        transform 0.15s ease,
-        border-color 0.15s ease,
-        box-shadow 0.15s ease;
+        0.15s;
+
 }
+
 
 .programmer-buttons button:hover {
-    border-color: var(--cyan);
+
+    border-color:
+        var(--cyan);
 
     box-shadow:
-        0 0 10px rgba(0, 180, 255, 0.15);
+        0 0 10px
+        rgba(0, 180, 255, 0.15);
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-2px);
+
 }
 
-.programmer-buttons button:active {
-    transform: scale(0.96);
-}
 
 /* =========================================================
    CONVERTER
 ========================================================= */
 
 .converter-box {
+
     padding: 15px;
 
     border-radius: 10px;
 
-    background: #041a2c;
+    background:
+        #041a2c;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
-    animation:
-        panelSlide 0.25s ease-out;
 }
 
+
 .converter-box label {
+
     display: block;
 
     margin-bottom: 5px;
 
-    color: #6d91a3;
+    color:
+        #6d91a3;
 
     font-size: 10px;
+
 }
+
 
 .converter-box select,
 .converter-box input {
+
     width: 100%;
 
     padding: 11px;
 
-    border: 1px solid rgba(0, 170, 230, 0.3);
+    border:
+        1px solid
+        rgba(0, 170, 230, 0.3);
 
     border-radius: 7px;
 
     outline: none;
 
-    background: #020d19;
+    background:
+        #020d19;
 
-    color: white;
+    color:
+        white;
 
-    font-family: inherit;
+    font-family:
+        inherit;
 
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
 }
+
 
 .converter-box select:focus,
 .converter-box input:focus {
-    border-color: var(--cyan);
+
+    border-color:
+        var(--cyan);
 
     box-shadow:
-        0 0 8px rgba(0, 180, 255, 0.12);
+        0 0 8px
+        rgba(0, 180, 255, 0.12);
+
 }
 
+
 .converter-inputs {
+
     display: grid;
 
-    grid-template-columns: 1fr 35px 1fr;
+    grid-template-columns:
+        1fr 35px 1fr;
 
     gap: 8px;
 
-    align-items: end;
+    align-items:
+        end;
 
     margin-top: 12px;
+
 }
+
 
 .converter-inputs input {
+
     margin-bottom: 6px;
+
 }
 
+
 .convert-arrow {
+
     display: flex;
 
-    align-items: center;
-    justify-content: center;
+    align-items:
+        center;
+
+    justify-content:
+        center;
 
     height: 40px;
 
-    color: var(--cyan);
+    color:
+        var(--cyan);
 
     font-size: 20px;
 
     animation:
-        arrowPulse 2s ease-in-out infinite;
+        arrowPulse
+        2s
+        ease-in-out
+        infinite;
+
 }
+
 
 @keyframes arrowPulse {
 
     0%,
     100% {
-        opacity: 0.55;
+
+        opacity:
+            0.5;
+
     }
 
     50% {
-        opacity: 1;
+
+        opacity:
+            1;
+
+        text-shadow:
+            0 0 10px
+            var(--cyan);
+
     }
+
 }
+
 
 /* =========================================================
    HISTORY PANEL
 ========================================================= */
 
 .history-panel {
+
     min-height: 100%;
 
     padding: 18px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
     border-radius: 15px;
 
@@ -1306,207 +1912,247 @@ body {
         );
 
     box-shadow:
-        0 0 25px rgba(0, 150, 255, 0.07);
+        0 0 25px
+        rgba(0, 150, 255, 0.07);
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    animation:
-        panelSlideRight 0.8s ease-out 0.25s both;
 }
 
-@keyframes panelSlide {
-
-    0% {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes panelSlideRight {
-
-    0% {
-        opacity: 0;
-        transform: translateX(15px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
 
 .history-title {
+
     display: flex;
 
-    align-items: center;
+    align-items:
+        center;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
     padding-bottom: 12px;
 
     margin-bottom: 10px;
 
-    border-bottom: 1px solid rgba(0, 175, 255, 0.18);
+    border-bottom:
+        1px solid
+        rgba(0, 175, 255, 0.18);
+
 }
 
+
 .history-title h2 {
+
     font-size: 15px;
 
     letter-spacing: 1px;
 
-    color: white;
+    color:
+        white;
+
 }
 
-.history-title button {
-    padding: 7px 11px;
 
-    border: 1px solid rgba(0, 190, 255, 0.4);
+.history-title button {
+
+    padding:
+        7px 11px;
+
+    border:
+        1px solid
+        rgba(0, 190, 255, 0.4);
 
     border-radius: 6px;
 
-    background: transparent;
+    background:
+        transparent;
 
-    color: var(--cyan);
+    color:
+        var(--cyan);
 
     font-size: 9px;
 
     font-weight: 700;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    transition:
-        transform 0.15s ease,
-        background 0.15s ease;
 }
+
 
 .history-title button:hover {
-    background: rgba(0, 160, 255, 0.1);
 
-    transform: translateY(-1px);
+    background:
+        rgba(0, 160, 255, 0.1);
+
 }
 
-.history-title button:active {
-    transform: scale(0.95);
-}
 
 #history-list {
+
     max-height: 500px;
 
-    overflow-y: auto;
+    overflow-y:
+        auto;
 
     padding-right: 3px;
+
 }
 
+
 /* =========================================================
-   SCROLLBAR HISTORY
+   SCROLLBAR
 ========================================================= */
 
 #history-list::-webkit-scrollbar {
+
     width: 5px;
+
 }
+
 
 #history-list::-webkit-scrollbar-track {
-    background: #020d19;
+
+    background:
+        #020d19;
+
 }
+
 
 #history-list::-webkit-scrollbar-thumb {
-    background: #075278;
 
-    border-radius: 10px;
+    background:
+        #075278;
+
+    border-radius:
+        10px;
+
 }
+
 
 /* =========================================================
    HISTORY ITEM
 ========================================================= */
 
 .history-item {
+
     margin-bottom: 9px;
 
     padding: 13px;
 
-    border-left: 3px solid var(--cyan);
+    border-left:
+        3px solid
+        var(--cyan);
 
-    border-top: 1px solid rgba(0, 160, 255, 0.2);
+    border-top:
+        1px solid
+        rgba(0, 160, 255, 0.2);
 
-    border-right: 1px solid rgba(0, 160, 255, 0.2);
+    border-right:
+        1px solid
+        rgba(0, 160, 255, 0.2);
 
-    border-bottom: 1px solid rgba(0, 160, 255, 0.2);
+    border-bottom:
+        1px solid
+        rgba(0, 160, 255, 0.2);
 
     border-radius: 7px;
 
     background:
         rgba(4, 29, 48, 0.85);
 
-    animation:
-        historyAppear 0.25s ease-out;
+    transition:
+        0.2s;
+
 }
 
-@keyframes historyAppear {
 
-    0% {
-        opacity: 0;
-        transform: translateX(8px);
-    }
+.history-item:hover {
 
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    transform:
+        translateX(3px);
+
+    border-left-color:
+        #72efff;
+
+    box-shadow:
+        0 0 12px
+        rgba(0, 190, 255, 0.08);
+
 }
+
 
 .history-expression {
-    color: #d5ebf4;
+
+    color:
+        #d5ebf4;
 
     font-size: 14px;
 
-    word-break: break-word;
+    word-break:
+        break-word;
+
 }
 
+
 .history-result {
+
     margin-top: 5px;
 
-    color: var(--cyan);
+    color:
+        var(--cyan);
 
     font-size: 19px;
 
     font-weight: 800;
 
-    word-break: break-word;
+    word-break:
+        break-word;
+
 }
+
 
 .empty-history {
-    padding: 35px 10px;
 
-    text-align: center;
+    padding:
+        35px 10px;
 
-    color: #537588;
+    text-align:
+        center;
+
+    color:
+        #537588;
 
     font-size: 11px;
+
 }
+
 
 /* =========================================================
    KNIGHT STATUS
 ========================================================= */
 
 .knight-status {
+
     display: flex;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
     margin-top: 12px;
 
-    padding: 11px 13px;
+    padding:
+        11px 13px;
 
-    border: 1px solid rgba(0, 160, 230, 0.25);
+    border:
+        1px solid
+        rgba(0, 160, 230, 0.25);
 
     border-radius: 7px;
 
-    color: #6f9aad;
+    color:
+        #6f9aad;
 
     font-size: 9px;
 
@@ -1514,512 +2160,267 @@ body {
 
     background:
         rgba(3, 24, 40, 0.7);
+
 }
+
 
 .knight-status span:first-child {
-    color: var(--cyan);
+
+    color:
+        var(--cyan);
+
 }
 
-/* =========================================================
-   CALCULATION EFFECT
-   ENERGY PULSE
-   ↓
-   CALCULATION
-   ↓
-   +XP EFFECT
-========================================================= */
 
-.calculation-effect {
-    position: fixed;
+#knight-message {
 
-    left: 50%;
-    top: 50%;
+    transition:
+        0.2s;
 
-    transform: translate(-50%, -50%);
-
-    z-index: 9999;
-
-    pointer-events: none;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    min-width: 220px;
-
-    padding: 20px 30px;
-
-    border: 1px solid rgba(36, 217, 255, 0.35);
-
-    border-radius: 12px;
-
-    background:
-        rgba(1, 14, 27, 0.92);
-
-    box-shadow:
-        0 0 25px rgba(0, 160, 255, 0.14);
-
-    animation:
-        calculationEffect 0.95s ease-out forwards;
 }
 
-.calculation-effect .effect-title {
-    color: var(--cyan);
 
-    font-size: 13px;
+.knight-message-active {
 
-    font-weight: 900;
-
-    letter-spacing: 3px;
+    color:
+        var(--cyan-light) !important;
 
     text-shadow:
-        0 0 10px rgba(36, 217, 255, 0.7);
+        0 0 8px
+        rgba(36, 217, 255, 0.7);
+
 }
 
-.calculation-effect .effect-xp {
-    margin-top: 7px;
-
-    color: var(--yellow);
-
-    font-size: 16px;
-
-    font-weight: 900;
-
-    letter-spacing: 1px;
-}
-
-@keyframes calculationEffect {
-
-    0% {
-        opacity: 0;
-        transform:
-            translate(-50%, -50%)
-            scale(0.92);
-    }
-
-    20% {
-        opacity: 1;
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-    }
-
-    45% {
-        opacity: 1;
-    }
-
-    75% {
-        opacity: 0.95;
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(-50%, -55%)
-            scale(1.04);
-    }
-}
-
-/* =========================================================
-   XP FLOATING EFFECT
-========================================================= */
-
-.xp-effect {
-    position: fixed;
-
-    z-index: 10000;
-
-    pointer-events: none;
-
-    color: var(--yellow);
-
-    font-size: 18px;
-
-    font-weight: 900;
-
-    text-shadow:
-        0 0 10px rgba(255, 216, 77, 0.8);
-
-    animation:
-        xpFloat 0.8s ease-out forwards;
-}
-
-@keyframes xpFloat {
-
-    0% {
-        opacity: 0;
-        transform:
-            translateY(10px)
-            scale(0.8);
-    }
-
-    25% {
-        opacity: 1;
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translateY(-30px)
-            scale(1.05);
-    }
-}
-
-/* =========================================================
-   ACHIEVEMENT UNLOCK
-========================================================= */
-
-.achievement-unlock {
-    position: fixed;
-
-    top: 25px;
-    right: 25px;
-
-    z-index: 10000;
-
-    min-width: 250px;
-
-    padding: 14px 18px;
-
-    border: 1px solid rgba(36, 217, 255, 0.45);
-
-    border-radius: 10px;
-
-    background:
-        rgba(2, 20, 35, 0.95);
-
-    box-shadow:
-        0 0 25px rgba(0, 170, 255, 0.18);
-
-    pointer-events: none;
-
-    animation:
-        achievementUnlock 2.2s ease-out forwards;
-}
-
-.achievement-unlock strong {
-    display: block;
-
-    color: var(--yellow);
-
-    font-size: 12px;
-
-    letter-spacing: 2px;
-}
-
-.achievement-unlock span {
-    display: block;
-
-    margin-top: 5px;
-
-    color: white;
-
-    font-size: 11px;
-}
-
-@keyframes achievementUnlock {
-
-    0% {
-        opacity: 0;
-        transform:
-            translateX(30px)
-            scale(0.95);
-    }
-
-    15% {
-        opacity: 1;
-        transform:
-            translateX(0)
-            scale(1);
-    }
-
-    75% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translateX(15px)
-            scale(0.98);
-    }
-}
-
-/* =========================================================
-   LEVEL UP
-========================================================= */
-
-.level-up-effect {
-    position: fixed;
-
-    left: 50%;
-    top: 35%;
-
-    transform: translate(-50%, -50%);
-
-    z-index: 10001;
-
-    pointer-events: none;
-
-    color: var(--yellow);
-
-    font-size: 24px;
-
-    font-weight: 900;
-
-    letter-spacing: 4px;
-
-    text-shadow:
-        0 0 10px rgba(255, 216, 77, 0.8),
-        0 0 25px rgba(255, 216, 77, 0.35);
-
-    animation:
-        levelUp 1.3s ease-out forwards;
-}
-
-@keyframes levelUp {
-
-    0% {
-        opacity: 0;
-        transform:
-            translate(-50%, -50%)
-            scale(0.7);
-    }
-
-    25% {
-        opacity: 1;
-        transform:
-            translate(-50%, -50%)
-            scale(1.08);
-    }
-
-    60% {
-        opacity: 1;
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform:
-            translate(-50%, -60%)
-            scale(1.04);
-    }
-}
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-.modal {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 9998;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    background:
-        rgba(0, 5, 12, 0.65);
-
-    backdrop-filter: blur(3px);
-
-    animation:
-        modalFade 0.25s ease-out;
-}
-
-.modal-content {
-    width: min(450px, 100%);
-
-    padding: 25px;
-
-    border: 1px solid var(--border);
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #041c31,
-            #020d19
-        );
-
-    box-shadow:
-        0 0 35px rgba(0, 160, 255, 0.2);
-
-    animation:
-        modalOpen 0.3s ease-out;
-}
-
-@keyframes modalFade {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes modalOpen {
-
-    from {
-        opacity: 0;
-        transform:
-            translateY(12px)
-            scale(0.96);
-    }
-
-    to {
-        opacity: 1;
-        transform:
-            translateY(0)
-            scale(1);
-    }
-}
 
 /* =========================================================
    TEAM
 ========================================================= */
 
 .team-section {
-    width: min(950px, 100%);
 
-    margin: 25px auto 15px;
+    width:
+        min(
+            950px,
+            100%
+        );
 
-    text-align: center;
+    margin:
+        25px auto 15px;
 
-    animation:
-        panelSlide 0.8s ease-out 0.35s both;
+    text-align:
+        center;
+
 }
+
 
 .team-section h2 {
-    margin-bottom: 12px;
 
-    color: var(--cyan);
+    margin-bottom:
+        12px;
 
-    font-size: 15px;
+    color:
+        var(--cyan);
 
-    letter-spacing: 4px;
+    font-size:
+        15px;
+
+    letter-spacing:
+        4px;
+
 }
+
 
 .team-list {
-    display: grid;
 
-    grid-template-columns: repeat(4, 1fr);
+    display:
+        grid;
 
-    gap: 10px;
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap:
+        10px;
+
 }
 
+
 .member {
-    padding: 11px;
 
-    border: 1px solid rgba(0, 170, 230, 0.25);
+    padding:
+        11px;
 
-    border-radius: 7px;
+    border:
+        1px solid
+        rgba(0, 170, 230, 0.25);
+
+    border-radius:
+        7px;
 
     background:
         rgba(3, 25, 42, 0.8);
 
-    color: #b6d0dc;
+    color:
+        #b6d0dc;
 
-    font-size: 11px;
+    font-size:
+        11px;
 
     transition:
-        transform 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        0.2s;
+
 }
+
 
 .member:hover {
-    transform: translateY(-2px);
+
+    transform:
+        translateY(-3px);
 
     border-color:
-        rgba(36, 217, 255, 0.5);
+        var(--cyan);
 
     box-shadow:
-        0 0 12px rgba(0, 170, 255, 0.08);
+        0 0 15px
+        rgba(0, 180, 255, 0.1);
+
 }
+
 
 .member span {
-    display: inline-block;
 
-    margin-right: 8px;
+    display:
+        inline-block;
 
-    color: var(--cyan);
+    margin-right:
+        8px;
 
-    font-weight: 900;
+    color:
+        var(--cyan);
+
+    font-weight:
+        900;
+
 }
+
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
 footer {
-    width: 100%;
 
-    padding: 15px;
+    width:
+        100%;
 
-    text-align: center;
+    padding:
+        15px;
 
-    border-top: 1px solid rgba(0, 175, 255, 0.3);
+    text-align:
+        center;
 
-    color: #4f7488;
+    border-top:
+        1px solid
+        rgba(0, 175, 255, 0.3);
 
-    font-size: 10px;
+    color:
+        #4f7488;
 
-    letter-spacing: 2px;
+    font-size:
+        10px;
+
+    letter-spacing:
+        2px;
+
 }
+
 
 footer strong {
-    color: var(--cyan);
 
-    font-size: 12px;
+    color:
+        var(--cyan);
+
+    font-size:
+        12px;
+
 }
+
 
 footer small {
-    color: #3c5e70;
+
+    color:
+        #3c5e70;
+
 }
+
 
 /* =========================================================
    GLOBAL IMAGE FIX
 ========================================================= */
 
 img {
-    max-width: 100%;
+
+    max-width:
+        100%;
+
 }
 
-/* HANYA gambar header yang dikunci ukurannya */
 
 .top-header img.header-logo {
-    width: 52px !important;
-    height: 52px !important;
 
-    min-width: 52px !important;
-    min-height: 52px !important;
+    width:
+        52px !important;
 
-    max-width: 52px !important;
-    max-height: 52px !important;
+    height:
+        52px !important;
 
-    object-fit: contain !important;
+    min-width:
+        52px !important;
 
-    display: block !important;
+    min-height:
+        52px !important;
+
+    max-width:
+        52px !important;
+
+    max-height:
+        52px !important;
+
+    object-fit:
+        contain !important;
+
+    display:
+        block !important;
+
 }
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .cube-knight {
+
+        right:
+            5px;
+
+        bottom:
+            20px;
+
+        width:
+            145px;
+
+        height:
+            205px;
+
+        opacity:
+            0.8;
+
+    }
+
+}
+
 
 /* =========================================================
    MOBILE TABLET
@@ -2028,62 +2429,138 @@ img {
 @media (max-width: 850px) {
 
     .workspace {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
+
     }
+
 
     .history-panel {
-        min-height: 300px;
+
+        min-height:
+            300px;
+
     }
+
 
     .top-header {
-        grid-template-columns: 70px 1fr 70px;
 
-        padding: 8px 12px;
+        grid-template-columns:
+            70px 1fr 70px;
+
+        padding:
+            8px 12px;
+
     }
+
 
     .brand-side {
-        width: 65px;
+
+        width:
+            65px;
+
     }
+
 
     .header-logo,
     .top-header img.header-logo {
-        width: 45px !important;
-        height: 45px !important;
 
-        min-width: 45px !important;
-        min-height: 45px !important;
+        width:
+            45px !important;
 
-        max-width: 45px !important;
-        max-height: 45px !important;
+        height:
+            45px !important;
+
+        min-width:
+            45px !important;
+
+        min-height:
+            45px !important;
+
+        max-width:
+            45px !important;
+
+        max-height:
+            45px !important;
+
     }
+
 
     .school-brand {
-        gap: 8px;
+
+        gap:
+            8px;
+
     }
+
 
     .school-brand .header-logo {
-        width: 42px !important;
-        height: 42px !important;
 
-        min-width: 42px !important;
-        min-height: 42px !important;
+        width:
+            42px !important;
 
-        max-width: 42px !important;
-        max-height: 42px !important;
+        height:
+            42px !important;
+
+        min-width:
+            42px !important;
+
+        min-height:
+            42px !important;
+
+        max-width:
+            42px !important;
+
+        max-height:
+            42px !important;
+
     }
+
 
     .main-title {
-        font-size: 23px;
 
-        letter-spacing: 4px;
+        font-size:
+            23px;
+
+        letter-spacing:
+            4px;
+
     }
+
 
     .sub-title {
-        font-size: 7px;
 
-        letter-spacing: 3px;
+        font-size:
+            7px;
+
+        letter-spacing:
+            3px;
+
     }
+
+
+    .cube-knight {
+
+        right:
+            5px;
+
+        bottom:
+            15px;
+
+        width:
+            125px;
+
+        height:
+            180px;
+
+        opacity:
+            0.65;
+
+    }
+
 }
+
 
 /* =========================================================
    MOBILE
@@ -2092,195 +2569,345 @@ img {
 @media (max-width: 600px) {
 
     body {
-        padding: 10px;
+
+        padding:
+            10px;
+
     }
+
 
     .top-header {
-        height: 75px;
 
-        grid-template-columns: 45px 1fr 45px;
+        height:
+            75px;
 
-        padding: 6px 8px;
+        grid-template-columns:
+            45px 1fr 45px;
 
-        margin-bottom: 15px;
+        padding:
+            6px 8px;
+
+        margin-bottom:
+            15px;
+
     }
+
 
     .brand-side {
-        width: 42px;
-        height: 60px;
+
+        width:
+            42px;
+
+        height:
+            60px;
+
     }
+
 
     .header-logo,
     .top-header img.header-logo {
-        width: 35px !important;
-        height: 35px !important;
 
-        min-width: 35px !important;
-        min-height: 35px !important;
+        width:
+            35px !important;
 
-        max-width: 35px !important;
-        max-height: 35px !important;
+        height:
+            35px !important;
+
+        min-width:
+            35px !important;
+
+        min-height:
+            35px !important;
+
+        max-width:
+            35px !important;
+
+        max-height:
+            35px !important;
+
     }
+
 
     .school-brand {
-        gap: 5px;
+
+        gap:
+            5px;
+
     }
+
 
     .school-brand .header-logo {
-        width: 32px !important;
-        height: 32px !important;
 
-        min-width: 32px !important;
-        min-height: 32px !important;
+        width:
+            32px !important;
 
-        max-width: 32px !important;
-        max-height: 32px !important;
+        height:
+            32px !important;
+
+        min-width:
+            32px !important;
+
+        min-height:
+            32px !important;
+
+        max-width:
+            32px !important;
+
+        max-height:
+            32px !important;
+
     }
+
 
     .main-title {
-        font-size: 18px;
 
-        letter-spacing: 2px;
+        font-size:
+            18px;
+
+        letter-spacing:
+            2px;
+
     }
+
 
     .sub-title {
-        margin-top: 4px;
 
-        font-size: 6px;
+        margin-top:
+            4px;
 
-        letter-spacing: 2px;
+        font-size:
+            6px;
+
+        letter-spacing:
+            2px;
+
     }
+
 
     .status-bar {
-        padding: 0 5px 10px;
 
-        font-size: 9px;
+        padding:
+            0 5px 10px;
+
+        font-size:
+            9px;
+
     }
+
 
     .energy span {
-        font-size: 14px;
+
+        font-size:
+            14px;
+
     }
+
 
     .mode-bar {
-        gap: 4px;
 
-        padding: 5px;
+        gap:
+            4px;
+
+        padding:
+            5px;
+
     }
+
 
     .mode-btn {
-        height: 40px;
 
-        font-size: 8px;
+        height:
+            40px;
+
+        font-size:
+            8px;
+
     }
+
 
     .workspace {
-        display: block;
+
+        display:
+            block;
+
     }
+
 
     .calculator-panel {
-        padding: 12px;
+
+        padding:
+            12px;
+
     }
+
 
     .history-panel {
-        margin-top: 12px;
+
+        margin-top:
+            12px;
+
     }
+
 
     .display {
-        height: 100px;
 
-        padding: 14px;
+        height:
+            100px;
+
+        padding:
+            14px;
+
     }
+
 
     #result {
-        font-size: 35px;
+
+        font-size:
+            35px;
+
     }
+
 
     .buttons {
-        gap: 5px;
+
+        gap:
+            5px;
+
     }
+
 
     .buttons button {
-        height: 52px;
 
-        font-size: 16px;
+        height:
+            52px;
 
-        border-radius: 9px;
+        font-size:
+            16px;
+
+        border-radius:
+            9px;
+
     }
+
 
     .scientific-buttons {
-        gap: 5px;
+
+        gap:
+            5px;
+
     }
+
 
     .scientific-buttons button {
-        font-size: 13px;
+
+        font-size:
+            13px;
+
     }
+
 
     .programmer-buttons {
-        gap: 5px;
+
+        gap:
+            5px;
+
     }
+
 
     .programmer-buttons button {
-        min-height: 45px;
 
-        font-size: 11px;
+        min-height:
+            45px;
+
+        font-size:
+            11px;
+
     }
+
 
     .converter-inputs {
-        grid-template-columns: 1fr;
 
-        gap: 10px;
+        grid-template-columns:
+            1fr;
+
+        gap:
+            10px;
+
     }
+
 
     .convert-arrow {
-        height: 25px;
+
+        height:
+            25px;
+
     }
+
 
     .knight-status {
-        font-size: 7px;
 
-        gap: 10px;
+        font-size:
+            7px;
+
+        gap:
+            10px;
+
     }
+
 
     .team-list {
-        grid-template-columns: repeat(2, 1fr);
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
     }
+
 
     .member {
-        font-size: 10px;
+
+        font-size:
+            10px;
+
     }
 
-    /* EFFECT MOBILE */
 
-    .calculation-effect {
-        min-width: 190px;
+    /* Cube Knight mobile */
 
-        padding: 16px 20px;
+    .cube-knight {
+
+        position:
+            fixed;
+
+        right:
+            -25px;
+
+        bottom:
+            8px;
+
+        width:
+            100px;
+
+        height:
+            145px;
+
+        opacity:
+            0.48;
+
+        z-index:
+            4;
+
     }
 
-    .calculation-effect .effect-title {
-        font-size: 11px;
 
-        letter-spacing: 2px;
+    .knight-glow {
+
+        transform:
+            scale(0.7);
+
     }
 
-    .calculation-effect .effect-xp {
-        font-size: 14px;
-    }
-
-    .achievement-unlock {
-        top: 15px;
-        right: 15px;
-        left: 15px;
-
-        min-width: auto;
-    }
-
-    .level-up-effect {
-        font-size: 18px;
-
-        letter-spacing: 2px;
-    }
 }
+
 
 /* =========================================================
    VERY SMALL SCREEN
@@ -2289,54 +2916,102 @@ img {
 @media (max-width: 400px) {
 
     .main-title {
-        font-size: 15px;
 
-        letter-spacing: 1px;
+        font-size:
+            15px;
+
+        letter-spacing:
+            1px;
+
     }
+
 
     .sub-title {
-        font-size: 5px;
 
-        letter-spacing: 1px;
+        font-size:
+            5px;
+
+        letter-spacing:
+            1px;
+
     }
+
 
     .school-brand .header-logo {
-        display: none !important;
+
+        display:
+            none !important;
+
     }
+
 
     .buttons button {
-        height: 48px;
 
-        font-size: 14px;
+        height:
+            48px;
+
+        font-size:
+            14px;
+
     }
+
 
     .scientific-buttons button {
-        font-size: 11px;
+
+        font-size:
+            11px;
+
     }
+
 
     .team-list {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
+
     }
 
-    .calculation-effect {
-        min-width: 170px;
 
-        padding: 14px;
+    .cube-knight {
+
+        width:
+            85px;
+
+        height:
+            125px;
+
+        right:
+            -25px;
+
+        bottom:
+            5px;
+
+        opacity:
+            0.35;
+
     }
+
 }
+
 
 /* =========================================================
    REDUCED MOTION
-   Tetap nyaman jika user mematikan animasi sistem
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    .cube,
+    .cube-knight,
+    .knight-glow,
+    .knight-eye,
+    .knight-sword,
+    .knight-shield,
+    .online-dot,
+    .convert-arrow {
+
+        animation:
+            none !important;
+
     }
+
 }
