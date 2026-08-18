@@ -3015,3 +3015,887 @@ img {
     }
 
 }
+
+/* =========================================================
+   #12 ANIMASI
+   CUBES ADVENTURE KNIGHT
+   ANIMASI HALUS & RINGAN
+========================================================= */
+
+
+/* =========================================================
+   1. FLOATING CUBES
+========================================================= */
+
+.cube {
+    animation:
+        cubeFloat 8s ease-in-out infinite,
+        cubeGlow 4s ease-in-out infinite alternate;
+}
+
+.cube-1 {
+    animation-delay: 0s;
+}
+
+.cube-2 {
+    animation-delay: -2s;
+}
+
+.cube-3 {
+    animation-delay: -4s;
+}
+
+.cube-4 {
+    animation-delay: -6s;
+}
+
+@keyframes cubeFloat {
+
+    0%,
+    100% {
+        margin-top: 0;
+        margin-left: 0;
+        transform: rotate(30deg);
+    }
+
+    50% {
+        margin-top: -18px;
+        margin-left: 10px;
+        transform: rotate(42deg);
+    }
+}
+
+@keyframes cubeGlow {
+
+    from {
+        opacity: 0.35;
+    }
+
+    to {
+        opacity: 0.75;
+    }
+}
+
+
+/* =========================================================
+   2. GLOWING PARTICLES
+========================================================= */
+
+body::before,
+body::after {
+    content: "";
+
+    position: fixed;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background: var(--cyan);
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    box-shadow:
+        80px 120px 0 rgba(36, 217, 255, 0.35),
+        180px 300px 0 rgba(36, 217, 255, 0.2),
+        320px 170px 0 rgba(36, 217, 255, 0.3),
+        470px 450px 0 rgba(36, 217, 255, 0.25),
+        620px 250px 0 rgba(36, 217, 255, 0.3),
+        760px 520px 0 rgba(36, 217, 255, 0.2),
+        900px 180px 0 rgba(36, 217, 255, 0.3),
+        1040px 400px 0 rgba(36, 217, 255, 0.25);
+}
+
+body::before {
+    animation: particlesFloat 7s linear infinite;
+}
+
+body::after {
+    width: 2px;
+    height: 2px;
+
+    opacity: 0.6;
+
+    animation:
+        particlesFloatReverse 10s linear infinite,
+        particleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes particlesFloat {
+
+    0% {
+        transform: translateY(20px);
+        opacity: 0.2;
+    }
+
+    50% {
+        transform: translateY(-20px);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(20px);
+        opacity: 0.2;
+    }
+}
+
+@keyframes particlesFloatReverse {
+
+    0% {
+        transform: translateY(-10px);
+    }
+
+    50% {
+        transform: translateY(25px);
+    }
+
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes particleGlow {
+
+    from {
+        filter: brightness(0.6);
+    }
+
+    to {
+        filter: brightness(1.8);
+    }
+}
+
+
+/* =========================================================
+   3. HEADER ANIMATION
+========================================================= */
+
+.top-header {
+    animation: headerSlideDown 0.7s ease-out both;
+}
+
+@keyframes headerSlideDown {
+
+    from {
+        opacity: 0;
+        transform: translateY(-25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   4. LOGO GLOW
+========================================================= */
+
+.header-logo {
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.header-logo:hover {
+    transform: scale(1.08);
+
+    filter:
+        drop-shadow(0 0 7px rgba(36, 217, 255, 0.7));
+}
+
+
+/* =========================================================
+   5. TITLE GLOW
+========================================================= */
+
+.main-title {
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+
+    from {
+        text-shadow:
+            0 0 8px rgba(20, 200, 255, 0.45);
+    }
+
+    to {
+        text-shadow:
+            0 0 15px rgba(20, 200, 255, 0.95),
+            0 0 30px rgba(20, 200, 255, 0.3);
+    }
+}
+
+
+/* =========================================================
+   6. MODE BAR SLIDE
+========================================================= */
+
+.mode-bar {
+    animation: panelSlideUp 0.65s ease-out 0.1s both;
+}
+
+
+/* =========================================================
+   7. WORKSPACE SLIDE
+========================================================= */
+
+.workspace {
+    animation: panelSlideUp 0.7s ease-out 0.2s both;
+}
+
+@keyframes panelSlideUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   8. STATUS FADE
+========================================================= */
+
+.status-bar {
+    animation: statusAppear 0.6s ease-out both;
+}
+
+@keyframes statusAppear {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   9. ONLINE DOT PULSE
+========================================================= */
+
+.online-dot {
+    animation: onlinePulse 1.8s ease-in-out infinite;
+}
+
+@keyframes onlinePulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+
+        box-shadow:
+            0 0 5px rgba(70, 255, 100, 0.5);
+    }
+
+    50% {
+        transform: scale(1.25);
+
+        box-shadow:
+            0 0 14px rgba(70, 255, 100, 1);
+    }
+}
+
+
+/* =========================================================
+   10. ENERGY PULSE
+========================================================= */
+
+.energy {
+    animation: energyPulse 2s ease-in-out infinite;
+}
+
+@keyframes energyPulse {
+
+    0%,
+    100% {
+        text-shadow:
+            0 0 3px rgba(36, 217, 255, 0.2);
+    }
+
+    50% {
+        text-shadow:
+            0 0 10px rgba(36, 217, 255, 0.8);
+    }
+}
+
+.energy span {
+    display: inline-block;
+
+    animation: energyIcon 1.5s ease-in-out infinite;
+}
+
+@keyframes energyIcon {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.18);
+    }
+}
+
+
+/* =========================================================
+   11. BUTTON HOVER
+========================================================= */
+
+.buttons button,
+.programmer-buttons button,
+.mode-btn,
+.history-title button {
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.buttons button:hover,
+.programmer-buttons button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 14px rgba(36, 217, 255, 0.2);
+}
+
+
+/* =========================================================
+   12. BUTTON PRESS
+========================================================= */
+
+.buttons button:active,
+.programmer-buttons button:active,
+.mode-btn:active,
+.history-title button:active {
+    transform: scale(0.94);
+
+    transition-duration: 0.05s;
+}
+
+
+/* =========================================================
+   13. EQUAL BUTTON PULSE
+========================================================= */
+
+.buttons .equal {
+    animation:
+        equalGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes equalGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 8px rgba(0, 150, 255, 0.15);
+    }
+
+    50% {
+        box-shadow:
+            0 0 20px rgba(0, 180, 255, 0.4);
+    }
+}
+
+
+/* =========================================================
+   14. DISPLAY GLOW
+========================================================= */
+
+.display {
+    animation: displayGlow 4s ease-in-out infinite;
+}
+
+@keyframes displayGlow {
+
+    0%,
+    100% {
+        box-shadow:
+            inset 0 0 20px rgba(0, 130, 255, 0.06),
+            0 0 0 rgba(36, 217, 255, 0);
+    }
+
+    50% {
+        box-shadow:
+            inset 0 0 25px rgba(0, 130, 255, 0.12),
+            0 0 12px rgba(36, 217, 255, 0.08);
+    }
+}
+
+
+/* =========================================================
+   15. NUMBER TRANSITION
+========================================================= */
+
+#result {
+    animation: numberAppear 0.2s ease-out;
+}
+
+@keyframes numberAppear {
+
+    from {
+        opacity: 0.4;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   16. HISTORY PANEL
+========================================================= */
+
+.history-panel {
+    animation: historySlide 0.8s ease-out 0.25s both;
+}
+
+@keyframes historySlide {
+
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================================================
+   17. HISTORY ITEM ANIMATION
+========================================================= */
+
+.history-item {
+    animation: historyItemAppear 0.35s ease-out both;
+}
+
+@keyframes historyItemAppear {
+
+    from {
+        opacity: 0;
+        transform: translateX(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* =========================================================
+   18. HISTORY ITEM HOVER
+========================================================= */
+
+.history-item {
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.history-item:hover {
+    transform: translateX(4px);
+
+    border-color:
+        rgba(36, 217, 255, 0.55);
+
+    box-shadow:
+        0 0 12px rgba(36, 217, 255, 0.08);
+}
+
+
+/* =========================================================
+   19. KNIGHT STATUS GLOW
+========================================================= */
+
+.knight-status {
+    animation: knightStatusPulse 3s ease-in-out infinite;
+}
+
+@keyframes knightStatusPulse {
+
+    0%,
+    100% {
+        border-color:
+            rgba(0, 160, 230, 0.25);
+    }
+
+    50% {
+        border-color:
+            rgba(36, 217, 255, 0.55);
+
+        box-shadow:
+            0 0 12px rgba(36, 217, 255, 0.08);
+    }
+}
+
+
+/* =========================================================
+   20. CONVERTER ANIMATION
+========================================================= */
+
+.converter-box {
+    animation: converterAppear 0.4s ease-out;
+}
+
+@keyframes converterAppear {
+
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* =========================================================
+   21. PROGRAMMER DISPLAY
+========================================================= */
+
+.programmer-display div {
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.programmer-display div:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(36, 217, 255, 0.5);
+
+    box-shadow:
+        0 0 10px rgba(36, 217, 255, 0.08);
+}
+
+
+/* =========================================================
+   22. TEAM MEMBER
+========================================================= */
+
+.member {
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.member:hover {
+    transform: translateY(-4px);
+
+    border-color:
+        rgba(36, 217, 255, 0.6);
+
+    box-shadow:
+        0 0 15px rgba(36, 217, 255, 0.1);
+}
+
+
+/* =========================================================
+   23. FOOTER APPEAR
+========================================================= */
+
+footer {
+    animation: footerFade 1s ease-out both;
+}
+
+@keyframes footerFade {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   24. MODAL ANIMATION
+   Berlaku jika modal ditambahkan nanti
+========================================================= */
+
+.modal {
+    animation:
+        modalBackground 0.25s ease-out;
+}
+
+.modal-content {
+    animation:
+        modalAppear 0.3s ease-out;
+}
+
+@keyframes modalBackground {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modalAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(20px)
+            scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   25. ACHIEVEMENT UNLOCK
+========================================================= */
+
+.achievement-unlock {
+    animation:
+        achievementAppear 0.55s
+        cubic-bezier(0.2, 0.8, 0.2, 1)
+        both;
+}
+
+@keyframes achievementAppear {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(0.8);
+    }
+
+    60% {
+        opacity: 1;
+
+        transform:
+            translateY(-5px)
+            scale(1.04);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   26. ACHIEVEMENT GLOW
+========================================================= */
+
+.achievement-unlock .achievement-icon {
+    animation:
+        achievementIcon 1.2s ease-in-out infinite;
+}
+
+@keyframes achievementIcon {
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.12) rotate(4deg);
+    }
+}
+
+
+/* =========================================================
+   27. LEVEL UP
+========================================================= */
+
+.level-up {
+    animation:
+        levelUpAnimation 0.8s
+        cubic-bezier(0.2, 0.8, 0.2, 1)
+        both;
+}
+
+@keyframes levelUpAnimation {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            scale(0.5)
+            rotate(-5deg);
+    }
+
+    50% {
+        opacity: 1;
+
+        transform:
+            scale(1.12)
+            rotate(2deg);
+    }
+
+    75% {
+        transform:
+            scale(0.96)
+            rotate(-1deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0);
+    }
+}
+
+
+/* =========================================================
+   28. LEVEL UP GLOW
+========================================================= */
+
+.level-up::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -5px;
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    animation:
+        levelUpGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes levelUpGlow {
+
+    0%,
+    100% {
+        opacity: 0;
+
+        box-shadow:
+            0 0 0 rgba(36, 217, 255, 0);
+    }
+
+    50% {
+        opacity: 1;
+
+        box-shadow:
+            0 0 25px rgba(36, 217, 255, 0.55);
+    }
+}
+
+
+/* =========================================================
+   29. MODE CHANGE ANIMATION
+========================================================= */
+
+.calculator-mode.active {
+    animation:
+        modeAppear 0.3s ease-out;
+}
+
+@keyframes modeAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================================================
+   30. INPUT FOCUS
+========================================================= */
+
+input:focus,
+select:focus {
+    animation:
+        inputGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes inputGlow {
+
+    from {
+        box-shadow:
+            0 0 4px rgba(36, 217, 255, 0.1);
+    }
+
+    to {
+        box-shadow:
+            0 0 10px rgba(36, 217, 255, 0.2);
+    }
+}
+
+
+/* =========================================================
+   31. SMOOTH SCROLL
+========================================================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* =========================================================
+   32. REDUCED MOTION
+   Untuk pengguna yang mematikan animasi
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+}
