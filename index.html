@@ -3,75 +3,55 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Cubes Adventure Knight - Calculator</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- =================================
-         BACKGROUND CUBE
-    ================================== -->
-
-    <div class="cube cube1"></div>
-    <div class="cube cube2"></div>
-    <div class="cube cube3"></div>
+    <!-- BACKGROUND CUBES -->
+    <div class="cube cube-1"></div>
+    <div class="cube cube-2"></div>
+    <div class="cube cube-3"></div>
+    <div class="cube cube-4"></div>
 
 
-    <!-- =================================
-         HEADER
-    ================================== -->
+    <!-- ================= HEADER ================= -->
 
-    <header>
+    <header class="top-header">
 
-        <!-- LOGO KELOMPOK -->
-
-        <div class="logo-kelompok">
+        <div class="brand-side">
 
             <img
                 src="img/logo-kelompok.jpeg"
                 alt="Logo Kelompok"
+                class="header-logo"
             >
 
         </div>
 
 
-        <!-- LOGO SEKOLAH + CUBES + RPL -->
-
-        <div class="logo-container">
+        <div class="school-brand">
 
             <img
                 src="img/logo-smkn.jpeg"
-                class="logo-img"
-                alt="Logo SMKN 1 Sanden"
+                alt="Logo SMKN"
+                class="header-logo"
             >
 
 
-            <div class="logo-tengah">
+            <div class="title-brand">
 
-                <div class="logo">
-
+                <div class="main-title">
                     <span>◆</span>
-
                     CUBES
-
                 </div>
 
-
-                <div class="subtitle">
-
+                <div class="sub-title">
                     ADVENTURE KNIGHT
-
                 </div>
 
             </div>
@@ -79,20 +59,19 @@
 
             <img
                 src="img/logo-rpl.jpeg"
-                class="logo-img"
                 alt="Logo RPL"
+                class="header-logo"
             >
 
         </div>
 
 
-        <!-- LOGO MOKO -->
-
-        <div class="moko-logo">
+        <div class="brand-side right">
 
             <img
                 src="img/logo-moko.jpeg"
-                alt="MOKO Game Development"
+                alt="Logo MOKO"
+                class="header-logo"
             >
 
         </div>
@@ -101,34 +80,32 @@
 
 
 
-    <!-- =================================
-         MAIN CALCULATOR
-    ================================== -->
+    <!-- ================= MAIN ================= -->
 
-    <main class="calculator">
+    <main class="main-wrapper">
 
 
         <!-- STATUS -->
 
-        <div class="status">
+        <div class="status-bar">
 
-            <span>
-                ● SYSTEM ONLINE
-            </span>
+            <div class="system-online">
+                <span class="online-dot"></span>
+                SYSTEM ONLINE
+            </div>
 
-            <span>
+            <div class="energy">
                 ENERGY 100%
-            </span>
+                <span>⚡</span>
+            </div>
 
         </div>
 
 
 
-        <!-- =================================
-             MODE KALKULATOR
-        ================================== -->
+        <!-- MODE -->
 
-        <div class="calculator-modes">
+        <div class="mode-bar">
 
             <button
                 class="mode-btn active"
@@ -137,7 +114,6 @@
                 BASIC
             </button>
 
-
             <button
                 class="mode-btn"
                 onclick="switchMode('scientific')"
@@ -145,14 +121,12 @@
                 SCIENTIFIC
             </button>
 
-
             <button
                 class="mode-btn"
                 onclick="switchMode('programmer')"
             >
                 PROGRAMMER
             </button>
-
 
             <button
                 class="mode-btn"
@@ -165,779 +139,658 @@
 
 
 
-        <!-- =================================
-             DISPLAY
-        ================================== -->
+        <!-- ================= WORKSPACE ================= -->
 
-        <div class="display">
+        <div class="workspace">
 
-            <div id="history">
-                READY FOR CALCULATION
-            </div>
 
+            <!-- ============ CALCULATOR ============ -->
 
-            <div id="result">
-                0
-            </div>
+            <div class="calculator-panel">
 
-        </div>
 
+                <!-- DISPLAY -->
 
+                <div class="display">
 
-        <!-- =================================
-             BASIC MODE
-        ================================== -->
+                    <div id="history">
+                        READY FOR CALCULATION
+                    </div>
 
-        <section
-            id="basic-mode"
-            class="calculator-mode active"
-        >
+                    <div id="result">
+                        0
+                    </div>
 
-            <div class="buttons basic-buttons">
-
-
-                <!-- AC / DEL / PLUS MINUS / PERCENT -->
-
-                <button
-                    class="special"
-                    onclick="clearDisplay()"
-                >
-                    AC
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="deleteNumber()"
-                >
-                    DEL
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="plusMinus()"
-                >
-                    ±
-                </button>
-
-
-                <button
-                    class="operator"
-                    onclick="addNumber('%')"
-                >
-                    %
-                </button>
-
-
-
-                <!-- ROW 1 -->
-
-                <button
-                    class="operator"
-                    onclick="addNumber('/')"
-                >
-                    ÷
-                </button>
-
-
-                <button onclick="addNumber('7')">
-                    7
-                </button>
-
-
-                <button onclick="addNumber('8')">
-                    8
-                </button>
-
-
-                <button onclick="addNumber('9')">
-                    9
-                </button>
-
-
-
-                <!-- ROW 2 -->
-
-                <button
-                    class="operator"
-                    onclick="addNumber('*')"
-                >
-                    ×
-                </button>
-
-
-                <button onclick="addNumber('4')">
-                    4
-                </button>
-
-
-                <button onclick="addNumber('5')">
-                    5
-                </button>
-
-
-                <button onclick="addNumber('6')">
-                    6
-                </button>
-
-
-
-                <!-- ROW 3 -->
-
-                <button
-                    class="operator"
-                    onclick="addNumber('-')"
-                >
-                    −
-                </button>
-
-
-                <button onclick="addNumber('1')">
-                    1
-                </button>
-
-
-                <button onclick="addNumber('2')">
-                    2
-                </button>
-
-
-                <button onclick="addNumber('3')">
-                    3
-                </button>
-
-
-
-                <!-- ROW 4 -->
-
-                <button
-                    class="operator"
-                    onclick="addNumber('+')"
-                >
-                    +
-                </button>
-
-
-                <button
-                    class="zero"
-                    onclick="addNumber('0')"
-                >
-                    0
-                </button>
-
-
-                <button onclick="addNumber('.')">
-                    .
-                </button>
-
-
-                <button
-                    class="equal"
-                    onclick="calculate()"
-                >
-                    =
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================
-             SCIENTIFIC MODE
-        ================================== -->
-
-        <section
-            id="scientific-mode"
-            class="calculator-mode"
-        >
-
-            <div class="buttons scientific-buttons">
-
-
-                <!-- ROW 1 -->
-
-                <button
-                    class="special"
-                    onclick="squareRoot()"
-                >
-                    √
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="squareNumber()"
-                >
-                    x²
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="powerNumber()"
-                >
-                    xʸ
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="inverseNumber()"
-                >
-                    1/x
-                </button>
-
-
-
-                <!-- ROW 2 -->
-
-                <button
-                    class="special"
-                    onclick="sinNumber()"
-                >
-                    sin
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="cosNumber()"
-                >
-                    cos
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="tanNumber()"
-                >
-                    tan
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="factorialNumber()"
-                >
-                    x!
-                </button>
-
-
-
-                <!-- ROW 3 -->
-
-                <button
-                    class="special"
-                    onclick="asinNumber()"
-                >
-                    asin
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="acosNumber()"
-                >
-                    acos
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="atanNumber()"
-                >
-                    atan
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="absoluteNumber()"
-                >
-                    abs
-                </button>
-
-
-
-                <!-- ROW 4 -->
-
-                <button
-                    class="special"
-                    onclick="logNumber()"
-                >
-                    log
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="lnNumber()"
-                >
-                    ln
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="exponentialNumber()"
-                >
-                    eˣ
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="tenPowerNumber()"
-                >
-                    10ˣ
-                </button>
-
-
-
-                <!-- CONSTANTS -->
-
-                <button
-                    class="special"
-                    onclick="addPi()"
-                >
-                    π
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="addE()"
-                >
-                    e
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="addPhi()"
-                >
-                    φ
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="randomNumber()"
-                >
-                    RND
-                </button>
-
-
-
-                <!-- BASIC CONTROLS -->
-
-                <button
-                    class="special"
-                    onclick="clearDisplay()"
-                >
-                    AC
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="deleteNumber()"
-                >
-                    DEL
-                </button>
-
-
-                <button
-                    class="special"
-                    onclick="plusMinus()"
-                >
-                    ±
-                </button>
-
-
-                <button
-                    class="operator"
-                    onclick="addNumber('%')"
-                >
-                    %
-                </button>
-
-
-
-                <!-- NUMBERS -->
-
-                <button
-                    class="operator"
-                    onclick="addNumber('/')"
-                >
-                    ÷
-                </button>
-
-
-                <button onclick="addNumber('7')">
-                    7
-                </button>
-
-
-                <button onclick="addNumber('8')">
-                    8
-                </button>
-
-
-                <button onclick="addNumber('9')">
-                    9
-                </button>
-
-
-                <button
-                    class="operator"
-                    onclick="addNumber('*')"
-                >
-                    ×
-                </button>
-
-
-                <button onclick="addNumber('4')">
-                    4
-                </button>
-
-
-                <button onclick="addNumber('5')">
-                    5
-                </button>
-
-
-                <button onclick="addNumber('6')">
-                    6
-                </button>
-
-
-                <button
-                    class="operator"
-                    onclick="addNumber('-')"
-                >
-                    −
-                </button>
-
-
-                <button onclick="addNumber('1')">
-                    1
-                </button>
-
-
-                <button onclick="addNumber('2')">
-                    2
-                </button>
-
-
-                <button onclick="addNumber('3')">
-                    3
-                </button>
-
-
-                <button
-                    class="operator"
-                    onclick="addNumber('+')"
-                >
-                    +
-                </button>
-
-
-                <button
-                    onclick="addNumber('0')"
-                    class="zero"
-                >
-                    0
-                </button>
-
-
-                <button onclick="addNumber('.')">
-                    .
-                </button>
-
-
-                <button
-                    class="equal"
-                    onclick="calculate()"
-                >
-                    =
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================
-             PROGRAMMER MODE
-        ================================== -->
-
-        <section
-            id="programmer-mode"
-            class="calculator-mode"
-        >
-
-            <div class="programmer-display">
-
-                <div>
-                    <span>DEC</span>
-                    <strong id="programmer-dec">0</strong>
                 </div>
 
 
-                <div>
-                    <span>BIN</span>
-                    <strong id="programmer-bin">0</strong>
-                </div>
 
+                <!-- ================= BASIC ================= -->
 
-                <div>
-                    <span>HEX</span>
-                    <strong id="programmer-hex">0</strong>
-                </div>
-
-
-                <div>
-                    <span>OCT</span>
-                    <strong id="programmer-oct">0</strong>
-                </div>
-
-            </div>
-
-
-            <div class="programmer-input">
-
-                <input
-                    type="number"
-                    id="programmer-input"
-                    value="0"
-                    oninput="updateProgrammer()"
+                <section
+                    id="basic-mode"
+                    class="calculator-mode active"
                 >
 
-            </div>
+                    <div class="buttons">
+
+                        <button
+                            class="clear-btn"
+                            onclick="clearDisplay()"
+                        >
+                            AC
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="deleteNumber()"
+                        >
+                            DEL
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="plusMinus()"
+                        >
+                            ±
+                        </button>
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('%')"
+                        >
+                            %
+                        </button>
 
 
-            <div class="programmer-buttons">
+                        <button
+                            class="operator"
+                            onclick="addNumber('/')"
+                        >
+                            ÷
+                        </button>
 
-                <button
-                    onclick="programmerOperation('AND')"
+                        <button onclick="addNumber('7')">
+                            7
+                        </button>
+
+                        <button onclick="addNumber('8')">
+                            8
+                        </button>
+
+                        <button onclick="addNumber('9')">
+                            9
+                        </button>
+
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('*')"
+                        >
+                            ×
+                        </button>
+
+                        <button onclick="addNumber('4')">
+                            4
+                        </button>
+
+                        <button onclick="addNumber('5')">
+                            5
+                        </button>
+
+                        <button onclick="addNumber('6')">
+                            6
+                        </button>
+
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('-')"
+                        >
+                            −
+                        </button>
+
+                        <button onclick="addNumber('1')">
+                            1
+                        </button>
+
+                        <button onclick="addNumber('2')">
+                            2
+                        </button>
+
+                        <button onclick="addNumber('3')">
+                            3
+                        </button>
+
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('+')"
+                        >
+                            +
+                        </button>
+
+                        <button
+                            class="zero"
+                            onclick="addNumber('0')"
+                        >
+                            0
+                        </button>
+
+                        <button onclick="addNumber('.')">
+                            .
+                        </button>
+
+                        <button
+                            class="equal"
+                            onclick="calculate()"
+                        >
+                            =
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ================= SCIENTIFIC ================= -->
+
+                <section
+                    id="scientific-mode"
+                    class="calculator-mode"
                 >
-                    AND
-                </button>
+
+                    <div class="buttons scientific-buttons">
+
+                        <button
+                            class="special"
+                            onclick="squareRoot()"
+                        >
+                            √
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="squareNumber()"
+                        >
+                            x²
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="powerNumber()"
+                        >
+                            xʸ
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="inverseNumber()"
+                        >
+                            1/x
+                        </button>
 
 
-                <button
-                    onclick="programmerOperation('OR')"
+                        <button
+                            class="special"
+                            onclick="sinNumber()"
+                        >
+                            sin
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="cosNumber()"
+                        >
+                            cos
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="tanNumber()"
+                        >
+                            tan
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="factorialNumber()"
+                        >
+                            x!
+                        </button>
+
+
+                        <button
+                            class="special"
+                            onclick="asinNumber()"
+                        >
+                            asin
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="acosNumber()"
+                        >
+                            acos
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="atanNumber()"
+                        >
+                            atan
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="absoluteNumber()"
+                        >
+                            abs
+                        </button>
+
+
+                        <button
+                            class="special"
+                            onclick="logNumber()"
+                        >
+                            log
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="lnNumber()"
+                        >
+                            ln
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="exponentialNumber()"
+                        >
+                            eˣ
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="tenPowerNumber()"
+                        >
+                            10ˣ
+                        </button>
+
+
+                        <button
+                            class="special"
+                            onclick="addPi()"
+                        >
+                            π
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="addE()"
+                        >
+                            e
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="addPhi()"
+                        >
+                            φ
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="randomNumber()"
+                        >
+                            RND
+                        </button>
+
+
+                        <button
+                            class="clear-btn"
+                            onclick="clearDisplay()"
+                        >
+                            AC
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="deleteNumber()"
+                        >
+                            DEL
+                        </button>
+
+                        <button
+                            class="special"
+                            onclick="plusMinus()"
+                        >
+                            ±
+                        </button>
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('%')"
+                        >
+                            %
+                        </button>
+
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('/')"
+                        >
+                            ÷
+                        </button>
+
+                        <button onclick="addNumber('7')">
+                            7
+                        </button>
+
+                        <button onclick="addNumber('8')">
+                            8
+                        </button>
+
+                        <button onclick="addNumber('9')">
+                            9
+                        </button>
+
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('*')"
+                        >
+                            ×
+                        </button>
+
+                        <button onclick="addNumber('4')">
+                            4
+                        </button>
+
+                        <button onclick="addNumber('5')">
+                            5
+                        </button>
+
+                        <button onclick="addNumber('6')">
+                            6
+                        </button>
+
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('-')"
+                        >
+                            −
+                        </button>
+
+                        <button onclick="addNumber('1')">
+                            1
+                        </button>
+
+                        <button onclick="addNumber('2')">
+                            2
+                        </button>
+
+                        <button onclick="addNumber('3')">
+                            3
+                        </button>
+
+
+                        <button
+                            class="operator"
+                            onclick="addNumber('+')"
+                        >
+                            +
+                        </button>
+
+                        <button
+                            class="zero"
+                            onclick="addNumber('0')"
+                        >
+                            0
+                        </button>
+
+                        <button onclick="addNumber('.')">
+                            .
+                        </button>
+
+                        <button
+                            class="equal"
+                            onclick="calculate()"
+                        >
+                            =
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ================= PROGRAMMER ================= -->
+
+                <section
+                    id="programmer-mode"
+                    class="calculator-mode"
                 >
-                    OR
-                </button>
+
+                    <div class="programmer-display">
+
+                        <div>
+                            <span>DEC</span>
+                            <strong id="programmer-dec">0</strong>
+                        </div>
+
+                        <div>
+                            <span>BIN</span>
+                            <strong id="programmer-bin">0</strong>
+                        </div>
+
+                        <div>
+                            <span>HEX</span>
+                            <strong id="programmer-hex">0</strong>
+                        </div>
+
+                        <div>
+                            <span>OCT</span>
+                            <strong id="programmer-oct">0</strong>
+                        </div>
+
+                    </div>
 
 
-                <button
-                    onclick="programmerOperation('XOR')"
+                    <input
+                        type="number"
+                        id="programmer-input"
+                        value="0"
+                        oninput="updateProgrammer()"
+                    >
+
+
+                    <div class="programmer-buttons">
+
+                        <button onclick="programmerOperation('AND')">
+                            AND
+                        </button>
+
+                        <button onclick="programmerOperation('OR')">
+                            OR
+                        </button>
+
+                        <button onclick="programmerOperation('XOR')">
+                            XOR
+                        </button>
+
+                        <button onclick="programmerNOT()">
+                            NOT
+                        </button>
+
+                        <button onclick="programmerShift('left')">
+                            SHIFT LEFT
+                        </button>
+
+                        <button onclick="programmerShift('right')">
+                            SHIFT RIGHT
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ================= CONVERTER ================= -->
+
+                <section
+                    id="converter-mode"
+                    class="calculator-mode"
                 >
-                    XOR
-                </button>
 
-
-                <button
-                    onclick="programmerNOT()"
-                >
-                    NOT
-                </button>
-
-
-                <button
-                    onclick="programmerShift('left')"
-                >
-                    SHIFT LEFT
-                </button>
-
-
-                <button
-                    onclick="programmerShift('right')"
-                >
-                    SHIFT RIGHT
-                </button>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================
-             CONVERTER MODE
-        ================================== -->
-
-        <section
-            id="converter-mode"
-            class="calculator-mode"
-        >
-
-            <div class="converter-box">
-
-                <label>
-                    Jenis Converter
-                </label>
-
-
-                <select
-                    id="converter-type"
-                    onchange="changeConverter()"
-                >
-
-                    <option value="length">
-                        Panjang
-                    </option>
-
-                    <option value="weight">
-                        Berat
-                    </option>
-
-                    <option value="temperature">
-                        Suhu
-                    </option>
-
-                    <option value="area">
-                        Luas
-                    </option>
-
-                    <option value="volume">
-                        Volume
-                    </option>
-
-                    <option value="time">
-                        Waktu
-                    </option>
-
-                    <option value="speed">
-                        Kecepatan
-                    </option>
-
-                    <option value="data">
-                        Data Digital
-                    </option>
-
-                    <option value="energy">
-                        Energi
-                    </option>
-
-                </select>
-
-
-                <div class="converter-inputs">
-
-
-                    <div>
+                    <div class="converter-box">
 
                         <label>
-                            Dari
+                            Jenis Converter
                         </label>
 
-
-                        <input
-                            type="number"
-                            id="convert-value"
-                            value="1"
-                            oninput="convertValue()"
+                        <select
+                            id="converter-type"
+                            onchange="changeConverter()"
                         >
 
+                            <option value="length">
+                                Panjang
+                            </option>
 
-                        <select
-                            id="from-unit"
-                            onchange="convertValue()"
-                        ></select>
+                            <option value="weight">
+                                Berat
+                            </option>
+
+                            <option value="temperature">
+                                Suhu
+                            </option>
+
+                            <option value="area">
+                                Luas
+                            </option>
+
+                            <option value="volume">
+                                Volume
+                            </option>
+
+                            <option value="time">
+                                Waktu
+                            </option>
+
+                            <option value="speed">
+                                Kecepatan
+                            </option>
+
+                            <option value="data">
+                                Data Digital
+                            </option>
+
+                            <option value="energy">
+                                Energi
+                            </option>
+
+                        </select>
+
+
+                        <div class="converter-inputs">
+
+                            <div>
+
+                                <label>Dari</label>
+
+                                <input
+                                    type="number"
+                                    id="convert-value"
+                                    value="1"
+                                    oninput="convertValue()"
+                                >
+
+                                <select
+                                    id="from-unit"
+                                    onchange="convertValue()"
+                                ></select>
+
+                            </div>
+
+
+                            <div class="convert-arrow">
+                                ⇄
+                            </div>
+
+
+                            <div>
+
+                                <label>Ke</label>
+
+                                <input
+                                    type="text"
+                                    id="convert-result"
+                                    readonly
+                                >
+
+                                <select
+                                    id="to-unit"
+                                    onchange="convertValue()"
+                                ></select>
+
+                            </div>
+
+                        </div>
 
                     </div>
 
-
-                    <div class="convert-arrow">
-                        ⇄
-                    </div>
+                </section>
 
 
-                    <div>
+                <!-- KNIGHT STATUS -->
 
-                        <label>
-                            Ke
-                        </label>
+                <div class="knight-status">
 
+                    <span>
+                        ⚔ KNIGHT CALCULATOR
+                    </span>
 
-                        <input
-                            type="text"
-                            id="convert-result"
-                            readonly
-                        >
-
-
-                        <select
-                            id="to-unit"
-                            onchange="convertValue()"
-                        ></select>
-
-                    </div>
+                    <span>
+                        CALCULATION MODE: ACTIVE
+                    </span>
 
                 </div>
 
             </div>
 
-        </section>
 
 
+            <!-- ============ HISTORY ============ -->
 
-        <!-- =================================
-             ADVENTURE HISTORY
-        ================================== -->
+            <aside class="history-panel">
 
-        <section class="adventure-history">
+                <div class="history-title">
 
-            <div class="history-header">
+                    <h2>
+                        ⚔️ ADVENTURE HISTORY
+                    </h2>
 
-                <h2>
-                    ⚔️ Adventure History
-                </h2>
+                    <button onclick="clearHistory()">
+                        CLEAR
+                    </button>
 
-
-                <button
-                    onclick="clearHistory()"
-                >
-                    CLEAR
-                </button>
-
-            </div>
-
-
-            <div id="history-list">
-
-                <div class="empty-history">
-                    Belum ada petualangan...
                 </div>
 
-            </div>
 
-        </section>
+                <div id="history-list">
 
+                    <div class="empty-history">
+                        Belum ada petualangan...
+                    </div>
 
+                </div>
 
-        <!-- =================================
-             KNIGHT INFO
-        ================================== -->
-
-        <div class="knight-info">
-
-            <div>
-                ⚔ KNIGHT CALCULATOR
-            </div>
-
-
-            <div>
-                CALCULATION MODE: ACTIVE
-            </div>
+            </aside>
 
         </div>
 
@@ -945,52 +798,35 @@
 
 
 
-    <!-- =================================
-         TEAM PROJECT
-    ================================== -->
+    <!-- ================= TEAM ================= -->
 
-    <section class="kelompok">
+    <section class="team-section">
 
         <h2>
             TEAM PROJECT
         </h2>
 
 
-        <div class="anggota">
+        <div class="team-list">
 
             <div class="member">
-
                 <span>01</span>
-
                 Finsa Dwi W.T
-
             </div>
 
-
             <div class="member">
-
                 <span>02</span>
-
                 Talitha Nur S
-
             </div>
 
-
             <div class="member">
-
                 <span>03</span>
-
                 Nazwa Agustina R
-
             </div>
 
-
             <div class="member">
-
                 <span>04</span>
-
                 Aulia Putri M
-
             </div>
 
         </div>
@@ -999,13 +835,13 @@
 
 
 
-    <!-- =================================
-         FOOTER
-    ================================== -->
+    <!-- ================= FOOTER ================= -->
 
     <footer>
 
-        CUBES ADVENTURE KNIGHT
+        <strong>
+            CUBES ADVENTURE KNIGHT
+        </strong>
 
         <br>
 
@@ -1019,11 +855,6 @@
 
     </footer>
 
-
-
-    <!-- =================================
-         JAVASCRIPT
-    ================================== -->
 
     <script src="script.js"></script>
 
