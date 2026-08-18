@@ -816,37 +816,78 @@ let currentMode = "basic";
 
 function switchMode(mode) {
 
-    currentMode = mode;
+    // ==============================
+    // SEMBUNYIKAN SEMUA MODE
+    // ==============================
 
-    document
-        .querySelectorAll(".mode-btn")
-        .forEach(button => {
-            button.classList.remove("active");
-        });
+    const modes = document.querySelectorAll('.calculator-mode');
 
-    const activeButton =
-        document.querySelector(
-            `.mode-btn[onclick="switchMode('${mode}')"]`
-        );
+    modes.forEach(function(section) {
+        section.classList.remove('active');
+        section.style.display = 'none';
+    });
 
-    if (activeButton) {
-        activeButton.classList.add("active");
+
+    // ==============================
+    // TAMPILKAN MODE YANG DIPILIH
+    // ==============================
+
+    const selectedMode = document.getElementById(mode + '-mode');
+
+    if (selectedMode) {
+        selectedMode.classList.add('active');
+        selectedMode.style.display = 'block';
     }
 
-    document
-        .querySelectorAll(".mode-panel")
-        .forEach(panel => {
-            panel.classList.remove("active");
-        });
 
-    const panel =
-        document.getElementById(`${mode}-mode`);
+    // ==============================
+    // UPDATE TOMBOL MODE
+    // ==============================
 
-    if (panel) {
-        panel.classList.add("active");
+    const modeButtons = document.querySelectorAll('.mode-btn');
+
+    modeButtons.forEach(function(button) {
+        button.classList.remove('active');
+    });
+
+
+    // Cari tombol yang sesuai dengan mode
+    modeButtons.forEach(function(button) {
+
+        const onclickValue = button.getAttribute('onclick');
+
+        if (onclickValue === switchMode('${mode}')) {
+            button.classList.add('active');
+        }
+
+    });
+
+
+    // ==============================
+    // KHUSUS CONVERTER
+    // ==============================
+
+    if (mode === 'converter') {
+
+        if (typeof changeConverter === 'function') {
+            changeConverter();
+        }
+
+    }
+
+
+    // ==============================
+    // KHUSUS PROGRAMMER
+    // ==============================
+
+    if (mode === 'programmer') {
+
+        if (typeof updateProgrammer === 'function') {
+            updateProgrammer();
+        }
+
     }
 }
-
 
 /* ========================================
    PROGRAMMER CALCULATOR
