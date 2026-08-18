@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cubes Adventure Knight - Calculator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background Cube -->
+    <div class="cube cube1"></div>
+    <div class="cube cube2"></div>
+    <div class="cube cube3"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span>◆</span>
+            CUBES
+        </div>
+
+        <div class="subtitle">
+            ADVENTURE KNIGHT
+        </div>
+    </header>
+
+    <!-- Calculator -->
+    <main class="calculator">
+
+        <div class="status">
+            <span>● SYSTEM ONLINE</span>
+            <span>ENERGY 100%</span>
+        </div>
+
+        <!-- Display -->
+        <div class="display">
+
+            <div id="history">
+                READY FOR CALCULATION
+            </div>
+
+            <div id="result">
+                0
+            </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+
+            <button class="special" onclick="clearDisplay()">AC</button>
+            <button class="special" onclick="deleteNumber()">DEL</button>
+            <button class="operator" onclick="addNumber('%')">%</button>
+            <button class="operator" onclick="addNumber('/')">÷</button>
+
+            <button onclick="addNumber('7')">7</button>
+            <button onclick="addNumber('8')">8</button>
+            <button onclick="addNumber('9')">9</button>
+            <button class="operator" onclick="addNumber('*')">×</button>
+
+            <button onclick="addNumber('4')">4</button>
+            <button onclick="addNumber('5')">5</button>
+            <button onclick="addNumber('6')">6</button>
+            <button class="operator" onclick="addNumber('-')">−</button>
+
+            <button onclick="addNumber('1')">1</button>
+            <button onclick="addNumber('2')">2</button>
+            <button onclick="addNumber('3')">3</button>
+            <button class="operator" onclick="addNumber('+')">+</button>
+
+            <button onclick="addNumber('0')" class="zero">0</button>
+            <button onclick="addNumber('.')">.</button>
+            <button class="equal" onclick="calculate()">=</button>
+
+        </div>
+
+        <!-- Knight Info -->
+        <div class="knight-info">
+            <div>⚔ KNIGHT CALCULATOR</div>
+            <div>CALCULATION MODE: ACTIVE</div>
+        </div>
+
+    </main>
+
+    <footer>
+        CUBES ADVENTURE KNIGHT
+        <br>
+        Futuristic Calculator
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
