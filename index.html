@@ -1,1560 +1,1911 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CubesAdy Knight - UI/UX & BE</title>
 
-    <title>Cubes Adventure Knight - Calculator</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <link rel="stylesheet" href="style.css">
+body {
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #020d1d;
+    color: white;
+}
+
+/* =====================================================
+   GAME BACKGROUND
+===================================================== */
+
+#game {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    background:
+        linear-gradient(rgba(0,100,160,.13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,100,160,.13) 1px, transparent 1px),
+        radial-gradient(circle at 50% 40%, #09294b, #020d1d 75%);
+
+    background-size:
+        50px 50px,
+        50px 50px,
+        100% 100%;
+
+    transition: filter .4s ease;
+}
+
+/* =====================================================
+   STARS
+===================================================== */
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #8edaff;
+    opacity: .6;
+}
+
+/* =====================================================
+   TOP HUD
+===================================================== */
+
+.hp-box {
+    position: absolute;
+    left: 25px;
+    top: 30px;
+
+    width: 380px;
+    padding: 22px;
+
+    border: 1px solid #126487;
+    border-radius: 20px;
+
+    background: rgba(3,24,49,.92);
+
+    box-shadow:
+        0 0 20px rgba(0,150,255,.08);
+}
+
+.hp-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.hp-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.heart {
+    color: #ff67a5;
+    font-size: 26px;
+    text-shadow: 0 0 12px #ff2d80;
+}
+
+.hp-value {
+    font-size: 21px;
+}
+
+.hp-bar {
+    width: 100%;
+    height: 18px;
+
+    margin-top: 17px;
+
+    background: #152e49;
+
+    border: 1px solid #254b68;
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.hp-fill {
+    height: 100%;
+    width: 64%;
+
+    background: linear-gradient(
+        90deg,
+        #25ddc2,
+        #2bc9f2
+    );
+
+    box-shadow: 0 0 15px #25d8dd;
+
+    transition: width .3s ease;
+}
+
+/* =====================================================
+   SCORE
+===================================================== */
+
+.score-box {
+    position: absolute;
+    left: 25px;
+    top: 145px;
+
+    padding: 13px 23px;
+
+    border: 1px solid #126487;
+    border-radius: 17px;
+
+    background: rgba(3,24,49,.92);
+
+    font-weight: bold;
+}
+
+.score {
+    color: #ffd43b;
+}
+
+.diamond {
+    color: #52cfff;
+    margin-left: 17px;
+}
+
+/* =====================================================
+   ONLINE
+===================================================== */
+
+.online {
+    position: absolute;
+    right: 25px;
+    top: 30px;
+
+    padding: 13px 20px;
+
+    border: 1px solid #126487;
+    border-radius: 18px;
+
+    background: rgba(3,24,49,.92);
+
+    font-weight: bold;
+}
+
+.online-dot {
+    display: inline-block;
+
+    width: 11px;
+    height: 11px;
+
+    margin-right: 9px;
+
+    border-radius: 50%;
+
+    background: #28efbd;
+
+    box-shadow: 0 0 12px #28efbd;
+}
+
+/* =====================================================
+   MINIMAP
+===================================================== */
+
+.minimap {
+    position: absolute;
+
+    right: 25px;
+    top: 88px;
+
+    width: 292px;
+    height: 210px;
+
+    border: 1px solid #126487;
+    border-radius: 20px;
+
+    background:
+        linear-gradient(rgba(0,150,200,.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,150,200,.14) 1px, transparent 1px),
+        #061b31;
+
+    background-size: 32px 32px;
+
+    overflow: hidden;
+}
+
+.map-dot {
+    position: absolute;
+
+    width: 13px;
+    height: 13px;
+
+    border-radius: 50%;
+
+    box-shadow: 0 0 12px currentColor;
+}
+
+.map-blue {
+    background: #43eaff;
+    color: #43eaff;
+}
+
+.map-red {
+    background: #ff3868;
+    color: #ff3868;
+}
+
+.map-yellow {
+    background: #ffd43b;
+    color: #ffd43b;
+}
+
+.map-purple {
+    background: #a954ff;
+    color: #a954ff;
+}
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.menu {
+    position: absolute;
+
+    right: 25px;
+    top: 310px;
+
+    display: flex;
+    gap: 9px;
+}
+
+.menu button {
+    border: 1px solid #126487;
+    border-radius: 15px;
+
+    padding: 13px 17px;
+
+    color: white;
+
+    background: rgba(3,24,49,.92);
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.menu button:hover {
+    background: #123958;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 15px rgba(50,200,255,.25);
+}
+
+.menu button:active {
+    transform: scale(.95);
+}
+
+/* =====================================================
+   PLAYER
+===================================================== */
+
+.player {
+    position: absolute;
+
+    left: 60%;
+    top: 52%;
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: 12px;
+
+    background: #ff3f69;
+
+    box-shadow:
+        0 0 15px #ff3f69,
+        0 0 35px rgba(255,63,105,.45);
+
+    transition: transform .08s linear;
+}
+
+.player::before,
+.player::after {
+    content: "";
+
+    position: absolute;
+
+    top: 20px;
+
+    width: 8px;
+    height: 8px;
+
+    background: white;
+}
+
+.player::before {
+    left: 15px;
+}
+
+.player::after {
+    right: 15px;
+}
+
+.player-bar {
+    position: absolute;
+
+    left: 0;
+    top: -12px;
+
+    width: 60px;
+    height: 7px;
+
+    background: #ff3f69;
+}
+
+/* =====================================================
+   ENEMY
+===================================================== */
+
+.enemy {
+    position: absolute;
+
+    left: 73%;
+    top: 58%;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 10px;
+
+    background: #a84dff;
+
+    box-shadow:
+        0 0 25px #a84dff;
+
+    transition:
+        transform .15s ease,
+        opacity .2s ease;
+}
+
+/* =====================================================
+   TOUCH CONTROLLER
+===================================================== */
+
+.controls {
+    position: absolute;
+
+    left: 30px;
+    bottom: 75px;
+
+    width: 320px;
+    height: 210px;
+}
+
+.control {
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    border: 1px solid #087fa9;
+    border-radius: 22px;
+
+    color: white;
+
+    background: rgba(3,24,49,.9);
+
+    font-size: 38px;
+
+    cursor: pointer;
+
+    transition: .1s;
+}
+
+.control:hover {
+    background: #10476b;
+}
+
+.control:active {
+    transform: scale(.92);
+}
+
+.up {
+    left: 110px;
+    top: 0;
+}
+
+.left {
+    left: 0;
+    bottom: 0;
+}
+
+.down {
+    left: 110px;
+    bottom: 0;
+}
+
+.right {
+    right: 0;
+    bottom: 0;
+}
+
+/* =====================================================
+   ATTACK
+===================================================== */
+
+.attack {
+    position: absolute;
+
+    right: 28px;
+    bottom: 75px;
+
+    width: 380px;
+    height: 88px;
+
+    border: none;
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #d9277f,
+            #a52ed4
+        );
+
+    color: white;
+
+    font-size: 23px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 25px rgba(218,39,127,.45);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.attack:hover {
+    transform: scale(1.02);
+
+    box-shadow:
+        0 0 35px rgba(218,39,127,.7);
+}
+
+.attack:active {
+    transform: scale(.95);
+}
+
+/* =====================================================
+   CONTROL GUIDE
+===================================================== */
+
+.help {
+    position: absolute;
+
+    left: 50%;
+    bottom: 17px;
+
+    transform: translateX(-50%);
+
+    padding: 10px 22px;
+
+    border: 1px solid #103d5b;
+    border-radius: 13px;
+
+    background: rgba(3,24,49,.9);
+
+    font-size: 14px;
+
+    color: #9bb0c4;
+}
+
+.help span {
+    color: #39dce9;
+    font-weight: bold;
+}
+
+/* =====================================================
+   ATTACK EFFECT
+===================================================== */
+
+.attack-effect {
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    border: 5px solid #ff4b91;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.3);
+
+    box-shadow:
+        0 0 25px #ff4b91,
+        inset 0 0 20px #ff4b91;
+}
+
+.attack-effect.active {
+    animation:
+        attackAnimation .3s ease-out;
+}
+
+@keyframes attackAnimation {
+
+    0% {
+        opacity: 1;
+        transform:
+            translate(-50%,-50%)
+            scale(.3);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(-50%,-50%)
+            scale(1.4);
+    }
+}
+
+/* =====================================================
+   MODAL / MENU
+===================================================== */
+
+.modal {
+    position: absolute;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 50;
+
+    background: rgba(0,10,25,.75);
+
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    width: 430px;
+
+    padding: 35px;
+
+    border: 1px solid #1bbfe8;
+    border-radius: 22px;
+
+    background: #061a30;
+
+    box-shadow:
+        0 0 35px rgba(0,200,255,.25);
+
+    animation:
+        modalIn .25s ease;
+}
+
+@keyframes modalIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-box h2 {
+    margin-bottom: 20px;
+}
+
+.modal-button {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 13px;
+
+    border: 1px solid #176484;
+    border-radius: 12px;
+
+    background: #092a44;
+    color: white;
+
+    cursor: pointer;
+}
+
+.modal-button:hover {
+    background: #10476b;
+}
+
+/* =====================================================
+   TUTORIAL
+===================================================== */
+
+#tutorial {
+    display: flex;
+}
+
+.tutorial-content {
+    text-align: center;
+}
+
+.tutorial-content h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+}
+
+.tutorial-content p {
+    color: #b7cada;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.start-button {
+    padding: 14px 35px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        90deg,
+        #24d9ca,
+        #2bc9f2
+    );
+
+    color: #00121e;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+.setting {
+    margin: 18px 0;
+}
+
+.setting label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.setting select,
+.setting input {
+    width: 100%;
+}
+
+/* =====================================================
+   PAUSE
+===================================================== */
+
+.pause-title {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+body.colorblind #game {
+    filter: saturate(.45) contrast(1.15);
+}
+
+body.large-text {
+    font-size: 115%;
+}
+
+.subtitle {
+    position: absolute;
+
+    left: 50%;
+    bottom: 120px;
+
+    transform: translateX(-50%);
+
+    padding: 10px 20px;
+
+    border-radius: 10px;
+
+    background: rgba(0,0,0,.75);
+
+    color: white;
+
+    font-size: 16px;
+
+    opacity: 0;
+
+    transition: opacity .2s;
+}
+
+.subtitle.show {
+    opacity: 1;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width: 950px) {
+
+    .minimap {
+        width: 220px;
+        height: 160px;
+    }
+
+    .menu {
+        transform: scale(.75);
+        transform-origin: right top;
+    }
+
+    .attack {
+        width: 300px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- =====================================================
-         BACKGROUND CUBES
-    ====================================================== -->
-
-    <div class="cube cube-1"></div>
-    <div class="cube cube-2"></div>
-    <div class="cube cube-3"></div>
-    <div class="cube cube-4"></div>
-
-
-    <!-- =====================================================
-         CUBE KNIGHT DECORATIVE MASCOT
-    ====================================================== -->
-
-    <div id="cube-knight" class="cube-knight" aria-label="Cube Knight">
-
-        <div class="knight-glow"></div>
-
-        <svg
-            class="knight-svg"
-            viewBox="0 0 260 360"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-
-            <!-- =========================
-                 GLOW FILTER
-            ========================== -->
-
-            <defs>
-
-                <filter id="knightGlow">
-                    <feGaussianBlur
-                        stdDeviation="3"
-                        result="blur"
-                    />
-
-                    <feMerge>
-                        <feMergeNode in="blur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                </filter>
-
-                <linearGradient
-                    id="armorGradient"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-                    <stop
-                        offset="0%"
-                        stop-color="#164f72"
-                    />
-
-                    <stop
-                        offset="50%"
-                        stop-color="#092c48"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#041725"
-                    />
-                </linearGradient>
-
-                <linearGradient
-                    id="shieldGradient"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-                    <stop
-                        offset="0%"
-                        stop-color="#20dfff"
-                    />
-
-                    <stop
-                        offset="50%"
-                        stop-color="#087dc5"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#05365c"
-                    />
-                </linearGradient>
-
-                <linearGradient
-                    id="swordGradient"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                >
-                    <stop
-                        offset="0%"
-                        stop-color="#ffffff"
-                    />
-
-                    <stop
-                        offset="50%"
-                        stop-color="#73eaff"
-                    />
-
-                    <stop
-                        offset="100%"
-                        stop-color="#1598d5"
-                    />
-                </linearGradient>
-
-            </defs>
-
-
-            <!-- =========================
-                 SHADOW
-            ========================== -->
-
-            <ellipse
-                cx="130"
-                cy="345"
-                rx="75"
-                ry="10"
-                fill="rgba(0,0,0,0.55)"
-            />
-
-
-            <!-- =========================
-                 CAPE / BACK ARMOR
-            ========================== -->
-
-            <path
-                d="
-                    M75 195
-                    L185 195
-                    L205 310
-                    L55 310
-                    Z
-                "
-                fill="#031522"
-                stroke="#128fc6"
-                stroke-width="3"
-            />
-
-            <path
-                d="
-                    M75 205
-                    L185 205
-                    L190 295
-                    L70 295
-                    Z
-                "
-                fill="#062a43"
-                opacity="0.7"
-            />
-
-
-            <!-- =========================
-                 BODY ARMOR
-            ========================== -->
-
-            <path
-                d="
-                    M82 180
-                    L178 180
-                    L194 285
-                    L66 285
-                    Z
-                "
-                fill="url(#armorGradient)"
-                stroke="#20dfff"
-                stroke-width="3"
-            />
-
-            <!-- Chest Core -->
-
-            <polygon
-                points="
-                    130,205
-                    154,220
-                    154,248
-                    130,263
-                    106,248
-                    106,220
-                "
-                fill="#031725"
-                stroke="#24d9ff"
-                stroke-width="3"
-                filter="url(#knightGlow)"
-            />
-
-            <circle
-                cx="130"
-                cy="234"
-                r="7"
-                fill="#55edff"
-                filter="url(#knightGlow)"
-            />
-
-
-            <!-- =========================
-                 LEFT ARM
-            ========================== -->
-
-            <path
-                d="
-                    M82 195
-                    L55 210
-                    L38 275
-                    L63 285
-                    L90 225
-                "
-                fill="url(#armorGradient)"
-                stroke="#159bd1"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 RIGHT ARM
-            ========================== -->
-
-            <path
-                d="
-                    M178 195
-                    L205 210
-                    L220 270
-                    L195 282
-                    L170 225
-                "
-                fill="url(#armorGradient)"
-                stroke="#159bd1"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 LEFT LEG
-            ========================== -->
-
-            <path
-                d="
-                    M72 275
-                    L122 275
-                    L118 325
-                    L70 325
-                "
-                fill="#062b45"
-                stroke="#20bce9"
-                stroke-width="3"
-            />
-
-            <!-- =========================
-                 RIGHT LEG
-            ========================== -->
-
-            <path
-                d="
-                    M138 275
-                    L188 275
-                    L190 325
-                    L142 325
-                "
-                fill="#062b45"
-                stroke="#20bce9"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 BOOTS
-            ========================== -->
-
-            <path
-                d="
-                    M65 315
-                    L118 315
-                    L125 337
-                    L58 337
-                    Z
-                "
-                fill="#04121f"
-                stroke="#158dbd"
-                stroke-width="3"
-            />
-
-            <path
-                d="
-                    M142 315
-                    L195 315
-                    L202 337
-                    L135 337
-                    Z
-                "
-                fill="#04121f"
-                stroke="#158dbd"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 NECK
-            ========================== -->
-
-            <rect
-                x="105"
-                y="157"
-                width="50"
-                height="35"
-                rx="7"
-                fill="#071d30"
-                stroke="#159bd1"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 CUBE HEAD
-            ========================== -->
-
-            <polygon
-                points="
-                    70,55
-                    130,30
-                    190,55
-                    190,140
-                    130,170
-                    70,140
-                "
-                fill="#082b45"
-                stroke="#24d9ff"
-                stroke-width="4"
-                filter="url(#knightGlow)"
-            />
-
-            <!-- Head front -->
-
-            <polygon
-                points="
-                    70,55
-                    130,80
-                    130,170
-                    70,140
-                "
-                fill="#0a3857"
-            />
-
-            <!-- Head right -->
-
-            <polygon
-                points="
-                    130,80
-                    190,55
-                    190,140
-                    130,170
-                "
-                fill="#06263e"
-            />
-
-            <!-- Top cube face -->
-
-            <polygon
-                points="
-                    70,55
-                    130,30
-                    190,55
-                    130,80
-                "
-                fill="#0d4668"
-            />
-
-
-            <!-- =========================
-                 CUBE DETAILS
-            ========================== -->
-
-            <path
-                d="M82 61 L130 42 L177 61"
-                fill="none"
-                stroke="#4de8ff"
-                stroke-width="2"
-                opacity="0.6"
-            />
-
-            <path
-                d="M82 128 L130 148 L178 128"
-                fill="none"
-                stroke="#0ca8dc"
-                stroke-width="2"
-                opacity="0.5"
-            />
-
-
-            <!-- =========================
-                 LEFT GLOWING EYE
-            ========================== -->
-
-            <polygon
-                class="knight-eye"
-                points="
-                    84,91
-                    113,99
-                    113,113
-                    84,105
-                "
-                fill="#65f4ff"
-                filter="url(#knightGlow)"
-            />
-
-
-            <!-- =========================
-                 RIGHT GLOWING EYE
-            ========================== -->
-
-            <polygon
-                class="knight-eye"
-                points="
-                    147,99
-                    176,91
-                    176,105
-                    147,113
-                "
-                fill="#65f4ff"
-                filter="url(#knightGlow)"
-            />
-
-
-            <!-- =========================
-                 FACE LINE
-            ========================== -->
-
-            <path
-                d="
-                    M101 130
-                    L130 140
-                    L159 130
-                "
-                fill="none"
-                stroke="#159acb"
-                stroke-width="3"
-            />
-
-
-            <!-- =========================
-                 SWORD
-            ========================== -->
-
-            <g class="knight-sword">
-
-                <!-- Blade -->
-
-                <polygon
-                    points="
-                        205,260
-                        236,105
-                        247,90
-                        239,135
-                        220,275
-                    "
-                    fill="url(#swordGradient)"
-                    stroke="#65efff"
-                    stroke-width="3"
-                    filter="url(#knightGlow)"
-                />
-
-                <!-- Sword edge -->
-
-                <line
-                    x1="236"
-                    y1="105"
-                    x2="205"
-                    y2="260"
-                    stroke="#ffffff"
-                    stroke-width="2"
-                    opacity="0.8"
-                />
-
-                <!-- Guard -->
-
-                <line
-                    x1="190"
-                    y1="267"
-                    x2="228"
-                    y2="278"
-                    stroke="#24d9ff"
-                    stroke-width="8"
-                    stroke-linecap="round"
-                />
-
-                <!-- Handle -->
-
-                <line
-                    x1="210"
-                    y1="273"
-                    x2="202"
-                    y2="309"
-                    stroke="#102d42"
-                    stroke-width="9"
-                    stroke-linecap="round"
-                />
-
-                <!-- Handle glow -->
-
-                <line
-                    x1="207"
-                    y1="276"
-                    x2="201"
-                    y2="307"
-                    stroke="#1bb9e9"
-                    stroke-width="3"
-                />
-
-            </g>
-
-
-            <!-- =========================
-                 SHIELD
-            ========================== -->
-
-            <g class="knight-shield">
-
-                <path
-                    d="
-                        M20 210
-                        L60 225
-                        L60 280
-                        Q40 310 20 320
-                        Q0 310 -20 280
-                        L-20 225
-                        Z
-                    "
-                    transform="translate(43,0)"
-                    fill="url(#shieldGradient)"
-                    stroke="#24d9ff"
-                    stroke-width="3"
-                    filter="url(#knightGlow)"
-                />
-
-                <!-- Shield symbol -->
-
-                <polygon
-                    points="
-                        43,240
-                        58,248
-                        58,267
-                        43,277
-                        28,267
-                        28,248
-                    "
-                    fill="#031b2c"
-                    stroke="#72efff"
-                    stroke-width="2"
-                />
-
-                <path
-                    d="
-                        M43 244
-                        L43 272
-                    "
-                    stroke="#5deaff"
-                    stroke-width="2"
-                />
-
-                <path
-                    d="
-                        M30 254
-                        L56 254
-                    "
-                    stroke="#5deaff"
-                    stroke-width="2"
-                />
-
-            </g>
-
-        </svg>
+<div id="game">
+
+    <!-- STARS -->
+    <div class="star" style="left:25%;top:20%"></div>
+    <div class="star" style="left:33%;top:35%"></div>
+    <div class="star" style="left:45%;top:15%"></div>
+    <div class="star" style="left:55%;top:30%"></div>
+    <div class="star" style="left:68%;top:18%"></div>
+    <div class="star" style="left:75%;top:50%"></div>
+    <div class="star" style="left:42%;top:75%"></div>
+
+    <!-- HP -->
+    <div class="hp-box">
+
+        <div class="hp-title">
+
+            <div class="hp-name">
+                <span class="heart">♥</span>
+                <span>HP</span>
+            </div>
+
+            <span>
+                <span id="hpText">64</span>/100
+            </span>
+
+        </div>
+
+        <div class="hp-bar">
+            <div
+                class="hp-fill"
+                id="hpFill">
+            </div>
+        </div>
 
     </div>
 
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+    <!-- SCORE -->
+    <div class="score-box">
 
-    <header class="top-header">
+        ⭐
+        <span class="score">
+            SCORE:
+            <span id="score">
+                20
+            </span>
+        </span>
 
-        <!-- LOGO KELOMPOK -->
+        <span>•</span>
 
-        <div class="brand-side">
+        💎
+        <span class="diamond">
+            <span id="diamond">
+                2
+            </span>
+        </span>
 
-            <img
-                src="img/logo-kelompok.jpeg"
-                alt="Logo Kelompok"
-                class="header-logo kelompok-logo"
-            >
+    </div>
 
+
+    <!-- ONLINE -->
+    <div class="online">
+
+        <span class="online-dot"></span>
+
+        ONLINE 4
+
+    </div>
+
+
+    <!-- MINIMAP -->
+    <div class="minimap">
+
+        <div
+            class="map-dot map-blue"
+            style="left:0;top:45px">
         </div>
 
-
-        <!-- JUDUL TENGAH -->
-
-        <div class="school-brand">
-
-            <img
-                src="img/logo-smkn.jpeg"
-                alt="Logo SMKN"
-                class="header-logo school-logo"
-            >
-
-
-            <div class="title-brand">
-
-                <div class="main-title">
-                    <span>◆</span>
-                    CUBES
-                </div>
-
-                <div class="sub-title">
-                    ADVENTURE KNIGHT
-                </div>
-
-            </div>
-
-
-            <img
-                src="img/logo-rpl.jpeg"
-                alt="Logo RPL"
-                class="header-logo school-logo"
-            >
-
+        <div
+            class="map-dot map-red"
+            style="left:90px;top:45px">
         </div>
 
-
-        <!-- LOGO MOKO -->
-
-        <div class="brand-side right">
-
-            <img
-                src="img/logo-moko.jpeg"
-                alt="Logo MOKO"
-                class="header-logo moko-logo"
-            >
-
+        <div
+            class="map-dot map-red"
+            style="right:45px;top:55px">
         </div>
 
-    </header>
-
-
-    <!-- =====================================================
-         MAIN
-    ====================================================== -->
-
-    <main class="main-wrapper">
-
-
-        <!-- STATUS -->
-
-        <div class="status-bar">
-
-            <div class="system-online">
-
-                <span class="online-dot"></span>
-
-                SYSTEM ONLINE
-
-            </div>
-
-
-            <div class="energy">
-
-                ENERGY
-                <span id="energy-value">100%</span>
-
-                <span>⚡</span>
-
-            </div>
-
+        <div
+            class="map-dot map-yellow"
+            style="left:140px;top:85px">
         </div>
 
+        <div
+            class="map-dot map-purple"
+            style="right:55px;bottom:25px">
+        </div>
 
-        <!-- =================================================
-             MODE
-        ================================================== -->
+        <div
+            class="map-dot map-blue"
+            style="left:15px;bottom:30px">
+        </div>
 
-        <div class="mode-bar">
+    </div>
+
+
+    <!-- MENU -->
+    <div class="menu">
+
+        <button onclick="openModal('lobby')">
+            🏠 Lobby
+        </button>
+
+        <button onclick="openModal('players')">
+            👥 Players
+        </button>
+
+        <button onclick="openModal('chat')">
+            💬 Chat
+        </button>
+
+        <button onclick="openModal('rank')">
+            🏆 Rank
+        </button>
+
+        <button onclick="openModal('match')">
+            🎯 Match
+        </button>
+
+        <button onclick="togglePause()">
+            II Pause
+        </button>
+
+    </div>
+
+
+    <!-- PLAYER -->
+    <div
+        class="player"
+        id="player">
+
+        <div class="player-bar"></div>
+
+    </div>
+
+
+    <!-- ENEMY -->
+    <div
+        class="enemy"
+        id="enemy">
+    </div>
+
+
+    <!-- ATTACK EFFECT -->
+    <div
+        class="attack-effect"
+        id="attackEffect">
+    </div>
+
+
+    <!-- TOUCH CONTROLLER -->
+    <div class="controls">
+
+        <button
+            class="control up"
+            data-key="arrowup">
+            ▲
+        </button>
+
+        <button
+            class="control left"
+            data-key="arrowleft">
+            ◀
+        </button>
+
+        <button
+            class="control down"
+            data-key="arrowdown">
+            ▼
+        </button>
+
+        <button
+            class="control right"
+            data-key="arrowright">
+            ▶
+        </button>
+
+    </div>
+
+
+    <!-- ATTACK -->
+    <button
+        class="attack"
+        id="attackButton">
+
+        ⚔ SERANG [ SPACE ]
+
+    </button>
+
+
+    <!-- HELP -->
+    <div class="help">
+
+        <span>WASD / ARROW</span>
+        Gerak
+
+        &nbsp; • &nbsp;
+
+        <span>SPACE</span>
+        Serang
+
+        &nbsp; • &nbsp;
+
+        <span>ESC</span>
+        Pause
+
+    </div>
+
+
+    <!-- SUBTITLE -->
+    <div
+        class="subtitle"
+        id="subtitle">
+    </div>
+
+
+    <!-- =================================================
+         TUTORIAL / ONBOARDING
+    ================================================== -->
+
+    <div
+        class="modal active"
+        id="tutorial">
+
+        <div class="tutorial-content">
+
+            <h1>⚔ CUBESADY KNIGHT</h1>
+
+            <p>
+                Selamat datang, Knight!<br>
+                Gunakan WASD atau Arrow untuk bergerak.<br>
+                Tekan SPACE untuk menyerang musuh.<br>
+                Tekan ESC untuk membuka Pause.
+            </p>
 
             <button
-                class="mode-btn active"
-                onclick="switchMode('basic')"
-            >
-                BASIC
-            </button>
+                class="start-button"
+                onclick="startGame()">
 
+                MULAI BERMAIN
 
-            <button
-                class="mode-btn"
-                onclick="switchMode('scientific')"
-            >
-                SCIENTIFIC
-            </button>
-
-
-            <button
-                class="mode-btn"
-                onclick="switchMode('programmer')"
-            >
-                PROGRAMMER
-            </button>
-
-
-            <button
-                class="mode-btn"
-                onclick="switchMode('converter')"
-            >
-                CONVERTER
             </button>
 
         </div>
 
+    </div>
 
-        <!-- =================================================
-             WORKSPACE
-        ================================================== -->
 
-        <div class="workspace">
+    <!-- =================================================
+         GENERAL MODAL
+    ================================================== -->
 
+    <div
+        class="modal"
+        id="generalModal">
 
-            <!-- =============================================
-                 CALCULATOR
-            ============================================== -->
+        <div class="modal-box">
 
-            <div class="calculator-panel">
+            <h2 id="modalTitle">
+                Menu
+            </h2>
 
+            <div id="modalContent"></div>
 
-                <!-- DISPLAY -->
+            <button
+                class="modal-button"
+                onclick="closeModal()">
 
-                <div class="display">
+                Tutup
 
-                    <div id="history">
-                        READY FOR CALCULATION
-                    </div>
-
-                    <div id="result">
-                        0
-                    </div>
-
-                </div>
-
-
-                <!-- =========================================
-                     BASIC
-                ========================================== -->
-
-                <section
-                    id="basic-mode"
-                    class="calculator-mode active"
-                >
-
-                    <div class="buttons">
-
-                        <button
-                            class="clear-btn"
-                            onclick="clearDisplay()"
-                        >
-                            AC
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="deleteNumber()"
-                        >
-                            DEL
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="plusMinus()"
-                        >
-                            ±
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('%')"
-                        >
-                            %
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('/')"
-                        >
-                            ÷
-                        </button>
-
-
-                        <button onclick="addNumber('7')">
-                            7
-                        </button>
-
-
-                        <button onclick="addNumber('8')">
-                            8
-                        </button>
-
-
-                        <button onclick="addNumber('9')">
-                            9
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('*')"
-                        >
-                            ×
-                        </button>
-
-
-                        <button onclick="addNumber('4')">
-                            4
-                        </button>
-
-
-                        <button onclick="addNumber('5')">
-                            5
-                        </button>
-
-
-                        <button onclick="addNumber('6')">
-                            6
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('-')"
-                        >
-                            −
-                        </button>
-
-
-                        <button onclick="addNumber('1')">
-                            1
-                        </button>
-
-
-                        <button onclick="addNumber('2')">
-                            2
-                        </button>
-
-
-                        <button onclick="addNumber('3')">
-                            3
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('+')"
-                        >
-                            +
-                        </button>
-
-
-                        <button
-                            class="zero"
-                            onclick="addNumber('0')"
-                        >
-                            0
-                        </button>
-
-
-                        <button onclick="addNumber('.')">
-                            .
-                        </button>
-
-
-                        <button
-                            class="equal"
-                            onclick="calculate()"
-                        >
-                            =
-                        </button>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =========================================
-                     SCIENTIFIC
-                ========================================== -->
-
-                <section
-                    id="scientific-mode"
-                    class="calculator-mode"
-                >
-
-                    <div class="buttons scientific-buttons">
-
-
-                        <button
-                            class="special"
-                            onclick="squareRoot()"
-                        >
-                            √
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="squareNumber()"
-                        >
-                            x²
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="powerNumber()"
-                        >
-                            xʸ
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="inverseNumber()"
-                        >
-                            1/x
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="sinNumber()"
-                        >
-                            sin
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="cosNumber()"
-                        >
-                            cos
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="tanNumber()"
-                        >
-                            tan
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="factorialNumber()"
-                        >
-                            x!
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="asinNumber()"
-                        >
-                            asin
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="acosNumber()"
-                        >
-                            acos
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="atanNumber()"
-                        >
-                            atan
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="absoluteNumber()"
-                        >
-                            abs
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="logNumber()"
-                        >
-                            log
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="lnNumber()"
-                        >
-                            ln
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="exponentialNumber()"
-                        >
-                            eˣ
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="tenPowerNumber()"
-                        >
-                            10ˣ
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="addPi()"
-                        >
-                            π
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="addE()"
-                        >
-                            e
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="addPhi()"
-                        >
-                            φ
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="randomNumber()"
-                        >
-                            RND
-                        </button>
-
-
-                        <button
-                            class="clear-btn"
-                            onclick="clearDisplay()"
-                        >
-                            AC
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="deleteNumber()"
-                        >
-                            DEL
-                        </button>
-
-
-                        <button
-                            class="special"
-                            onclick="plusMinus()"
-                        >
-                            ±
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('%')"
-                        >
-                            %
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('/')"
-                        >
-                            ÷
-                        </button>
-
-
-                        <button onclick="addNumber('7')">
-                            7
-                        </button>
-
-
-                        <button onclick="addNumber('8')">
-                            8
-                        </button>
-
-
-                        <button onclick="addNumber('9')">
-                            9
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('*')"
-                        >
-                            ×
-                        </button>
-
-
-                        <button onclick="addNumber('4')">
-                            4
-                        </button>
-
-
-                        <button onclick="addNumber('5')">
-                            5
-                        </button>
-
-
-                        <button onclick="addNumber('6')">
-                            6
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('-')"
-                        >
-                            −
-                        </button>
-
-
-                        <button onclick="addNumber('1')">
-                            1
-                        </button>
-
-
-                        <button onclick="addNumber('2')">
-                            2
-                        </button>
-
-
-                        <button onclick="addNumber('3')">
-                            3
-                        </button>
-
-
-                        <button
-                            class="operator"
-                            onclick="addNumber('+')"
-                        >
-                            +
-                        </button>
-
-
-                        <button
-                            class="zero"
-                            onclick="addNumber('0')"
-                        >
-                            0
-                        </button>
-
-
-                        <button onclick="addNumber('.')">
-                            .
-                        </button>
-
-
-                        <button
-                            class="equal"
-                            onclick="calculate()"
-                        >
-                            =
-                        </button>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =========================================
-                     PROGRAMMER
-                ========================================== -->
-
-                <section
-                    id="programmer-mode"
-                    class="calculator-mode"
-                >
-
-                    <div class="programmer-display">
-
-                        <div>
-                            <span>DEC</span>
-                            <strong id="programmer-dec">
-                                0
-                            </strong>
-                        </div>
-
-
-                        <div>
-                            <span>BIN</span>
-                            <strong id="programmer-bin">
-                                0
-                            </strong>
-                        </div>
-
-
-                        <div>
-                            <span>HEX</span>
-                            <strong id="programmer-hex">
-                                0
-                            </strong>
-                        </div>
-
-
-                        <div>
-                            <span>OCT</span>
-                            <strong id="programmer-oct">
-                                0
-                            </strong>
-                        </div>
-
-                    </div>
-
-
-                    <input
-                        type="number"
-                        id="programmer-input"
-                        value="0"
-                        oninput="updateProgrammer()"
-                    >
-
-
-                    <div class="programmer-buttons">
-
-                        <button
-                            onclick="programmerOperation('AND')"
-                        >
-                            AND
-                        </button>
-
-
-                        <button
-                            onclick="programmerOperation('OR')"
-                        >
-                            OR
-                        </button>
-
-
-                        <button
-                            onclick="programmerOperation('XOR')"
-                        >
-                            XOR
-                        </button>
-
-
-                        <button
-                            onclick="programmerNOT()"
-                        >
-                            NOT
-                        </button>
-
-
-                        <button
-                            onclick="programmerShift('left')"
-                        >
-                            SHIFT LEFT
-                        </button>
-
-
-                        <button
-                            onclick="programmerShift('right')"
-                        >
-                            SHIFT RIGHT
-                        </button>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =========================================
-                     CONVERTER
-                ========================================== -->
-
-                <section
-                    id="converter-mode"
-                    class="calculator-mode"
-                >
-
-                    <div class="converter-box">
-
-                        <label>
-                            Jenis Converter
-                        </label>
-
-
-                        <select
-                            id="converter-type"
-                            onchange="changeConverter()"
-                        >
-
-                            <option value="length">
-                                Panjang
-                            </option>
-
-                            <option value="weight">
-                                Berat
-                            </option>
-
-                            <option value="temperature">
-                                Suhu
-                            </option>
-
-                            <option value="area">
-                                Luas
-                            </option>
-
-                            <option value="volume">
-                                Volume
-                            </option>
-
-                            <option value="time">
-                                Waktu
-                            </option>
-
-                            <option value="speed">
-                                Kecepatan
-                            </option>
-
-                            <option value="data">
-                                Data Digital
-                            </option>
-
-                            <option value="energy">
-                                Energi
-                            </option>
-
-                        </select>
-
-
-                        <div class="converter-inputs">
-
-                            <div>
-
-                                <label>
-                                    Dari
-                                </label>
-
-
-                                <input
-                                    type="number"
-                                    id="convert-value"
-                                    value="1"
-                                    oninput="convertValue()"
-                                >
-
-
-                                <select
-                                    id="from-unit"
-                                    onchange="convertValue()"
-                                ></select>
-
-                            </div>
-
-
-                            <div class="convert-arrow">
-                                ⇄
-                            </div>
-
-
-                            <div>
-
-                                <label>
-                                    Ke
-                                </label>
-
-
-                                <input
-                                    type="text"
-                                    id="convert-result"
-                                    readonly
-                                >
-
-
-                                <select
-                                    id="to-unit"
-                                    onchange="convertValue()"
-                                ></select>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =========================================
-                     KNIGHT STATUS
-                ========================================== -->
-
-                <div class="knight-status">
-
-                    <span>
-                        ⚔ KNIGHT CALCULATOR
-                    </span>
-
-
-                    <span id="knight-message">
-                        CALCULATION MODE: ACTIVE
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- =============================================
-                 HISTORY
-            ============================================== -->
-
-            <aside class="history-panel">
-
-                <div class="history-title">
-
-                    <h2>
-                        ⚔️ ADVENTURE HISTORY
-                    </h2>
-
-
-                    <button onclick="clearHistory()">
-                        CLEAR
-                    </button>
-
-                </div>
-
-
-                <div id="history-list">
-
-                    <div class="empty-history">
-                        Belum ada petualangan...
-                    </div>
-
-                </div>
-
-            </aside>
+            </button>
 
         </div>
 
-    </main>
+    </div>
 
 
-    <!-- =====================================================
-         TEAM
-    ====================================================== -->
+    <!-- =================================================
+         PAUSE
+    ================================================== -->
 
-    <section class="team-section">
+    <div
+        class="modal"
+        id="pauseModal">
 
-        <h2>
-            TEAM PROJECT
-        </h2>
+        <div class="modal-box">
 
+            <h2 class="pause-title">
+                ⏸ GAME PAUSED
+            </h2>
 
-        <div class="team-list">
+            <button
+                class="modal-button"
+                onclick="resumeGame()">
 
-            <div class="member">
-                <span>01</span>
-                Finsa Dwi W.T
-            </div>
+                ▶ Lanjutkan
 
+            </button>
 
-            <div class="member">
-                <span>02</span>
-                Talitha Nur S
-            </div>
+            <button
+                class="modal-button"
+                onclick="openSettings()">
 
+                ⚙ Pengaturan
 
-            <div class="member">
-                <span>03</span>
-                Nazwa Agustina R
-            </div>
+            </button>
 
+            <button
+                class="modal-button"
+                onclick="exitGame()">
 
-            <div class="member">
-                <span>04</span>
-                Aulia Putri M
-            </div>
+                🚪 Exit ke Lobby
+
+            </button>
 
         </div>
 
-    </section>
+    </div>
 
 
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
+    <!-- =================================================
+         SETTINGS
+    ================================================== -->
 
-    <footer>
+    <div
+        class="modal"
+        id="settingsModal">
 
-        <strong>
-            CUBES ADVENTURE KNIGHT
-        </strong>
+        <div class="modal-box">
 
-        <br>
+            <h2>⚙ Pengaturan</h2>
 
-        Futuristic Calculator
+            <div class="setting">
 
-        <br>
+                <label>
+                    Tingkat Kesulitan
+                </label>
 
-        <small>
-            SMKN 1 SANDEN • RPL
-        </small>
+                <select id="difficulty">
 
-    </footer>
+                    <option value="easy">
+                        Easy
+                    </option>
+
+                    <option
+                        value="normal"
+                        selected>
+                        Normal
+                    </option>
+
+                    <option value="hard">
+                        Hard
+                    </option>
+
+                </select>
+
+            </div>
 
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
+            <div class="setting">
 
-    <script src="script.js"></script>
+                <label>
+                    Subtitle
+                </label>
+
+                <input
+                    type="checkbox"
+                    id="subtitleToggle"
+                    checked>
+
+                Aktif
+
+            </div>
+
+
+            <div class="setting">
+
+                <label>
+                    Colorblind Mode
+                </label>
+
+                <input
+                    type="checkbox"
+                    id="colorblindToggle">
+
+                Aktif
+
+            </div>
+
+
+            <div class="setting">
+
+                <label>
+                    Ukuran teks
+                </label>
+
+                <input
+                    type="checkbox"
+                    id="largeTextToggle">
+
+                Teks besar
+
+            </div>
+
+
+            <button
+                class="modal-button"
+                onclick="applySettings()">
+
+                Simpan Pengaturan
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GAME VARIABLES
+===================================================== */
+
+const player =
+    document.getElementById("player");
+
+const enemy =
+    document.getElementById("enemy");
+
+const hpFill =
+    document.getElementById("hpFill");
+
+const hpText =
+    document.getElementById("hpText");
+
+const scoreText =
+    document.getElementById("score");
+
+const diamondText =
+    document.getElementById("diamond");
+
+const attackEffect =
+    document.getElementById("attackEffect");
+
+const subtitle =
+    document.getElementById("subtitle");
+
+let x = window.innerWidth * .60;
+let y = window.innerHeight * .52;
+
+let hp = 64;
+let score = 20;
+let diamond = 2;
+
+let speed = 6;
+let paused = true;
+let gameStarted = false;
+
+const keys = {};
+
+
+/* =====================================================
+   UPDATE PLAYER
+===================================================== */
+
+function updatePlayer() {
+
+    player.style.left = x + "px";
+    player.style.top = y + "px";
+
+}
+
+
+/* =====================================================
+   KEYBOARD CONTROL
+   UX1
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(e) {
+
+        if (e.code === "Space") {
+
+            e.preventDefault();
+
+            attack();
+
+            return;
+        }
+
+        if (e.code === "Escape") {
+
+            if (gameStarted) {
+
+                togglePause();
+
+            }
+
+            return;
+        }
+
+        keys[e.key.toLowerCase()] = true;
+
+    }
+);
+
+
+document.addEventListener(
+    "keyup",
+    function(e) {
+
+        keys[e.key.toLowerCase()] = false;
+
+    }
+);
+
+
+/* =====================================================
+   GAME LOOP
+===================================================== */
+
+function gameLoop() {
+
+    if (
+        !paused &&
+        gameStarted
+    ) {
+
+        if (
+            keys["w"] ||
+            keys["arrowup"]
+        ) {
+
+            y -= speed;
+
+        }
+
+        if (
+            keys["s"] ||
+            keys["arrowdown"]
+        ) {
+
+            y += speed;
+
+        }
+
+        if (
+            keys["a"] ||
+            keys["arrowleft"]
+        ) {
+
+            x -= speed;
+
+        }
+
+        if (
+            keys["d"] ||
+            keys["arrowright"]
+        ) {
+
+            x += speed;
+
+        }
+
+
+        /* batas arena */
+
+        x = Math.max(
+            0,
+            Math.min(
+                window.innerWidth - 60,
+                x
+            )
+        );
+
+        y = Math.max(
+            0,
+            Math.min(
+                window.innerHeight - 60,
+                y
+            )
+        );
+
+
+        updatePlayer();
+
+    }
+
+    requestAnimationFrame(gameLoop);
+
+}
+
+gameLoop();
+
+
+/* =====================================================
+   TOUCH CONTROL
+   UX1
+===================================================== */
+
+document
+.querySelectorAll(".control")
+.forEach(button => {
+
+    const key =
+        button.dataset.key;
+
+    button.addEventListener(
+        "mousedown",
+        () => {
+
+            keys[key] = true;
+
+        }
+    );
+
+    button.addEventListener(
+        "mouseup",
+        () => {
+
+            keys[key] = false;
+
+        }
+    );
+
+    button.addEventListener(
+        "mouseleave",
+        () => {
+
+            keys[key] = false;
+
+        }
+    );
+
+    button.addEventListener(
+        "touchstart",
+        e => {
+
+            e.preventDefault();
+
+            keys[key] = true;
+
+        }
+    );
+
+    button.addEventListener(
+        "touchend",
+        e => {
+
+            e.preventDefault();
+
+            keys[key] = false;
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+   ATTACK
+   UX2 - FEEDBACK INTERAKTIF
+===================================================== */
+
+function attack() {
+
+    if (
+        paused ||
+        !gameStarted
+    ) {
+
+        return;
+
+    }
+
+
+    /* visual feedback */
+
+    attackEffect.classList.remove(
+        "active"
+    );
+
+    void attackEffect.offsetWidth;
+
+    const rect =
+        player.getBoundingClientRect();
+
+    attackEffect.style.left =
+        (rect.left + 30) + "px";
+
+    attackEffect.style.top =
+        (rect.top + 30) + "px";
+
+    attackEffect.classList.add(
+        "active"
+    );
+
+
+    /* subtitle */
+
+    showSubtitle(
+        "⚔ Serangan dilakukan!"
+    );
+
+
+    /* score */
+
+    score += 5;
+
+    scoreText.textContent =
+        score;
+
+
+    /* hit detection */
+
+    const enemyRect =
+        enemy.getBoundingClientRect();
+
+    const dx =
+        rect.left -
+        enemyRect.left;
+
+    const dy =
+        rect.top -
+        enemyRect.top;
+
+    const distance =
+        Math.sqrt(
+            dx * dx +
+            dy * dy
+        );
+
+
+    if (distance < 160) {
+
+        enemy.style.transform =
+            "scale(.65)";
+
+        enemy.style.opacity =
+            ".5";
+
+        showSubtitle(
+            "💥 Musuh terkena serangan!"
+        );
+
+
+        setTimeout(() => {
+
+            enemy.style.transform =
+                "scale(1)";
+
+            enemy.style.opacity =
+                "1";
+
+        }, 200);
+
+    }
+
+}
+
+
+/* =====================================================
+   ATTACK BUTTON
+===================================================== */
+
+document
+.getElementById("attackButton")
+.addEventListener(
+    "click",
+    attack
+);
+
+
+/* =====================================================
+   ONBOARDING
+   UX3
+===================================================== */
+
+function startGame() {
+
+    document
+    .getElementById("tutorial")
+    .classList.remove("active");
+
+    gameStarted = true;
+    paused = false;
+
+    showSubtitle(
+        "🎮 Gunakan WASD / Arrow untuk bergerak"
+    );
+
+}
+
+
+/* =====================================================
+   SUBTITLE
+   UX2 / ACCESSIBILITY
+===================================================== */
+
+function showSubtitle(text) {
+
+    const enabled =
+        document
+        .getElementById("subtitleToggle")
+        ?.checked !== false;
+
+    if (!enabled) return;
+
+    subtitle.textContent = text;
+
+    subtitle.classList.add("show");
+
+    setTimeout(() => {
+
+        subtitle.classList.remove(
+            "show"
+        );
+
+    }, 2000);
+
+}
+
+
+/* =====================================================
+   PAUSE
+   UX2
+===================================================== */
+
+function togglePause() {
+
+    if (!gameStarted) return;
+
+    paused = !paused;
+
+    document
+    .getElementById("pauseModal")
+    .classList.toggle(
+        "active",
+        paused
+    );
+
+}
+
+
+function resumeGame() {
+
+    paused = false;
+
+    document
+    .getElementById("pauseModal")
+    .classList.remove(
+        "active"
+    );
+
+}
+
+
+/* =====================================================
+   EXIT
+   FLOW GAME
+===================================================== */
+
+function exitGame() {
+
+    paused = true;
+
+    gameStarted = false;
+
+    document
+    .getElementById("pauseModal")
+    .classList.remove(
+        "active"
+    );
+
+    document
+    .getElementById("tutorial")
+    .classList.add(
+        "active"
+    );
+
+}
+
+
+/* =====================================================
+   MENU MODAL
+===================================================== */
+
+function openModal(type) {
+
+    const modal =
+        document.getElementById(
+            "generalModal"
+        );
+
+    const title =
+        document.getElementById(
+            "modalTitle"
+        );
+
+    const content =
+        document.getElementById(
+            "modalContent"
+        );
+
+
+    if (type === "lobby") {
+
+        title.textContent =
+            "🏠 Lobby";
+
+        content.innerHTML =
+            "<p>Selamat datang kembali, Knight!</p>";
+
+    }
+
+
+    if (type === "players") {
+
+        title.textContent =
+            "👥 Players";
+
+        content.innerHTML =
+            "<p>🟢 Knight Player</p>" +
+            "<p>🟢 Shadow Knight</p>" +
+            "<p>🟢 Red Cube</p>" +
+            "<p>🟢 Blue Cube</p>";
+
+    }
+
+
+    if (type === "chat") {
+
+        title.textContent =
+            "💬 Chat";
+
+        content.innerHTML =
+            "<p>💬 Welcome to the arena!</p>" +
+            "<p>💬 Good luck, Knight!</p>";
+
+    }
+
+
+    if (type === "rank") {
+
+        title.textContent =
+            "🏆 Rank";
+
+        content.innerHTML =
+            "<p>🥇 Knight — 1200</p>" +
+            "<p>🥈 Shadow — 980</p>" +
+            "<p>🥉 Cube — 850</p>";
+
+    }
+
+
+    if (type === "match") {
+
+        title.textContent =
+            "🎯 Match";
+
+        content.innerHTML =
+            "<p>Match sedang berlangsung.</p>";
+
+    }
+
+
+    modal.classList.add("active");
+
+}
+
+
+function closeModal() {
+
+    document
+    .getElementById(
+        "generalModal"
+    )
+    .classList.remove(
+        "active"
+    );
+
+}
+
+
+/* =====================================================
+   SETTINGS
+   UX2 ACCESSIBILITY
+===================================================== */
+
+function openSettings() {
+
+    document
+    .getElementById("pauseModal")
+    .classList.remove(
+        "active"
+    );
+
+    document
+    .getElementById("settingsModal")
+    .classList.add(
+        "active"
+    );
+
+}
+
+
+function applySettings() {
+
+    const difficulty =
+        document
+        .getElementById("difficulty")
+        .value;
+
+
+    /* adjustable difficulty */
+
+    if (difficulty === "easy") {
+
+        speed = 4;
+
+    }
+
+    if (difficulty === "normal") {
+
+        speed = 6;
+
+    }
+
+    if (difficulty === "hard") {
+
+        speed = 9;
+
+    }
+
+
+    /* colorblind */
+
+    const colorblind =
+        document
+        .getElementById(
+            "colorblindToggle"
+        ).checked;
+
+    document.body.classList.toggle(
+        "colorblind",
+        colorblind
+    );
+
+
+    /* large text */
+
+    const largeText =
+        document
+        .getElementById(
+            "largeTextToggle"
+        ).checked;
+
+    document.body.classList.toggle(
+        "large-text",
+        largeText
+    );
+
+
+    /* subtitle */
+
+    const subtitleOn =
+        document
+        .getElementById(
+            "subtitleToggle"
+        ).checked;
+
+    if (subtitleOn) {
+
+        showSubtitle(
+            "⚙ Pengaturan berhasil diterapkan"
+        );
+
+    }
+
+
+    document
+    .getElementById("settingsModal")
+    .classList.remove(
+        "active"
+    );
+
+
+    if (gameStarted) {
+
+        document
+        .getElementById("pauseModal")
+        .classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    updatePlayer
+);
+
+</script>
 
 </body>
-
 </html>
