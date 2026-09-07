@@ -1,941 +1,436 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="description"
-          content="Cubes Adventure Knight Futuristic Calculator">
-
-    <title>Cubes Adventure Knight</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cubes Adventure Knight Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- =========================
-         MAIN WORLD
-    ========================== -->
+<div class="app">
 
-    <div class="world">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-cube">◆</div>
+            <div>
+                <h1>CUBES ADVENTURE</h1>
+                <p>KNIGHT CALCULATOR</p>
+            </div>
+        </div>
 
-        <!-- Background -->
-        <div class="grid-background"></div>
-        <div id="particles"></div>
-        <div id="floatingCubes"></div>
+        <div class="header-buttons">
+            <button id="soundBtn">🔇</button>
+            <button id="themeBtn">☀</button>
+            <button id="settingsBtn">⚙</button>
+        </div>
+    </header>
 
 
-        <!-- =========================
-             HEADER
-        ========================== -->
+    <!-- MAIN -->
+    <main>
 
-        <header class="topbar">
+        <!-- CALCULATOR CARD -->
+        <section class="calculator">
 
-            <div class="brand">
+            <div class="calculator-top">
 
-                <div class="logo-cube">
-                    ◆
-                </div>
-
-                <div class="brand-text">
-
-                    <h1>
-                        CUBES ADVENTURE
-                    </h1>
-
-                    <span>
-                        KNIGHT // FUTURISTIC CALCULATOR
+                <div>
+                    <span class="small-title">
+                        FUTURISTIC MATH CORE
                     </span>
 
+                    <h2>Cubes Calculator</h2>
+                </div>
+
+                <select id="mode">
+                    <option value="basic">BASIC</option>
+                    <option value="scientific">SCIENTIFIC</option>
+                </select>
+
+            </div>
+
+
+            <!-- DISPLAY -->
+            <div class="display">
+
+                <div id="expression">
+                    Ready for your quest
+                </div>
+
+                <div id="result">
+                    0
                 </div>
 
             </div>
 
 
-            <div class="header-actions">
+            <!-- MEMORY -->
+            <div class="memory">
 
-                <button
-                    id="soundButton"
-                    class="icon-button"
-                    aria-label="Toggle sound">
-                    🔇
+                <button onclick="memoryClear()">MC</button>
+                <button onclick="memoryRecall()">MR</button>
+                <button onclick="memoryAdd()">M+</button>
+                <button onclick="memorySubtract()">M-</button>
+                <button onclick="memoryStore()">MS</button>
+
+                <button onclick="showHistory()">
+                    HISTORY
                 </button>
 
-                <button
-                    id="themeButton"
-                    class="icon-button"
-                    aria-label="Toggle theme">
-                    ☀️
+                <span id="memoryStatus"></span>
+
+            </div>
+
+
+            <!-- SCIENTIFIC -->
+            <div id="scientific" class="scientific hidden">
+
+                <button onclick="scientificCalc('sqrt')">√</button>
+                <button onclick="scientificCalc('square')">x²</button>
+                <button onclick="scientificCalc('inverse')">1/x</button>
+
+                <button onclick="scientificCalc('sin')">
+                    sin
                 </button>
 
-                <button
-                    id="settingsButton"
-                    class="icon-button"
-                    aria-label="Open settings">
-                    ⚙
+                <button onclick="scientificCalc('cos')">
+                    cos
+                </button>
+
+                <button onclick="scientificCalc('tan')">
+                    tan
+                </button>
+
+                <button onclick="scientificCalc('asin')">
+                    asin
+                </button>
+
+                <button onclick="scientificCalc('acos')">
+                    acos
+                </button>
+
+                <button onclick="scientificCalc('atan')">
+                    atan
+                </button>
+
+                <button onclick="scientificCalc('log')">
+                    log
+                </button>
+
+                <button onclick="scientificCalc('ln')">
+                    ln
+                </button>
+
+                <button onclick="scientificCalc('exp')">
+                    eˣ
+                </button>
+
+                <button onclick="scientificCalc('10x')">
+                    10ˣ
+                </button>
+
+                <button onclick="scientificCalc('pi')">
+                    π
+                </button>
+
+                <button onclick="scientificCalc('e')">
+                    e
+                </button>
+
+                <button onclick="scientificCalc('phi')">
+                    φ
+                </button>
+
+                <button onclick="scientificCalc('factorial')">
+                    n!
+                </button>
+
+                <button onclick="scientificCalc('abs')">
+                    abs
+                </button>
+
+                <button onclick="scientificCalc('random')">
+                    RND
                 </button>
 
             </div>
 
-        </header>
+
+            <!-- KEYPAD -->
+            <div class="keypad">
+
+                <button class="danger" onclick="clearCalculator()">
+                    AC
+                </button>
+
+                <button class="danger" onclick="backspace()">
+                    ⌫
+                </button>
+
+                <button class="danger" onclick="percentage()">
+                    %
+                </button>
+
+                <button class="operator" onclick="operatorInput('/')">
+                    ÷
+                </button>
 
 
+                <button onclick="numberInput('7')">
+                    7
+                </button>
 
-        <!-- =========================
-             MAIN CONTENT
-        ========================== -->
+                <button onclick="numberInput('8')">
+                    8
+                </button>
 
-        <main class="main-layout">
+                <button onclick="numberInput('9')">
+                    9
+                </button>
+
+                <button class="operator" onclick="operatorInput('*')">
+                    ×
+                </button>
 
 
-            <!-- =========================
-                 CUBE KNIGHT PANEL
-            ========================== -->
+                <button onclick="numberInput('4')">
+                    4
+                </button>
 
-            <aside class="adventure-panel glass-panel">
+                <button onclick="numberInput('5')">
+                    5
+                </button>
 
-                <div class="panel-label">
-                    ADVENTURE SYSTEM
+                <button onclick="numberInput('6')">
+                    6
+                </button>
+
+                <button class="operator" onclick="operatorInput('-')">
+                    −
+                </button>
+
+
+                <button onclick="numberInput('1')">
+                    1
+                </button>
+
+                <button onclick="numberInput('2')">
+                    2
+                </button>
+
+                <button onclick="numberInput('3')">
+                    3
+                </button>
+
+                <button class="operator" onclick="operatorInput('+')">
+                    +
+                </button>
+
+
+                <button class="zero" onclick="numberInput('0')">
+                    0
+                </button>
+
+                <button onclick="numberInput('.')">
+                    .
+                </button>
+
+                <button onclick="negative()">
+                    ±
+                </button>
+
+                <button class="equal" onclick="calculate()">
+                    =
+                </button>
+
+            </div>
+
+
+            <div class="status">
+                <span>⌨ Keyboard Ready</span>
+                <span>● SYSTEM ONLINE</span>
+            </div>
+
+        </section>
+
+
+        <!-- KNIGHT PANEL -->
+        <aside class="knight-panel">
+
+            <div class="knight-art">
+                <div class="helmet">
+                    <div class="eyes">◆ ◆</div>
                 </div>
 
-
-                <!-- Cube Knight -->
-
-                <div class="cube-knight">
-
-                    <div class="helmet">
-
-                        <div class="helmet-horn"></div>
-
-                        <div class="helmet-face">
-
-                            <span class="eye">
-                                ◆
-                            </span>
-
-                            <span class="eye">
-                                ◆
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="knight-body">
-
-                        <div class="shoulder left"></div>
-
-                        <div class="armor-core">
-                            ◈
-                        </div>
-
-                        <div class="shoulder right"></div>
-
-                    </div>
-
-
-                    <div class="shield">
-                        ⬟
-                    </div>
-
-
-                    <div class="sword">
-                        ⚔
-                    </div>
-
+                <div class="armor">
+                    ◈
                 </div>
 
-
-                <!-- Knight Information -->
-
-                <div class="knight-info">
-
-                    <small>
-                        GUARDIAN OF NUMBERS
-                    </small>
-
-                    <h2>
-                        Cube Knight
-                    </h2>
-
-                    <p id="knightMessage">
-                        Calculation ready!
-                    </p>
-
+                <div class="shield">
+                    ⬟
                 </div>
 
+                <div class="sword">
+                    ⚔
+                </div>
+            </div>
 
-                <!-- Level -->
+            <p class="guardian">
+                GUARDIAN OF NUMBERS
+            </p>
 
-                <div class="level-card">
+            <h2>Cube Knight</h2>
 
-                    <div class="level-header">
-
-                        <span>
-                            KNIGHT LEVEL
-                        </span>
-
-                        <strong id="level">
-                            01
-                        </strong>
-
-                    </div>
+            <p id="knightMessage">
+                Calculation ready!
+            </p>
 
 
-                    <div
-                        class="rank-name"
-                        id="rankName">
+            <div class="level-box">
 
-                        Novice Knight
-
-                    </div>
-
-
-                    <div class="xp-container">
-
-                        <div
-                            class="xp-progress"
-                            id="xpProgress">
-                        </div>
-
-                    </div>
-
-
-                    <div
-                        class="xp-text"
-                        id="xpText">
-
-                        0 / 100 XP
-
-                    </div>
-
+                <div class="level-title">
+                    <span>KNIGHT LEVEL</span>
+                    <strong id="level">01</strong>
                 </div>
 
+                <h3 id="rank">
+                    Novice Knight
+                </h3>
 
-                <!-- Achievement -->
-
-                <div class="achievement-summary">
-
-                    <span class="achievement-icon">
-                        🏆
-                    </span>
-
-                    <div>
-
-                        <strong
-                            id="achievementCount">
-
-                            0
-
-                        </strong>
-
-                        <small>
-                            achievements unlocked
-                        </small>
-
-                    </div>
-
+                <div class="xp-background">
+                    <div id="xpBar"></div>
                 </div>
 
-            </aside>
+                <small id="xpText">
+                    0 / 100 XP
+                </small>
+
+            </div>
 
 
+            <div class="achievement">
 
-            <!-- =========================
-                 CALCULATOR
-            ========================== -->
+                🏆
 
-            <section class="calculator glass-panel">
-
-
-                <!-- Calculator Header -->
-
-                <div class="calculator-header">
-
-                    <div>
-
-                        <span class="eyebrow">
-                            FUTURISTIC MATH CORE
-                        </span>
-
-                        <h2>
-                            Cubes Calculator
-                        </h2>
-
-                    </div>
-
-
-                    <!-- Calculator Mode -->
-
-                    <select
-                        id="calculatorMode"
-                        aria-label="Calculator mode">
-
-                        <option value="basic">
-                            BASIC
-                        </option>
-
-                        <option value="scientific">
-                            SCIENTIFIC
-                        </option>
-
-                        <option value="programmer">
-                            PROGRAMMER
-                        </option>
-
-                        <option value="converter">
-                            CONVERTER
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-
-                <!-- =========================
-                     DISPLAY
-                ========================== -->
-
-                <div class="calculator-display">
-
-                    <div
-                        id="expression"
-                        class="expression">
-
-                        Ready for your quest
-
-                    </div>
-
-
-                    <div
-                        id="display"
-                        class="result">
-
+                <div>
+                    <strong id="achievementCount">
                         0
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =========================
-                     MEMORY
-                ========================== -->
-
-                <div class="memory-controls">
-
-                    <button
-                        data-memory="mc">
-                        MC
-                    </button>
-
-                    <button
-                        data-memory="mr">
-                        MR
-                    </button>
-
-                    <button
-                        data-memory="mplus">
-                        M+
-                    </button>
-
-                    <button
-                        data-memory="mminus">
-                        M-
-                    </button>
-
-                    <button
-                        data-memory="ms">
-                        MS
-                    </button>
-
-                    <button
-                        id="historyButton">
-                        HISTORY
-                    </button>
-
-                    <span
-                        id="memoryIndicator">
-                    </span>
-
-                </div>
-
-
-
-                <!-- =========================
-                     SCIENTIFIC PANEL
-                ========================== -->
-
-                <div
-                    id="scientificPanel"
-                    class="function-panel hidden">
-
-                    <button data-scientific="sqrt">
-                        √
-                    </button>
-
-                    <button data-scientific="square">
-                        x²
-                    </button>
-
-                    <button data-scientific="power">
-                        xʸ
-                    </button>
-
-                    <button data-scientific="reciprocal">
-                        1/x
-                    </button>
-
-                    <button data-scientific="sin">
-                        sin
-                    </button>
-
-                    <button data-scientific="cos">
-                        cos
-                    </button>
-
-                    <button data-scientific="tan">
-                        tan
-                    </button>
-
-                    <button data-scientific="asin">
-                        asin
-                    </button>
-
-                    <button data-scientific="acos">
-                        acos
-                    </button>
-
-                    <button data-scientific="atan">
-                        atan
-                    </button>
-
-                    <button data-scientific="log">
-                        log
-                    </button>
-
-                    <button data-scientific="ln">
-                        ln
-                    </button>
-
-                    <button data-scientific="exp">
-                        eˣ
-                    </button>
-
-                    <button data-scientific="tenpower">
-                        10ˣ
-                    </button>
-
-                    <button data-scientific="pi">
-                        π
-                    </button>
-
-                    <button data-scientific="e">
-                        e
-                    </button>
-
-                    <button data-scientific="phi">
-                        φ
-                    </button>
-
-                    <button data-scientific="factorial">
-                        n!
-                    </button>
-
-                    <button data-scientific="absolute">
-                        abs
-                    </button>
-
-                    <button data-scientific="random">
-                        RND
-                    </button>
-
-                </div>
-
-
-
-                <!-- =========================
-                     PROGRAMMER PANEL
-                ========================== -->
-
-                <div
-                    id="programmerPanel"
-                    class="function-panel hidden">
-
-                    <button data-programmer="BIN">
-                        BIN
-                    </button>
-
-                    <button data-programmer="DEC">
-                        DEC
-                    </button>
-
-                    <button data-programmer="HEX">
-                        HEX
-                    </button>
-
-                    <button data-programmer="OCT">
-                        OCT
-                    </button>
-
-                    <button data-programmer="AND">
-                        AND
-                    </button>
-
-                    <button data-programmer="OR">
-                        OR
-                    </button>
-
-                    <button data-programmer="XOR">
-                        XOR
-                    </button>
-
-                    <button data-programmer="NOT">
-                        NOT
-                    </button>
-
-                    <button data-programmer="LEFT">
-                        SHIFT ←
-                    </button>
-
-                    <button data-programmer="RIGHT">
-                        SHIFT →
-                    </button>
-
-                </div>
-
-
-
-                <!-- =========================
-                     CONVERTER PANEL
-                ========================== -->
-
-                <div
-                    id="converterPanel"
-                    class="converter-panel hidden">
-
-                    <select id="converterType">
-
-                        <option value="length">
-                            Length
-                        </option>
-
-                        <option value="weight">
-                            Weight
-                        </option>
-
-                        <option value="temperature">
-                            Temperature
-                        </option>
-
-                        <option value="area">
-                            Area
-                        </option>
-
-                        <option value="volume">
-                            Volume
-                        </option>
-
-                        <option value="time">
-                            Time
-                        </option>
-
-                        <option value="speed">
-                            Speed
-                        </option>
-
-                        <option value="data">
-                            Digital Data
-                        </option>
-
-                        <option value="energy">
-                            Energy
-                        </option>
-
-                    </select>
-
-
-                    <input
-                        id="converterInput"
-                        type="number"
-                        value="1"
-                        aria-label="Converter value">
-
-
-                    <select
-                        id="converterFrom">
-                    </select>
-
-
-                    <select
-                        id="converterTo">
-                    </select>
-
-
-                    <button
-                        id="convertButton">
-
-                        CONVERT
-
-                    </button>
-
-
-                    <div
-                        id="converterResult">
-
-                        —
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =========================
-                     NUMERIC KEYPAD
-                ========================== -->
-
-                <div
-                    id="keypad"
-                    class="keypad">
-
-
-                    <button
-                        class="special"
-                        data-action="clear">
-                        AC
-                    </button>
-
-                    <button
-                        class="special"
-                        data-action="backspace">
-                        ⌫
-                    </button>
-
-                    <button
-                        class="special"
-                        data-action="percent">
-                        %
-                    </button>
-
-                    <button
-                        class="operator"
-                        data-operator="/">
-                        ÷
-                    </button>
-
-
-                    <button data-number="7">
-                        7
-                    </button>
-
-                    <button data-number="8">
-                        8
-                    </button>
-
-                    <button data-number="9">
-                        9
-                    </button>
-
-                    <button
-                        class="operator"
-                        data-operator="*">
-                        ×
-                    </button>
-
-
-                    <button data-number="4">
-                        4
-                    </button>
-
-                    <button data-number="5">
-                        5
-                    </button>
-
-                    <button data-number="6">
-                        6
-                    </button>
-
-                    <button
-                        class="operator"
-                        data-operator="-">
-                        −
-                    </button>
-
-
-                    <button data-number="1">
-                        1
-                    </button>
-
-                    <button data-number="2">
-                        2
-                    </button>
-
-                    <button data-number="3">
-                        3
-                    </button>
-
-                    <button
-                        class="operator"
-                        data-operator="+">
-                        +
-                    </button>
-
-
-                    <button
-                        class="zero"
-                        data-number="0">
-                        0
-                    </button>
-
-                    <button data-number=".">
-                        .
-                    </button>
-
-                    <button data-action="sign">
-                        ±
-                    </button>
-
-                    <button
-                        class="equal"
-                        data-action="equals">
-                        =
-                    </button>
-
-                </div>
-
-
-
-                <!-- =========================
-                     STATUS
-                ========================== -->
-
-                <div class="calculator-status">
+                    </strong>
 
                     <span>
-                        ⌨ Keyboard Ready
+                        achievements unlocked
                     </span>
-
-                    <span id="systemStatus">
-                        SYSTEM ONLINE
-                    </span>
-
                 </div>
 
-            </section>
+            </div>
 
-        </main>
+        </aside>
 
-
-
-        <!-- =========================
-             HISTORY MODAL
-        ========================== -->
-
-        <div
-            id="historyModal"
-            class="modal">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h2>
-                        ⚔ Adventure History
-                    </h2>
-
-                    <button
-                        data-close="historyModal">
-                        ×
-                    </button>
-
-                </div>
+    </main>
 
 
-                <div id="historyList">
-                </div>
+    <!-- HISTORY MODAL -->
+    <div id="historyModal" class="modal">
 
+        <div class="modal-box">
 
-                <button
-                    id="deleteAllHistory"
-                    class="danger-button">
+            <div class="modal-header">
 
-                    DELETE ALL HISTORY
+                <h2>
+                    ⚔ Adventure History
+                </h2>
 
+                <button onclick="closeHistory()">
+                    ×
                 </button>
 
             </div>
 
-        </div>
+            <div id="historyList"></div>
 
+            <button
+                class="delete-history"
+                onclick="deleteHistory()">
 
+                DELETE ALL HISTORY
 
-        <!-- =========================
-             SETTINGS MODAL
-        ========================== -->
-
-        <div
-            id="settingsModal"
-            class="modal">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    <h2>
-                        ⚙ Settings
-                    </h2>
-
-                    <button
-                        data-close="settingsModal">
-                        ×
-                    </button>
-
-                </div>
-
-
-                <label class="setting-row">
-
-                    <span>
-                        Theme
-                    </span>
-
-                    <select id="themeSelect">
-
-                        <option value="dark">
-                            Dark
-                        </option>
-
-                        <option value="light">
-                            Light
-                        </option>
-
-                    </select>
-
-                </label>
-
-
-                <label class="setting-row">
-
-                    <span>
-                        Sound
-                    </span>
-
-                    <input
-                        type="checkbox"
-                        id="soundToggle">
-
-                </label>
-
-
-                <label class="setting-row">
-
-                    <span>
-                        Animation
-                    </span>
-
-                    <input
-                        type="checkbox"
-                        id="animationToggle"
-                        checked>
-
-                </label>
-
-
-                <label class="setting-row">
-
-                    <span>
-                        Vibration
-                    </span>
-
-                    <input
-                        type="checkbox"
-                        id="vibrationToggle">
-
-                </label>
-
-
-                <label class="setting-row">
-
-                    <span>
-                        Decimal Places
-                    </span>
-
-                    <select id="decimalSelect">
-
-                        <option value="auto">
-                            Auto
-                        </option>
-
-                        <option value="2">
-                            2
-                        </option>
-
-                        <option value="4">
-                            4
-                        </option>
-
-                        <option value="6">
-                            6
-                        </option>
-
-                        <option value="8">
-                            8
-                        </option>
-
-                    </select>
-
-                </label>
-
-
-                <button
-                    id="resetData"
-                    class="danger-button">
-
-                    RESET ALL DATA
-
-                </button>
-
-            </div>
+            </button>
 
         </div>
-
-
-
-        <!-- =========================
-             TOAST
-        ========================== -->
-
-        <div
-            id="toast"
-            class="toast">
-        </div>
-
-
-        <!-- =========================
-             FOOTER
-        ========================== -->
-
-        <footer>
-
-            ⚔ CUBES ADVENTURE KNIGHT
-            <span>•</span>
-            MATH QUEST
-            <span>•</span>
-            LOCAL STORAGE ENABLED
-
-        </footer>
 
     </div>
 
 
-    <script src="script.js"></script>
+    <!-- SETTINGS MODAL -->
+    <div id="settingsModal" class="modal">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2>
+                    ⚙ Settings
+                </h2>
+
+                <button onclick="closeSettings()">
+                    ×
+                </button>
+
+            </div>
+
+            <label>
+                Theme
+
+                <select id="themeSelect">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+
+            </label>
+
+            <label>
+                Sound
+
+                <input type="checkbox" id="soundToggle">
+            </label>
+
+            <label>
+                Animation
+
+                <input
+                    type="checkbox"
+                    id="animationToggle"
+                    checked>
+            </label>
+
+            <button
+                class="delete-history"
+                onclick="resetData()">
+
+                RESET ALL DATA
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="toast"></div>
+
+
+    <footer>
+        ⚔ CUBES ADVENTURE KNIGHT
+        •
+        FUTURISTIC CALCULATOR
+    </footer>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
