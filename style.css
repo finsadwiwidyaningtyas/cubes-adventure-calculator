@@ -1,1580 +1,1046 @@
-"use strict";
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Rajdhani, Arial, sans-serif;
+    background:
+        radial-gradient(circle at top, #173d68 0%, #071426 45%, #02050b 100%);
+    color: white;
+}
+
+/* =========================
+   MAIN PAGE
+========================= */
+
+.app {
+    min-height: 100vh;
+    padding: 25px 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background decoration */
+
+.app::before,
+.app::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 2px solid rgba(39, 230, 255, 0.18);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.app::before {
+    top: 100px;
+    left: -100px;
+}
+
+.app::after {
+    right: -100px;
+    bottom: 100px;
+}
 
 
-/* =====================================
-   STATE
-===================================== */
+/* =========================
+   HEADER
+========================= */
 
-let current = "0";
-let previous = null;
-let operator = null;
+.header {
+    max-width: 1000px;
+    margin: auto;
 
-let memory = Number(
-    localStorage.getItem("cubeMemory") || 0
-);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-let history = JSON.parse(
-    localStorage.getItem("cubeHistory") || "[]"
-);
+    margin-bottom: 30px;
+}
 
-let xp = Number(
-    localStorage.getItem("cubeXP") || 0
-);
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-let calculations = Number(
-    localStorage.getItem("cubeCalculations") || 0
-);
+.logo-cube {
+    width: 45px;
+    height: 45px;
 
-let soundEnabled =
-    localStorage.getItem("cubeSound") === "true";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #27e6ff;
+
+    color: #27e6ff;
+
+    transform: rotate(45deg);
+
+    box-shadow:
+        0 0 15px rgba(39, 230, 255, .4);
+}
+
+.logo h1 {
+    font-family: Orbitron, sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.logo p {
+    margin-top: 5px;
+
+    color: #27e6ff;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.header-buttons button {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid rgba(39, 230, 255, .3);
+
+    border-radius: 8px;
+
+    background: #0b1729;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 17px;
+}
+
+.header-buttons button:hover {
+    border-color: #27e6ff;
+
+    box-shadow:
+        0 0 15px rgba(39, 230, 255, .3);
+}
 
 
-/* =====================================
-   ELEMENTS
-===================================== */
+/* =========================
+   MAIN LAYOUT
+========================= */
 
-const display =
-    document.getElementById("result");
+main {
+    max-width: 1000px;
+    margin: auto;
 
-const expression =
-    document.getElementById("expression");
-
-const memoryStatus =
-    document.getElementById("memoryStatus");
-
-const mode =
-    document.getElementById("mode");
-
-const scientificPanel =
-    document.getElementById("scientific");
-
-const knightMessage =
-    document.getElementById("knightMessage");
-
-const toast =
-    document.getElementById("toast");
+    display: flex;
+    justify-content: center;
+}
 
 
-/* =====================================
+/* =========================
+   CALCULATOR
+========================= */
+
+.calculator {
+    width: 430px;
+
+    padding: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101d32,
+            #07101e
+        );
+
+    border:
+        2px solid
+        rgba(39, 230, 255, .25);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, .65),
+        inset 0 1px rgba(255,255,255,.08);
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* top */
+
+.calculator-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.small-title {
+    display: block;
+
+    color: #27e6ff;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 5px;
+}
+
+.calculator h2 {
+    font-family: Orbitron, sans-serif;
+
+    font-size: 18px;
+}
+
+#mode {
+    padding: 8px 10px;
+
+    border:
+        1px solid
+        rgba(39, 230, 255, .25);
+
+    border-radius: 7px;
+
+    background: #071326;
+
+    color: white;
+
+    outline: none;
+}
+
+
+/* =========================
    DISPLAY
-===================================== */
+========================= */
 
-function updateDisplay() {
+.display {
 
-    display.textContent = current;
+    width: 100%;
 
-    if (memory !== 0) {
+    min-height: 120px;
 
-        memoryStatus.textContent =
-            "MEMORY: " + formatNumber(memory);
+    padding: 15px 18px;
 
-    } else {
+    margin-bottom: 12px;
 
-        memoryStatus.textContent = "";
-
-    }
-
-    updateLevel();
-
-}
-
-
-/* =====================================
-   NUMBER FORMAT
-===================================== */
-
-function formatNumber(number) {
-
-    if (!Number.isFinite(number)) {
-
-        return "ERROR";
-
-    }
-
-    return Number(
-        number.toFixed(10)
-    ).toLocaleString("en-US");
-
-}
-
-
-/* =====================================
-   NUMBER INPUT
-===================================== */
-
-function numberInput(number) {
-
-    playSound(500);
-
-    if (current === "ERROR") {
-
-        current = "0";
-
-    }
-
-
-    if (number === ".") {
-
-        if (current.includes(".")) {
-
-            return;
-
-        }
-
-    }
-
-
-    if (
-        current === "0" &&
-        number !== "."
-    ) {
-
-        current = "";
-
-    }
-
-
-    if (current.length >= 18) {
-
-        return;
-
-    }
-
-
-    current += number;
-
-    updateDisplay();
-
-}
-
-
-/* =====================================
-   OPERATOR
-===================================== */
-
-function operatorInput(selectedOperator) {
-
-    playSound(650);
-
-    if (current === "ERROR") {
-
-        return;
-
-    }
-
-
-    if (previous !== null) {
-
-        calculate(false);
-
-    }
-
-
-    previous =
-        Number(current.replaceAll(",", ""));
-
-    operator =
-        selectedOperator;
-
-
-    expression.textContent =
-        formatNumber(previous) +
-        " " +
-        getSymbol(selectedOperator);
-
-
-    current = "0";
-
-    updateDisplay();
-
-}
-
-
-/* =====================================
-   SYMBOL
-===================================== */
-
-function getSymbol(op) {
-
-    if (op === "+") return "+";
-
-    if (op === "-") return "−";
-
-    if (op === "*") return "×";
-
-    if (op === "/") return "÷";
-
-    return op;
-
-}
-
-
-/* =====================================
-   CALCULATE
-===================================== */
-
-function calculate(final = true) {
-
-    if (
-        previous === null ||
-        operator === null
-    ) {
-
-        return;
-
-    }
-
-
-    const second =
-        Number(current.replaceAll(",", ""));
-
-
-    let result;
-
-
-    if (
-        operator === "/" &&
-        second === 0
-    ) {
-
-        current = "ERROR";
-
-        expression.textContent =
-            "INVALID MOVE";
-
-        knightMessage.textContent =
-            "Impossible move!";
-
-        previous = null;
-
-        operator = null;
-
-        updateDisplay();
-
-        playSound(100);
-
-        return;
-
-    }
-
-
-    switch (operator) {
-
-        case "+":
-
-            result =
-                previous + second;
-
-            break;
-
-
-        case "-":
-
-            result =
-                previous - second;
-
-            break;
-
-
-        case "*":
-
-            result =
-                previous * second;
-
-            break;
-
-
-        case "/":
-
-            result =
-                previous / second;
-
-            break;
-
-    }
-
-
-    if (
-        !Number.isFinite(result)
-    ) {
-
-        current = "ERROR";
-
-        knightMessage.textContent =
-            "Result is too large.";
-
-        previous = null;
-
-        operator = null;
-
-        updateDisplay();
-
-        return;
-
-    }
-
-
-    const oldExpression =
-        formatNumber(previous) +
-        " " +
-        getSymbol(operator) +
-        " " +
-        formatNumber(second);
-
-
-    current =
-        formatNumber(result);
-
-
-    expression.textContent =
-        oldExpression +
-        " =";
-
-
-    previous = null;
-
-    operator = null;
-
-
-    if (final) {
-
-        calculations++;
-
-        xp += 10;
-
-
-        history.unshift({
-
-            expression:
-                oldExpression,
-
-            result:
-                current,
-
-            time:
-                new Date().toLocaleTimeString()
-
-        });
-
-
-        history =
-            history.slice(0,50);
-
-
-        saveData();
-
-        knightMessage.textContent =
-            "Calculation complete!";
-
-
-        showToast(
-            "⚔ Calculation Complete! +10 XP"
+    background:
+        linear-gradient(
+            180deg,
+            #020812,
+            #071426
         );
 
+    border:
+        2px solid
+        #142e47;
 
-        playSound(800);
+    border-radius: 12px;
 
-        checkAchievements();
-
-    }
-
-
-    updateDisplay();
-
+    box-shadow:
+        inset 0 0 25px rgba(39,230,255,.05);
 }
 
 
-/* =====================================
-   CLEAR
-===================================== */
+/* expression */
 
-function clearCalculator() {
+#expression {
 
-    current = "0";
+    height: 30px;
 
-    previous = null;
+    color: #6e89a8;
 
-    operator = null;
+    font-size: 14px;
 
-    expression.textContent =
-        "Ready for your quest";
+    text-align: right;
 
-    knightMessage.textContent =
-        "Calculation ready!";
+    white-space: nowrap;
 
-    playSound(180);
-
-    updateDisplay();
-
+    overflow-x: auto;
 }
 
 
-/* =====================================
-   BACKSPACE
-===================================== */
+/* result */
 
-function backspace() {
+#result {
 
-    if (
-        current === "ERROR"
-    ) {
+    text-align: right;
 
-        current = "0";
+    font-family: Orbitron, sans-serif;
 
-    }
+    font-size: 38px;
 
+    font-weight: 700;
 
-    if (
-        current.length > 1
-    ) {
+    color: #ffffff;
 
-        current =
-            current.slice(0,-1);
+    white-space: nowrap;
 
-    } else {
+    overflow-x: auto;
 
-        current = "0";
-
-    }
-
-
-    updateDisplay();
-
+    text-shadow:
+        0 0 12px
+        rgba(39,230,255,.7);
 }
 
 
-/* =====================================
-   PERCENT
-===================================== */
-
-function percentage() {
-
-    const value =
-        Number(
-            current.replaceAll(",", "")
-        );
-
-
-    current =
-        formatNumber(value / 100);
-
-    updateDisplay();
-
-}
-
-
-/* =====================================
-   NEGATIVE
-===================================== */
-
-function negative() {
-
-    const value =
-        Number(
-            current.replaceAll(",", "")
-        );
-
-
-    current =
-        formatNumber(-value);
-
-    updateDisplay();
-
-}
-
-
-/* =====================================
+/* =========================
    MEMORY
-===================================== */
+========================= */
 
-function memoryClear() {
+.memory {
 
-    memory = 0;
+    display: grid;
 
-    saveData();
+    grid-template-columns:
+        repeat(6, 1fr);
 
-    updateDisplay();
+    gap: 6px;
 
+    margin-bottom: 12px;
+}
+
+.memory button {
+
+    height: 36px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 6px;
+
+    background: #0d1b2f;
+
+    color: #9db2cb;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+.memory button:hover {
+
+    color: #27e6ff;
+
+    border-color:
+        rgba(39,230,255,.5);
+}
+
+#memoryStatus {
+
+    display: none;
 }
 
 
-function memoryRecall() {
-
-    current =
-        formatNumber(memory);
-
-    updateDisplay();
-
-}
-
-
-function memoryAdd() {
-
-    memory += getCurrentValue();
-
-    saveData();
-
-    updateDisplay();
-
-}
-
-
-function memorySubtract() {
-
-    memory -= getCurrentValue();
-
-    saveData();
-
-    updateDisplay();
-
-}
-
-
-function memoryStore() {
-
-    memory =
-        getCurrentValue();
-
-    saveData();
-
-    updateDisplay();
-
-}
-
-
-function getCurrentValue() {
-
-    const value =
-        Number(
-            current.replaceAll(",", "")
-        );
-
-    return Number.isFinite(value)
-        ? value
-        : 0;
-
-}
-
-
-/* =====================================
+/* =========================
    SCIENTIFIC
-===================================== */
+========================= */
 
-function scientificCalc(type) {
+.scientific {
 
-    const x =
-        getCurrentValue();
+    display: grid;
 
-    let result;
+    grid-template-columns:
+        repeat(5, 1fr);
 
+    gap: 6px;
 
-    try {
+    margin-bottom: 10px;
+}
 
-        switch (type) {
+.scientific button {
 
-            case "sqrt":
+    height: 38px;
 
-                result =
-                    Math.sqrt(x);
+    border:
+        1px solid
+        rgba(157,92,255,.25);
 
-                break;
+    border-radius: 6px;
 
+    background: #15152d;
 
-            case "square":
+    color: #c9b8ff;
 
-                result =
-                    x * x;
+    font-size: 11px;
 
-                break;
+    cursor: pointer;
+}
 
+.scientific button:hover {
 
-            case "inverse":
+    background: #24204a;
 
-                if (x === 0) {
-
-                    throw new Error();
-
-                }
-
-                result =
-                    1 / x;
-
-                break;
-
-
-            case "sin":
-
-                result =
-                    Math.sin(
-                        x * Math.PI / 180
-                    );
-
-                break;
-
-
-            case "cos":
-
-                result =
-                    Math.cos(
-                        x * Math.PI / 180
-                    );
-
-                break;
-
-
-            case "tan":
-
-                result =
-                    Math.tan(
-                        x * Math.PI / 180
-                    );
-
-                break;
-
-
-            case "asin":
-
-                result =
-                    Math.asin(x)
-                    * 180 / Math.PI;
-
-                break;
-
-
-            case "acos":
-
-                result =
-                    Math.acos(x)
-                    * 180 / Math.PI;
-
-                break;
-
-
-            case "atan":
-
-                result =
-                    Math.atan(x)
-                    * 180 / Math.PI;
-
-                break;
-
-
-            case "log":
-
-                result =
-                    Math.log10(x);
-
-                break;
-
-
-            case "ln":
-
-                result =
-                    Math.log(x);
-
-                break;
-
-
-            case "exp":
-
-                result =
-                    Math.exp(x);
-
-                break;
-
-
-            case "10x":
-
-                result =
-                    Math.pow(10,x);
-
-                break;
-
-
-            case "pi":
-
-                result =
-                    Math.PI;
-
-                break;
-
-
-            case "e":
-
-                result =
-                    Math.E;
-
-                break;
-
-
-            case "phi":
-
-                result =
-                    (1 + Math.sqrt(5)) / 2;
-
-                break;
-
-
-            case "factorial":
-
-                if (
-                    x < 0 ||
-                    x > 170 ||
-                    !Number.isInteger(x)
-                ) {
-
-                    throw new Error();
-
-                }
-
-                result =
-                    factorial(x);
-
-                break;
-
-
-            case "abs":
-
-                result =
-                    Math.abs(x);
-
-                break;
-
-
-            case "random":
-
-                result =
-                    Math.random();
-
-                break;
-
-        }
-
-
-        if (
-            !Number.isFinite(result)
-        ) {
-
-            throw new Error();
-
-        }
-
-
-        current =
-            formatNumber(result);
-
-
-        expression.textContent =
-            type.toUpperCase() +
-            "(" +
-            formatNumber(x) +
-            ")";
-
-
-        calculations++;
-
-        xp += 10;
-
-
-        saveData();
-
-        checkAchievements();
-
-        updateDisplay();
-
-        showToast(
-            "🔬 Scientific calculation complete!"
-        );
-
-        playSound(750);
-
-
-    } catch {
-
-        current = "ERROR";
-
-        expression.textContent =
-            "INVALID MOVE";
-
-        knightMessage.textContent =
-            "Oops! Check your equation.";
-
-        updateDisplay();
-
-        playSound(120);
-
-    }
-
+    border-color: #9d5cff;
 }
 
 
-function factorial(number) {
+/* hide */
 
-    let result = 1;
-
-    for (
-        let i = 2;
-        i <= number;
-        i++
-    ) {
-
-        result *= i;
-
-    }
-
-    return result;
-
+.hidden {
+    display: none !important;
 }
 
 
-/* =====================================
-   MODE
-===================================== */
+/* =========================
+   KEYPAD
+========================= */
 
-mode.addEventListener(
-    "change",
-    function () {
+.keypad {
 
-        if (
-            this.value === "scientific"
-        ) {
+    display: grid;
 
-            scientificPanel
-                .classList
-                .remove("hidden");
+    grid-template-columns:
+        repeat(4, 1fr);
 
-
-            knightMessage.textContent =
-                "Scientific core online.";
-
-        } else {
-
-            scientificPanel
-                .classList
-                .add("hidden");
-
-
-            knightMessage.textContent =
-                "Calculation ready!";
-
-        }
-
-    }
-);
-
-
-/* =====================================
-   HISTORY
-===================================== */
-
-function showHistory() {
-
-    const modal =
-        document.getElementById(
-            "historyModal"
-        );
-
-    const list =
-        document.getElementById(
-            "historyList"
-        );
-
-
-    list.innerHTML = "";
-
-
-    if (
-        history.length === 0
-    ) {
-
-        list.innerHTML =
-            "<p>No adventures yet.</p>";
-
-    }
-
-
-    history.forEach(
-        function(item,index) {
-
-            const row =
-                document.createElement("div");
-
-            row.className =
-                "history-item";
-
-
-            const content =
-                document.createElement("div");
-
-
-            content.innerHTML =
-                "<strong>" +
-                item.expression +
-                "</strong><br>" +
-                item.result +
-                "<br><small>" +
-                item.time +
-                "</small>";
-
-
-            content.style.cursor =
-                "pointer";
-
-
-            content.onclick =
-                function () {
-
-                    current =
-                        item.result;
-
-                    expression.textContent =
-                        item.expression;
-
-                    closeHistory();
-
-                    updateDisplay();
-
-                };
-
-
-            const deleteButton =
-                document.createElement("button");
-
-
-            deleteButton.textContent =
-                "×";
-
-
-            deleteButton.onclick =
-                function () {
-
-                    history.splice(
-                        index,
-                        1
-                    );
-
-                    saveData();
-
-                    showHistory();
-
-                };
-
-
-            row.appendChild(content);
-
-            row.appendChild(
-                deleteButton
-            );
-
-            list.appendChild(row);
-
-        }
-    );
-
-
-    modal.classList.add("active");
-
+    gap: 9px;
 }
 
 
-function closeHistory() {
+/* EVERY BUTTON */
 
-    document
-        .getElementById(
-            "historyModal"
-        )
-        .classList
-        .remove("active");
+.keypad button {
 
+    height: 64px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-bottom:
+        4px solid
+        #03070e;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1c2d47,
+            #0d192b
+        );
+
+    color: white;
+
+    font-family: Orbitron, sans-serif;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        transform .1s,
+        box-shadow .1s,
+        border .1s;
 }
 
 
-function deleteHistory() {
+/* hover */
 
-    history = [];
+.keypad button:hover {
 
-    saveData();
+    transform:
+        translateY(-2px);
 
-    showHistory();
+    border-color:
+        rgba(39,230,255,.45);
 
+    box-shadow:
+        0 0 15px
+        rgba(39,230,255,.15);
 }
 
 
-/* =====================================
-   SETTINGS
-===================================== */
+/* press */
 
-document
-    .getElementById("settingsButton")
-    .onclick = function () {
+.keypad button:active {
 
-        document
-            .getElementById(
-                "settingsModal"
-            )
-            .classList
-            .add("active");
+    transform:
+        translateY(3px);
 
-    };
-
-
-function closeSettings() {
-
-    document
-        .getElementById(
-            "settingsModal"
-        )
-        .classList
-        .remove("active");
-
+    border-bottom-width: 1px;
 }
 
 
-/* =====================================
-   THEME
-===================================== */
+/* =========================
+   SPECIAL BUTTON
+========================= */
 
-document
-    .getElementById("themeButton")
-    .onclick = function () {
+.keypad .danger {
 
-        document.body
-            .classList
-            .toggle("light");
+    color: #ff7187;
 
-        const light =
-            document.body
-                .classList
-                .contains("light");
-
-        localStorage.setItem(
-            "cubeTheme",
-            light
-                ? "light"
-                : "dark"
+    background:
+        linear-gradient(
+            145deg,
+            #38202a,
+            #21131a
         );
-
-    };
-
-
-const savedTheme =
-    localStorage.getItem(
-        "cubeTheme"
-    );
-
-
-if (
-    savedTheme === "light"
-) {
-
-    document.body
-        .classList
-        .add("light");
-
 }
 
 
-/* =====================================
-   SOUND
-===================================== */
+/* =========================
+   OPERATORS
+========================= */
 
-function playSound(
-    frequency = 500
-) {
+.keypad .operator {
 
-    if (!soundEnabled) {
+    color: #ffc857;
 
-        return;
-
-    }
-
-
-    try {
-
-        const AudioContext =
-            window.AudioContext ||
-            window.webkitAudioContext;
-
-
-        const context =
-            new AudioContext();
-
-
-        const oscillator =
-            context.createOscillator();
-
-
-        const gain =
-            context.createGain();
-
-
-        oscillator.frequency.value =
-            frequency;
-
-
-        oscillator.type =
-            "sine";
-
-
-        gain.gain.setValueAtTime(
-            0.04,
-            context.currentTime
+    background:
+        linear-gradient(
+            145deg,
+            #3b311c,
+            #211b10
         );
 
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            context.currentTime + .08
-        );
-
-
-        oscillator.connect(gain);
-
-        gain.connect(
-            context.destination
-        );
-
-
-        oscillator.start();
-
-        oscillator.stop(
-            context.currentTime + .08
-        );
-
-    } catch {
-
-        // Audio not available
-
-    }
-
+    border-color:
+        rgba(255,200,87,.15);
 }
 
 
-document
-    .getElementById("soundButton")
-    .onclick = function () {
+/* =========================
+   EQUAL BUTTON
+========================= */
 
-        soundEnabled =
-            !soundEnabled;
+.keypad .equal {
 
+    color: white;
 
-        this.textContent =
-            soundEnabled
-                ? "🔊"
-                : "🔇";
-
-
-        localStorage.setItem(
-            "cubeSound",
-            soundEnabled
+    background:
+        linear-gradient(
+            145deg,
+            #18a3aa,
+            #15528a
         );
 
+    border-color:
+        rgba(39,230,255,.4);
 
-        if (soundEnabled) {
-
-            playSound(700);
-
-        }
-
-    };
-
-
-if (soundEnabled) {
-
-    document
-        .getElementById(
-            "soundButton"
-        )
-        .textContent = "🔊";
-
+    box-shadow:
+        0 0 20px
+        rgba(39,230,255,.18);
 }
 
 
-/* =====================================
-   SETTINGS CONTROLS
-===================================== */
+/* =========================
+   ZERO
+========================= */
 
-document
-    .getElementById("soundToggle")
-    .onchange = function () {
+.keypad .zero {
 
-        soundEnabled =
-            this.checked;
-
-        localStorage.setItem(
-            "cubeSound",
-            soundEnabled
-        );
-
-        document
-            .getElementById(
-                "soundButton"
-            )
-            .textContent =
-                soundEnabled
-                ? "🔊"
-                : "🔇";
-
-    };
-
-
-document
-    .getElementById("themeSelect")
-    .onchange = function () {
-
-        document.body
-            .classList
-            .toggle(
-                "light",
-                this.value === "light"
-            );
-
-        localStorage.setItem(
-            "cubeTheme",
-            this.value
-        );
-
-    };
-
-
-document
-    .getElementById("animationToggle")
-    .onchange = function () {
-
-        document.body.style
-            .setProperty(
-                "--animation-state",
-                this.checked
-                    ? "1"
-                    : "0"
-            );
-
-    };
-
-
-/* =====================================
-   XP / LEVEL
-===================================== */
-
-function updateLevel() {
-
-    const level =
-        Math.min(
-            10,
-            Math.floor(xp / 100) + 1
-        );
-
-
-    const currentXP =
-        xp % 100;
-
-
-    const ranks = [
-
-        "Novice Knight",
-
-        "Cube Apprentice",
-
-        "Cube Warrior",
-
-        "Crystal Knight",
-
-        "Shadow Knight",
-
-        "Royal Knight",
-
-        "Legendary Cube Knight",
-
-        "Master of Numbers"
-
-    ];
-
-
-    document
-        .getElementById("level")
-        .textContent =
-            String(level)
-            .padStart(2,"0");
-
-
-    document
-        .getElementById("rank")
-        .textContent =
-            ranks[
-                Math.min(
-                    ranks.length - 1,
-                    level - 1
-                )
-            ];
-
-
-    document
-        .getElementById("xpBar")
-        .style.width =
-            currentXP + "%";
-
-
-    document
-        .getElementById("xpText")
-        .textContent =
-            currentXP +
-            " / 100 XP";
-
-
+    grid-column:
+        span 2;
 }
 
 
-/* =====================================
-   ACHIEVEMENTS
-===================================== */
+/* =========================
+   STATUS
+========================= */
 
-function checkAchievements() {
+.status {
 
-    const achievements = [];
+    display: flex;
 
+    justify-content: space-between;
 
-    if (
-        calculations >= 1
-    ) {
+    margin-top: 12px;
 
-        achievements.push(
-            "FIRST CALCULATION"
-        );
+    color: #607994;
 
-    }
-
-
-    if (
-        calculations >= 10
-    ) {
-
-        achievements.push(
-            "SPEED KNIGHT"
-        );
-
-    }
-
-
-    if (
-        calculations >= 100
-    ) {
-
-        achievements.push(
-            "MATH WARRIOR"
-        );
-
-    }
-
-
-    if (
-        xp >= 900
-    ) {
-
-        achievements.push(
-            "CUBE MASTER"
-        );
-
-    }
-
-
-    document
-        .getElementById(
-            "achievementCount"
-        )
-        .textContent =
-            achievements.length;
-
+    font-size: 10px;
 }
 
 
-/* =====================================
+/* =========================
+   KNIGHT PANEL
+========================= */
+
+.knight-panel {
+
+    display: none;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.75);
+}
+
+.modal.active {
+
+    display: flex;
+}
+
+
+.modal-box {
+
+    width: 100%;
+
+    max-width: 500px;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    padding: 22px;
+
+    background: #0b1729;
+
+    border:
+        1px solid
+        rgba(39,230,255,.3);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.7);
+}
+
+
+.modal-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 15px;
+}
+
+
+.modal-header h2 {
+
+    font-family: Orbitron;
+
+    font-size: 18px;
+}
+
+
+.modal-header button {
+
+    background: none;
+
+    border: none;
+
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+
+/* HISTORY */
+
+.history-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 12px;
+
+    margin-bottom: 7px;
+
+    background: #0f2038;
+
+    border-radius: 8px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.05);
+}
+
+
+.history-item strong {
+
+    color: #27e6ff;
+}
+
+
+.history-item button {
+
+    border: none;
+
+    background: none;
+
+    color: #ff526d;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+/* SETTINGS */
+
+.modal-box label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 14px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+
+.modal-box select {
+
+    background: #071326;
+
+    color: white;
+
+    border:
+        1px solid
+        rgba(39,230,255,.3);
+
+    border-radius: 6px;
+
+    padding: 7px;
+}
+
+
+.delete-history {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 15px;
+
+    background: #591b2a;
+
+    border:
+        1px solid
+        #ff526d55;
+
+    color: white;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
    TOAST
-===================================== */
+========================= */
 
-function showToast(message) {
+#toast {
 
-    toast.textContent =
-        message;
+    position: fixed;
 
-    toast.classList.add(
-        "show"
-    );
+    bottom: 25px;
 
+    left: 50%;
 
-    clearTimeout(
-        window.toastTimer
-    );
+    transform:
+        translate(-50%, 100px);
 
+    z-index: 200;
 
-    window.toastTimer =
-        setTimeout(
-            function () {
+    padding: 12px 20px;
 
-                toast.classList.remove(
-                    "show"
-                );
+    background: #08182b;
 
-            },
-            1800
-        );
+    border:
+        1px solid
+        #27e6ff;
 
+    border-radius: 8px;
+
+    opacity: 0;
+
+    transition: .25s;
 }
 
 
-/* =====================================
-   LOCAL STORAGE
-===================================== */
+#toast.show {
 
-function saveData() {
+    transform:
+        translate(-50%, 0);
 
-    localStorage.setItem(
-        "cubeMemory",
-        memory
-    );
-
-
-    localStorage.setItem(
-        "cubeHistory",
-        JSON.stringify(history)
-    );
-
-
-    localStorage.setItem(
-        "cubeXP",
-        xp
-    );
-
-
-    localStorage.setItem(
-        "cubeCalculations",
-        calculations
-    );
-
+    opacity: 1;
 }
 
 
-/* =====================================
-   RESET
-===================================== */
+/* =========================
+   FOOTER
+========================= */
 
-function resetData() {
+footer {
 
-    localStorage.clear();
+    max-width: 1000px;
 
-    location.reload();
+    margin: 25px auto 0;
 
+    text-align: center;
+
+    color: #59718d;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
 }
 
 
-/* =====================================
-   KEYBOARD
-===================================== */
+/* =========================
+   MOBILE
+========================= */
 
-document.addEventListener(
-    "keydown",
-    function(event) {
+@media (max-width: 600px) {
 
-        if (
-            event.target.tagName ===
-            "INPUT"
-        ) {
+    .app {
 
-            return;
-
-        }
-
-
-        if (
-            /^[0-9]$/.test(event.key)
-        ) {
-
-            numberInput(
-                event.key
-            );
-
-            return;
-
-        }
-
-
-        if (
-            event.key === "."
-        ) {
-
-            numberInput(".");
-
-            return;
-
-        }
-
-
-        if (
-            ["+","-","*","/"]
-            .includes(event.key)
-        ) {
-
-            operatorInput(
-                event.key
-            );
-
-            return;
-
-        }
-
-
-        if (
-            event.key === "Enter" ||
-            event.key === "="
-        ) {
-
-            calculate();
-
-            return;
-
-        }
-
-
-        if (
-            event.key === "Backspace"
-        ) {
-
-            backspace();
-
-            return;
-
-        }
-
-
-        if (
-            event.key === "Escape"
-        ) {
-
-            clearCalculator();
-
-            return;
-
-        }
-
-
-        if (
-            event.key === "%"
-        ) {
-
-            percentage();
-
-        }
+        padding:
+            15px 10px;
 
     }
-);
 
 
-/* =====================================
-   START
-===================================== */
+    .header {
 
-updateDisplay();
+        margin-bottom: 20px;
 
-document
-    .getElementById("soundToggle")
-    .checked =
-        soundEnabled;
+    }
+
+
+    .logo h1 {
+
+        font-size: 13px;
+
+    }
+
+
+    .logo p {
+
+        font-size: 8px;
+
+    }
+
+
+    .logo-cube {
+
+        width: 35px;
+
+        height: 35px;
+
+    }
+
+
+    .header-buttons button {
+
+        width: 35px;
+
+        height: 35px;
+
+    }
+
+
+    .calculator {
+
+        width: 100%;
+
+        padding: 15px;
+
+        border-radius: 15px;
+
+    }
+
+
+    .calculator-top {
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .calculator h2 {
+
+        font-size: 15px;
+
+    }
+
+
+    #mode {
+
+        font-size: 11px;
+
+        padding: 7px;
+
+    }
+
+
+    .display {
+
+        min-height: 105px;
+
+    }
+
+
+    #result {
+
+        font-size: 29px;
+
+    }
+
+
+    .memory {
+
+        grid-template-columns:
+            repeat(6, minmax(45px,1fr));
+
+        overflow-x: auto;
+
+    }
+
+
+    .keypad {
+
+        gap: 6px;
+
+    }
+
+
+    .keypad button {
+
+        height: 58px;
+
+        font-size: 14px;
+
+    }
+
+
+    .scientific {
+
+        grid-template-columns:
+            repeat(4,1fr);
+
+    }
+
+
+    .scientific button {
+
+        font-size: 10px;
+
+    }
+
+}
+
+
+/* =========================
+   LIGHT MODE
+========================= */
+
+body.light {
+
+    background:
+        radial-gradient(
+            circle at top,
+            #e8f9ff,
+            #9bd8ef
+        );
+
+    color: #10243d;
+
+}
+
+
+body.light .calculator {
+
+    background:
+        rgba(255,255,255,.9);
+
+    border-color:
+        rgba(20,120,160,.25);
+
+}
+
+
+body.light .display {
+
+    background:
+        #eefaff;
+
+}
+
+
+body.light #result {
+
+    color: #10243d;
+
+    text-shadow:
+        0 0 10px
+        rgba(39,150,200,.25);
+}
+
+
+body.light .keypad button {
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #dbeef7
+        );
+
+    color: #10243d;
+
+}
+
+
+body.light .memory button {
+
+    background: #e8f5fa;
+
+    color: #31516c;
+
+}
