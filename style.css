@@ -1,51 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap');
-
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
-    min-height: 100vh;
-    font-family: Rajdhani, Arial, sans-serif;
-    background:
-        radial-gradient(circle at top, #173d68 0%, #071426 45%, #02050b 100%);
-    color: white;
+
+:root {
+
+    --bg: #050b18;
+
+    --calculator: #101a2b;
+
+    --display: #07101e;
+
+    --button: #1b2a40;
+
+    --button-hover: #263b58;
+
+    --cyan: #31ddff;
+
+    --blue: #397bff;
+
+    --purple: #985cff;
+
+    --gold: #ffc857;
+
+    --red: #ff5870;
+
+    --white: #ffffff;
+
+    --gray: #879bb5;
+
 }
+
 
 /* =========================
-   MAIN PAGE
+   BODY
 ========================= */
 
-.app {
+body {
+
     min-height: 100vh;
-    padding: 25px 15px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #16365c 0%,
+            #071325 45%,
+            #02050b 100%
+        );
+
+    color: var(--white);
+
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page {
+
+    min-height: 100vh;
+
+    padding:
+        25px 15px;
+
     position: relative;
-    overflow: hidden;
-}
 
-/* Background decoration */
+    display: flex;
 
-.app::before,
-.app::after {
-    content: "";
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    border: 2px solid rgba(39, 230, 255, 0.18);
-    transform: rotate(45deg);
-    pointer-events: none;
-}
+    flex-direction: column;
 
-.app::before {
-    top: 100px;
-    left: -100px;
-}
+    align-items: center;
 
-.app::after {
-    right: -100px;
-    bottom: 100px;
 }
 
 
@@ -53,97 +86,116 @@ body {
    HEADER
 ========================= */
 
-.header {
-    max-width: 1000px;
-    margin: auto;
+header {
+
+    width: 100%;
+
+    max-width: 430px;
 
     display: flex;
-    align-items: center;
-    justify-content: space-between;
 
-    margin-bottom: 30px;
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    margin-bottom: 20px;
+
 }
 
-.logo {
+
+.brand {
+
     display: flex;
+
     align-items: center;
-    gap: 15px;
+
+    gap: 12px;
+
 }
 
-.logo-cube {
-    width: 45px;
-    height: 45px;
+
+.brand-icon {
+
+    width: 38px;
+
+    height: 38px;
+
+    border:
+        2px solid
+        var(--cyan);
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    border: 2px solid #27e6ff;
+    color: var(--cyan);
 
-    color: #27e6ff;
-
-    transform: rotate(45deg);
+    transform:
+        rotate(45deg);
 
     box-shadow:
-        0 0 15px rgba(39, 230, 255, .4);
+        0 0 15px
+        rgba(49,221,255,.4);
+
 }
 
-.logo h1 {
-    font-family: Orbitron, sans-serif;
-    font-size: 20px;
+
+.brand h1 {
+
+    font-size: 16px;
+
+    font-weight: 800;
+
     letter-spacing: 1px;
+
 }
 
-.logo p {
-    margin-top: 5px;
 
-    color: #27e6ff;
+.brand p {
 
-    font-size: 11px;
+    margin-top: 3px;
+
+    font-size: 9px;
 
     letter-spacing: 2px;
+
+    color: var(--cyan);
+
 }
 
-.header-buttons {
+
+.top-buttons {
+
     display: flex;
-    gap: 8px;
+
+    gap: 6px;
+
 }
 
-.header-buttons button {
-    width: 42px;
-    height: 42px;
 
-    border: 1px solid rgba(39, 230, 255, .3);
+.top-buttons button {
 
-    border-radius: 8px;
+    width: 36px;
 
-    background: #0b1729;
+    height: 36px;
+
+    border:
+        1px solid
+        rgba(49,221,255,.25);
+
+    background:
+        rgba(10,20,38,.9);
 
     color: white;
 
+    border-radius: 8px;
+
     cursor: pointer;
 
-    font-size: 17px;
-}
-
-.header-buttons button:hover {
-    border-color: #27e6ff;
-
-    box-shadow:
-        0 0 15px rgba(39, 230, 255, .3);
-}
-
-
-/* =========================
-   MAIN LAYOUT
-========================= */
-
-main {
-    max-width: 1000px;
-    margin: auto;
-
-    display: flex;
-    justify-content: center;
 }
 
 
@@ -152,77 +204,91 @@ main {
 ========================= */
 
 .calculator {
-    width: 430px;
 
-    padding: 22px;
+    width: 100%;
+
+    max-width: 430px;
+
+    padding: 18px;
 
     background:
         linear-gradient(
             145deg,
-            #101d32,
-            #07101e
+            #142238,
+            #0b1424
         );
 
     border:
-        2px solid
-        rgba(39, 230, 255, .25);
+        1px solid
+        rgba(49,221,255,.25);
 
     border-radius: 22px;
 
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, .65),
-        inset 0 1px rgba(255,255,255,.08);
+        0 25px 70px
+        rgba(0,0,0,.55);
 
-    position: relative;
-
-    z-index: 2;
 }
 
 
-/* top */
+/* =========================
+   TITLE
+========================= */
 
-.calculator-top {
+.calculator-title {
+
     display: flex;
 
-    align-items: center;
+    justify-content:
+        space-between;
 
-    justify-content: space-between;
+    align-items:
+        center;
 
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+
 }
 
-.small-title {
+
+.calculator-title span {
+
     display: block;
 
-    color: #27e6ff;
+    color:
+        var(--cyan);
 
-    font-size: 9px;
+    font-size: 8px;
 
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
 
-    margin-bottom: 5px;
+    margin-bottom: 4px;
+
 }
 
-.calculator h2 {
-    font-family: Orbitron, sans-serif;
 
-    font-size: 18px;
+.calculator-title h2 {
+
+    font-size: 20px;
+
 }
+
 
 #mode {
-    padding: 8px 10px;
+
+    padding: 8px;
 
     border:
         1px solid
-        rgba(39, 230, 255, .25);
+        rgba(49,221,255,.3);
+
+    background:
+        #071223;
+
+    color:
+        white;
 
     border-radius: 7px;
 
-    background: #071326;
-
-    color: white;
-
-    outline: none;
 }
 
 
@@ -232,71 +298,87 @@ main {
 
 .display {
 
-    width: 100%;
+    height: 115px;
 
-    min-height: 120px;
+    padding:
+        15px;
 
-    padding: 15px 18px;
+    display: flex;
 
-    margin-bottom: 12px;
+    flex-direction:
+        column;
+
+    justify-content:
+        flex-end;
+
+    align-items:
+        flex-end;
 
     background:
-        linear-gradient(
-            180deg,
-            #020812,
-            #071426
-        );
+        var(--display);
 
     border:
-        2px solid
-        #142e47;
+        1px solid
+        rgba(49,221,255,.25);
 
-    border-radius: 12px;
+    border-radius:
+        13px;
 
-    box-shadow:
-        inset 0 0 25px rgba(39,230,255,.05);
+    margin-bottom:
+        10px;
+
+    overflow:
+        hidden;
+
 }
 
 
-/* expression */
+.expression {
 
-#expression {
+    width: 100%;
 
-    height: 30px;
+    min-height: 22px;
 
-    color: #6e89a8;
+    text-align:
+        right;
 
-    font-size: 14px;
+    color:
+        var(--gray);
 
-    text-align: right;
+    font-size:
+        14px;
 
-    white-space: nowrap;
+    white-space:
+        nowrap;
 
-    overflow-x: auto;
+    overflow-x:
+        auto;
+
 }
 
 
-/* result */
+.display-number {
 
-#result {
+    width: 100%;
 
-    text-align: right;
+    text-align:
+        right;
 
-    font-family: Orbitron, sans-serif;
+    font-size:
+        38px;
 
-    font-size: 38px;
+    font-weight:
+        600;
 
-    font-weight: 700;
+    white-space:
+        nowrap;
 
-    color: #ffffff;
+    overflow-x:
+        auto;
 
-    white-space: nowrap;
+    color:
+        white;
 
-    overflow-x: auto;
-
-    text-shadow:
-        0 0 12px
-        rgba(39,230,255,.7);
 }
 
 
@@ -306,46 +388,56 @@ main {
 
 .memory {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
-        repeat(6, 1fr);
+        repeat(5, 1fr);
 
-    gap: 6px;
+    gap:
+        6px;
 
-    margin-bottom: 12px;
+    margin-bottom:
+        10px;
+
 }
+
 
 .memory button {
 
-    height: 36px;
+    height:
+        34px;
+
+    background:
+        #111f34;
 
     border:
         1px solid
-        rgba(255,255,255,.08);
+        rgba(255,255,255,.06);
 
-    border-radius: 6px;
+    border-radius:
+        7px;
 
-    background: #0d1b2f;
+    color:
+        #a8bad0;
 
-    color: #9db2cb;
+    cursor:
+        pointer;
 
-    font-size: 10px;
+    font-size:
+        10px;
 
-    cursor: pointer;
 }
+
 
 .memory button:hover {
 
-    color: #27e6ff;
+    color:
+        var(--cyan);
 
     border-color:
-        rgba(39,230,255,.5);
-}
+        var(--cyan);
 
-#memoryStatus {
-
-    display: none;
 }
 
 
@@ -355,47 +447,50 @@ main {
 
 .scientific {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(5, 1fr);
 
-    gap: 6px;
+    gap:
+        6px;
 
-    margin-bottom: 10px;
+    margin-bottom:
+        10px;
+
 }
+
 
 .scientific button {
 
-    height: 38px;
+    height:
+        36px;
 
     border:
         1px solid
-        rgba(157,92,255,.25);
+        rgba(152,92,255,.3);
 
-    border-radius: 6px;
+    border-radius:
+        7px;
 
-    background: #15152d;
+    background:
+        #17182d;
 
-    color: #c9b8ff;
+    color:
+        #d1c2ff;
 
-    font-size: 11px;
+    cursor:
+        pointer;
 
-    cursor: pointer;
 }
 
-.scientific button:hover {
-
-    background: #24204a;
-
-    border-color: #9d5cff;
-}
-
-
-/* hide */
 
 .hidden {
-    display: none !important;
+
+    display:
+        none;
+
 }
 
 
@@ -405,367 +500,376 @@ main {
 
 .keypad {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(4, 1fr);
 
-    gap: 9px;
+    gap:
+        8px;
+
 }
 
 
-/* EVERY BUTTON */
+/* BUTTON */
 
 .keypad button {
 
-    height: 64px;
+    height:
+        62px;
 
     border:
         1px solid
-        rgba(255,255,255,.08);
+        rgba(255,255,255,.06);
 
     border-bottom:
         4px solid
-        #03070e;
+        #050912;
 
-    border-radius: 10px;
+    border-radius:
+        13px;
 
     background:
         linear-gradient(
             145deg,
-            #1c2d47,
-            #0d192b
+            #20334e,
+            #142237
         );
 
-    color: white;
+    color:
+        white;
 
-    font-family: Orbitron, sans-serif;
+    font-size:
+        20px;
 
-    font-size: 17px;
-
-    cursor: pointer;
+    cursor:
+        pointer;
 
     transition:
-        transform .1s,
-        box-shadow .1s,
-        border .1s;
+        .12s;
+
 }
 
-
-/* hover */
 
 .keypad button:hover {
 
-    transform:
-        translateY(-2px);
+    background:
+        linear-gradient(
+            145deg,
+            #2b4668,
+            #192d47
+        );
 
     border-color:
-        rgba(39,230,255,.45);
+        rgba(49,221,255,.4);
 
-    box-shadow:
-        0 0 15px
-        rgba(39,230,255,.15);
 }
 
 
-/* press */
+/* CLICK */
 
 .keypad button:active {
 
     transform:
         translateY(3px);
 
-    border-bottom-width: 1px;
+    border-bottom:
+        1px solid
+        #050912;
+
 }
 
 
 /* =========================
-   SPECIAL BUTTON
+   FUNCTION
 ========================= */
 
-.keypad .danger {
+.keypad .function {
 
-    color: #ff7187;
+    color:
+        #ff8092;
 
     background:
         linear-gradient(
             145deg,
-            #38202a,
-            #21131a
+            #34202a,
+            #24151d
         );
+
 }
 
 
 /* =========================
-   OPERATORS
+   OPERATOR
 ========================= */
 
 .keypad .operator {
 
-    color: #ffc857;
+    color:
+        var(--gold);
 
     background:
         linear-gradient(
             145deg,
-            #3b311c,
-            #211b10
+            #3c321d,
+            #251e12
         );
 
-    border-color:
-        rgba(255,200,87,.15);
 }
 
 
 /* =========================
-   EQUAL BUTTON
+   EQUAL
 ========================= */
 
 .keypad .equal {
 
-    color: white;
+    color:
+        white;
 
     background:
         linear-gradient(
             145deg,
-            #18a3aa,
-            #15528a
+            #1c9da7,
+            #155ca0
         );
-
-    border-color:
-        rgba(39,230,255,.4);
 
     box-shadow:
         0 0 20px
-        rgba(39,230,255,.18);
+        rgba(49,221,255,.2);
+
 }
 
 
-/* =========================
-   ZERO
-========================= */
+/* ZERO */
 
 .keypad .zero {
 
     grid-column:
         span 2;
+
 }
 
 
 /* =========================
-   STATUS
+   BOTTOM
 ========================= */
 
-.status {
+.bottom {
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    margin-top: 12px;
+    margin-top:
+        10px;
 
-    color: #607994;
+    color:
+        #617995;
 
-    font-size: 10px;
+    font-size:
+        10px;
+
 }
 
 
 /* =========================
-   KNIGHT PANEL
+   HISTORY
 ========================= */
 
-.knight-panel {
+.history-button {
 
-    display: none;
+    margin-top:
+        15px;
+
+    padding:
+        10px 20px;
+
+    border:
+        1px solid
+        rgba(49,221,255,.25);
+
+    border-radius:
+        8px;
+
+    background:
+        #0c182b;
+
+    color:
+        #b4c8dd;
+
+    cursor:
+        pointer;
+
 }
 
-
-/* =========================
-   MODAL
-========================= */
 
 .modal {
 
-    display: none;
+    position:
+        fixed;
 
-    position: fixed;
+    inset:
+        0;
 
-    inset: 0;
+    display:
+        none;
 
-    z-index: 100;
+    align-items:
+        center;
 
-    align-items: center;
+    justify-content:
+        center;
 
-    justify-content: center;
-
-    padding: 20px;
+    padding:
+        20px;
 
     background:
         rgba(0,0,0,.75);
+
+    z-index:
+        100;
+
 }
+
 
 .modal.active {
 
-    display: flex;
+    display:
+        flex;
+
 }
 
 
-.modal-box {
+.modal-content {
 
-    width: 100%;
+    width:
+        100%;
 
-    max-width: 500px;
+    max-width:
+        430px;
 
-    max-height: 80vh;
+    max-height:
+        80vh;
 
-    overflow-y: auto;
+    overflow-y:
+        auto;
 
-    padding: 22px;
+    padding:
+        20px;
 
-    background: #0b1729;
+    background:
+        #0e1b2d;
 
     border:
         1px solid
-        rgba(39,230,255,.3);
+        rgba(49,221,255,.3);
 
-    border-radius: 15px;
+    border-radius:
+        15px;
 
-    box-shadow:
-        0 20px 60px
-        rgba(0,0,0,.7);
 }
 
 
-.modal-header {
+.modal-title {
 
-    display: flex;
+    display:
+        flex;
 
-    justify-content: space-between;
+    justify-content:
+        space-between;
 
-    align-items: center;
+    align-items:
+        center;
 
-    margin-bottom: 15px;
+    margin-bottom:
+        15px;
+
 }
 
 
-.modal-header h2 {
+.modal-title h3 {
 
-    font-family: Orbitron;
+    font-size:
+        18px;
 
-    font-size: 18px;
 }
 
 
-.modal-header button {
-
-    background: none;
-
-    border: none;
-
-    color: white;
-
-    font-size: 28px;
-
-    cursor: pointer;
-}
-
-
-/* HISTORY */
-
-.history-item {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 12px;
-
-    margin-bottom: 7px;
-
-    background: #0f2038;
-
-    border-radius: 8px;
+.modal-title button {
 
     border:
-        1px solid
-        rgba(255,255,255,.05);
+        none;
+
+    background:
+        none;
+
+    color:
+        white;
+
+    font-size:
+        28px;
+
+    cursor:
+        pointer;
+
 }
 
 
-.history-item strong {
+.history-row {
 
-    color: #27e6ff;
+    padding:
+        12px;
+
+    margin-bottom:
+        7px;
+
+    border-radius:
+        8px;
+
+    background:
+        #13243b;
+
+    cursor:
+        pointer;
+
 }
 
 
-.history-item button {
+.history-row strong {
 
-    border: none;
+    color:
+        var(--cyan);
 
-    background: none;
-
-    color: #ff526d;
-
-    font-size: 20px;
-
-    cursor: pointer;
 }
 
 
-/* SETTINGS */
+.clear-history {
 
-.modal-box label {
+    width:
+        100%;
 
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    padding: 14px 0;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.08);
-}
-
-
-.modal-box select {
-
-    background: #071326;
-
-    color: white;
+    padding:
+        11px;
 
     border:
-        1px solid
-        rgba(39,230,255,.3);
+        none;
 
-    border-radius: 6px;
+    border-radius:
+        7px;
 
-    padding: 7px;
-}
+    background:
+        #5b1c2b;
 
+    color:
+        white;
 
-.delete-history {
+    cursor:
+        pointer;
 
-    width: 100%;
-
-    padding: 12px;
-
-    margin-top: 15px;
-
-    background: #591b2a;
-
-    border:
-        1px solid
-        #ff526d55;
-
-    color: white;
-
-    border-radius: 7px;
-
-    cursor: pointer;
 }
 
 
@@ -773,205 +877,131 @@ main {
    TOAST
 ========================= */
 
-#toast {
+.toast {
 
-    position: fixed;
+    position:
+        fixed;
 
-    bottom: 25px;
+    bottom:
+        25px;
 
-    left: 50%;
+    left:
+        50%;
 
     transform:
-        translate(-50%, 100px);
+        translate(-50%,100px);
 
-    z-index: 200;
+    padding:
+        12px 18px;
 
-    padding: 12px 20px;
-
-    background: #08182b;
+    background:
+        #09182a;
 
     border:
         1px solid
-        #27e6ff;
+        var(--cyan);
 
-    border-radius: 8px;
+    border-radius:
+        8px;
 
-    opacity: 0;
+    opacity:
+        0;
 
-    transition: .25s;
+    transition:
+        .25s;
+
+    z-index:
+        200;
+
 }
 
 
-#toast.show {
+.toast.show {
 
     transform:
-        translate(-50%, 0);
+        translate(-50%,0);
 
-    opacity: 1;
+    opacity:
+        1;
+
 }
 
 
 /* =========================
-   FOOTER
+   CUBES
 ========================= */
 
-footer {
+.cube {
 
-    max-width: 1000px;
+    position:
+        absolute;
 
-    margin: 25px auto 0;
+    width:
+        55px;
 
-    text-align: center;
+    height:
+        55px;
 
-    color: #59718d;
+    border:
+        1px solid
+        rgba(49,221,255,.2);
 
-    font-size: 9px;
+    transform:
+        rotate(45deg);
 
-    letter-spacing: 2px;
+    pointer-events:
+        none;
+
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+.cube-1 {
 
-@media (max-width: 600px) {
+    top:
+        25%;
 
-    .app {
+    left:
+        5%;
 
-        padding:
-            15px 10px;
+}
 
-    }
 
+.cube-2 {
 
-    .header {
+    right:
+        7%;
 
-        margin-bottom: 20px;
+    top:
+        45%;
 
-    }
+    width:
+        40px;
 
+    height:
+        40px;
 
-    .logo h1 {
+    border-color:
+        rgba(152,92,255,.3);
 
-        font-size: 13px;
+}
 
-    }
 
+.cube-3 {
 
-    .logo p {
+    left:
+        10%;
 
-        font-size: 8px;
+    bottom:
+        10%;
 
-    }
+    width:
+        30px;
 
+    height:
+        30px;
 
-    .logo-cube {
-
-        width: 35px;
-
-        height: 35px;
-
-    }
-
-
-    .header-buttons button {
-
-        width: 35px;
-
-        height: 35px;
-
-    }
-
-
-    .calculator {
-
-        width: 100%;
-
-        padding: 15px;
-
-        border-radius: 15px;
-
-    }
-
-
-    .calculator-top {
-
-        align-items:
-            flex-start;
-
-    }
-
-
-    .calculator h2 {
-
-        font-size: 15px;
-
-    }
-
-
-    #mode {
-
-        font-size: 11px;
-
-        padding: 7px;
-
-    }
-
-
-    .display {
-
-        min-height: 105px;
-
-    }
-
-
-    #result {
-
-        font-size: 29px;
-
-    }
-
-
-    .memory {
-
-        grid-template-columns:
-            repeat(6, minmax(45px,1fr));
-
-        overflow-x: auto;
-
-    }
-
-
-    .keypad {
-
-        gap: 6px;
-
-    }
-
-
-    .keypad button {
-
-        height: 58px;
-
-        font-size: 14px;
-
-    }
-
-
-    .scientific {
-
-        grid-template-columns:
-            repeat(4,1fr);
-
-    }
-
-
-    .scientific button {
-
-        font-size: 10px;
-
-    }
+    border-color:
+        rgba(255,200,87,.25);
 
 }
 
@@ -983,13 +1013,14 @@ footer {
 body.light {
 
     background:
-        radial-gradient(
-            circle at top,
-            #e8f9ff,
-            #9bd8ef
+        linear-gradient(
+            145deg,
+            #e9f9ff,
+            #9edbf1
         );
 
-    color: #10243d;
+    color:
+        #10243b;
 
 }
 
@@ -999,27 +1030,22 @@ body.light .calculator {
     background:
         rgba(255,255,255,.9);
 
-    border-color:
-        rgba(20,120,160,.25);
-
 }
 
 
 body.light .display {
 
     background:
-        #eefaff;
+        #edfaff;
 
 }
 
 
-body.light #result {
+body.light .display-number {
 
-    color: #10243d;
+    color:
+        #10243b;
 
-    text-shadow:
-        0 0 10px
-        rgba(39,150,200,.25);
 }
 
 
@@ -1029,18 +1055,137 @@ body.light .keypad button {
         linear-gradient(
             145deg,
             #ffffff,
-            #dbeef7
+            #dcecf5
         );
 
-    color: #10243d;
+    color:
+        #10243b;
 
 }
 
 
 body.light .memory button {
 
-    background: #e8f5fa;
+    background:
+        #e9f5fa;
 
-    color: #31516c;
+    color:
+        #31516c;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:480px) {
+
+    .page {
+
+        padding:
+            15px 10px;
+
+    }
+
+
+    header {
+
+        margin-bottom:
+            15px;
+
+    }
+
+
+    .brand h1 {
+
+        font-size:
+            13px;
+
+    }
+
+
+    .brand p {
+
+        font-size:
+            8px;
+
+    }
+
+
+    .brand-icon {
+
+        width:
+            32px;
+
+        height:
+            32px;
+
+    }
+
+
+    .calculator {
+
+        padding:
+            14px;
+
+        border-radius:
+            18px;
+
+    }
+
+
+    .calculator-title h2 {
+
+        font-size:
+            18px;
+
+    }
+
+
+    .display {
+
+        height:
+            105px;
+
+    }
+
+
+    .display-number {
+
+        font-size:
+            30px;
+
+    }
+
+
+    .keypad {
+
+        gap:
+            6px;
+
+    }
+
+
+    .keypad button {
+
+        height:
+            58px;
+
+        border-radius:
+            11px;
+
+        font-size:
+            16px;
+
+    }
+
+
+    .scientific {
+
+        grid-template-columns:
+            repeat(4,1fr);
+
+    }
 
 }
