@@ -1,74 +1,939 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubes Adventures Calculator</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Cubes Adventure Knight Futuristic Calculator">
+
+    <title>Cubes Adventure Knight</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="game-bg">
-        <div class="cube cube1"></div>
-        <div class="cube cube2"></div>
-        <div class="cube cube3"></div>
-        <div class="cube cube4"></div>
+    <!-- =========================
+         MAIN WORLD
+    ========================== -->
 
-        <main class="calculator">
+    <div class="world">
 
-            <div class="game-title">
-                <span>🧊</span>
-                <div>
-                    <h1>CUBES</h1>
-                    <p>ADVENTURES</p>
+        <!-- Background -->
+        <div class="grid-background"></div>
+        <div id="particles"></div>
+        <div id="floatingCubes"></div>
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header class="topbar">
+
+            <div class="brand">
+
+                <div class="logo-cube">
+                    ◆
                 </div>
-                <span>⚔️</span>
-            </div>
 
-            <div class="level">
-                ⭐ LEVEL 01 • CALCULATOR QUEST ⭐
-            </div>
+                <div class="brand-text">
 
-            <div class="display-box">
-                <div id="history"></div>
-                <div id="display">0</div>
-            </div>
+                    <h1>
+                        CUBES ADVENTURE
+                    </h1>
 
-            <div class="buttons">
+                    <span>
+                        KNIGHT // FUTURISTIC CALCULATOR
+                    </span>
 
-                <button class="special" onclick="clearDisplay()">AC</button>
-                <button class="special" onclick="deleteNumber()">⌫</button>
-                <button class="special" onclick="percentage()">%</button>
-                <button class="operator" onclick="chooseOperator('/')">÷</button>
-
-                <button onclick="appendNumber('7')">7</button>
-                <button onclick="appendNumber('8')">8</button>
-                <button onclick="appendNumber('9')">9</button>
-                <button class="operator" onclick="chooseOperator('*')">×</button>
-
-                <button onclick="appendNumber('4')">4</button>
-                <button onclick="appendNumber('5')">5</button>
-                <button onclick="appendNumber('6')">6</button>
-                <button class="operator" onclick="chooseOperator('-')">−</button>
-
-                <button onclick="appendNumber('1')">1</button>
-                <button onclick="appendNumber('2')">2</button>
-                <button onclick="appendNumber('3')">3</button>
-                <button class="operator" onclick="chooseOperator('+')">+</button>
-
-                <button class="zero" onclick="appendNumber('0')">0</button>
-                <button onclick="appendNumber('.')">.</button>
-                <button class="equals" onclick="calculate()">=</button>
+                </div>
 
             </div>
 
-            <div class="footer">
-                🏆 COMPLETE YOUR CALCULATION QUEST 🏆
+
+            <div class="header-actions">
+
+                <button
+                    id="soundButton"
+                    class="icon-button"
+                    aria-label="Toggle sound">
+                    🔇
+                </button>
+
+                <button
+                    id="themeButton"
+                    class="icon-button"
+                    aria-label="Toggle theme">
+                    ☀️
+                </button>
+
+                <button
+                    id="settingsButton"
+                    class="icon-button"
+                    aria-label="Open settings">
+                    ⚙
+                </button>
+
             </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+
+        <main class="main-layout">
+
+
+            <!-- =========================
+                 CUBE KNIGHT PANEL
+            ========================== -->
+
+            <aside class="adventure-panel glass-panel">
+
+                <div class="panel-label">
+                    ADVENTURE SYSTEM
+                </div>
+
+
+                <!-- Cube Knight -->
+
+                <div class="cube-knight">
+
+                    <div class="helmet">
+
+                        <div class="helmet-horn"></div>
+
+                        <div class="helmet-face">
+
+                            <span class="eye">
+                                ◆
+                            </span>
+
+                            <span class="eye">
+                                ◆
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="knight-body">
+
+                        <div class="shoulder left"></div>
+
+                        <div class="armor-core">
+                            ◈
+                        </div>
+
+                        <div class="shoulder right"></div>
+
+                    </div>
+
+
+                    <div class="shield">
+                        ⬟
+                    </div>
+
+
+                    <div class="sword">
+                        ⚔
+                    </div>
+
+                </div>
+
+
+                <!-- Knight Information -->
+
+                <div class="knight-info">
+
+                    <small>
+                        GUARDIAN OF NUMBERS
+                    </small>
+
+                    <h2>
+                        Cube Knight
+                    </h2>
+
+                    <p id="knightMessage">
+                        Calculation ready!
+                    </p>
+
+                </div>
+
+
+                <!-- Level -->
+
+                <div class="level-card">
+
+                    <div class="level-header">
+
+                        <span>
+                            KNIGHT LEVEL
+                        </span>
+
+                        <strong id="level">
+                            01
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="rank-name"
+                        id="rankName">
+
+                        Novice Knight
+
+                    </div>
+
+
+                    <div class="xp-container">
+
+                        <div
+                            class="xp-progress"
+                            id="xpProgress">
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="xp-text"
+                        id="xpText">
+
+                        0 / 100 XP
+
+                    </div>
+
+                </div>
+
+
+                <!-- Achievement -->
+
+                <div class="achievement-summary">
+
+                    <span class="achievement-icon">
+                        🏆
+                    </span>
+
+                    <div>
+
+                        <strong
+                            id="achievementCount">
+
+                            0
+
+                        </strong>
+
+                        <small>
+                            achievements unlocked
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+
+            <!-- =========================
+                 CALCULATOR
+            ========================== -->
+
+            <section class="calculator glass-panel">
+
+
+                <!-- Calculator Header -->
+
+                <div class="calculator-header">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            FUTURISTIC MATH CORE
+                        </span>
+
+                        <h2>
+                            Cubes Calculator
+                        </h2>
+
+                    </div>
+
+
+                    <!-- Calculator Mode -->
+
+                    <select
+                        id="calculatorMode"
+                        aria-label="Calculator mode">
+
+                        <option value="basic">
+                            BASIC
+                        </option>
+
+                        <option value="scientific">
+                            SCIENTIFIC
+                        </option>
+
+                        <option value="programmer">
+                            PROGRAMMER
+                        </option>
+
+                        <option value="converter">
+                            CONVERTER
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =========================
+                     DISPLAY
+                ========================== -->
+
+                <div class="calculator-display">
+
+                    <div
+                        id="expression"
+                        class="expression">
+
+                        Ready for your quest
+
+                    </div>
+
+
+                    <div
+                        id="display"
+                        class="result">
+
+                        0
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================
+                     MEMORY
+                ========================== -->
+
+                <div class="memory-controls">
+
+                    <button
+                        data-memory="mc">
+                        MC
+                    </button>
+
+                    <button
+                        data-memory="mr">
+                        MR
+                    </button>
+
+                    <button
+                        data-memory="mplus">
+                        M+
+                    </button>
+
+                    <button
+                        data-memory="mminus">
+                        M-
+                    </button>
+
+                    <button
+                        data-memory="ms">
+                        MS
+                    </button>
+
+                    <button
+                        id="historyButton">
+                        HISTORY
+                    </button>
+
+                    <span
+                        id="memoryIndicator">
+                    </span>
+
+                </div>
+
+
+
+                <!-- =========================
+                     SCIENTIFIC PANEL
+                ========================== -->
+
+                <div
+                    id="scientificPanel"
+                    class="function-panel hidden">
+
+                    <button data-scientific="sqrt">
+                        √
+                    </button>
+
+                    <button data-scientific="square">
+                        x²
+                    </button>
+
+                    <button data-scientific="power">
+                        xʸ
+                    </button>
+
+                    <button data-scientific="reciprocal">
+                        1/x
+                    </button>
+
+                    <button data-scientific="sin">
+                        sin
+                    </button>
+
+                    <button data-scientific="cos">
+                        cos
+                    </button>
+
+                    <button data-scientific="tan">
+                        tan
+                    </button>
+
+                    <button data-scientific="asin">
+                        asin
+                    </button>
+
+                    <button data-scientific="acos">
+                        acos
+                    </button>
+
+                    <button data-scientific="atan">
+                        atan
+                    </button>
+
+                    <button data-scientific="log">
+                        log
+                    </button>
+
+                    <button data-scientific="ln">
+                        ln
+                    </button>
+
+                    <button data-scientific="exp">
+                        eˣ
+                    </button>
+
+                    <button data-scientific="tenpower">
+                        10ˣ
+                    </button>
+
+                    <button data-scientific="pi">
+                        π
+                    </button>
+
+                    <button data-scientific="e">
+                        e
+                    </button>
+
+                    <button data-scientific="phi">
+                        φ
+                    </button>
+
+                    <button data-scientific="factorial">
+                        n!
+                    </button>
+
+                    <button data-scientific="absolute">
+                        abs
+                    </button>
+
+                    <button data-scientific="random">
+                        RND
+                    </button>
+
+                </div>
+
+
+
+                <!-- =========================
+                     PROGRAMMER PANEL
+                ========================== -->
+
+                <div
+                    id="programmerPanel"
+                    class="function-panel hidden">
+
+                    <button data-programmer="BIN">
+                        BIN
+                    </button>
+
+                    <button data-programmer="DEC">
+                        DEC
+                    </button>
+
+                    <button data-programmer="HEX">
+                        HEX
+                    </button>
+
+                    <button data-programmer="OCT">
+                        OCT
+                    </button>
+
+                    <button data-programmer="AND">
+                        AND
+                    </button>
+
+                    <button data-programmer="OR">
+                        OR
+                    </button>
+
+                    <button data-programmer="XOR">
+                        XOR
+                    </button>
+
+                    <button data-programmer="NOT">
+                        NOT
+                    </button>
+
+                    <button data-programmer="LEFT">
+                        SHIFT ←
+                    </button>
+
+                    <button data-programmer="RIGHT">
+                        SHIFT →
+                    </button>
+
+                </div>
+
+
+
+                <!-- =========================
+                     CONVERTER PANEL
+                ========================== -->
+
+                <div
+                    id="converterPanel"
+                    class="converter-panel hidden">
+
+                    <select id="converterType">
+
+                        <option value="length">
+                            Length
+                        </option>
+
+                        <option value="weight">
+                            Weight
+                        </option>
+
+                        <option value="temperature">
+                            Temperature
+                        </option>
+
+                        <option value="area">
+                            Area
+                        </option>
+
+                        <option value="volume">
+                            Volume
+                        </option>
+
+                        <option value="time">
+                            Time
+                        </option>
+
+                        <option value="speed">
+                            Speed
+                        </option>
+
+                        <option value="data">
+                            Digital Data
+                        </option>
+
+                        <option value="energy">
+                            Energy
+                        </option>
+
+                    </select>
+
+
+                    <input
+                        id="converterInput"
+                        type="number"
+                        value="1"
+                        aria-label="Converter value">
+
+
+                    <select
+                        id="converterFrom">
+                    </select>
+
+
+                    <select
+                        id="converterTo">
+                    </select>
+
+
+                    <button
+                        id="convertButton">
+
+                        CONVERT
+
+                    </button>
+
+
+                    <div
+                        id="converterResult">
+
+                        —
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================
+                     NUMERIC KEYPAD
+                ========================== -->
+
+                <div
+                    id="keypad"
+                    class="keypad">
+
+
+                    <button
+                        class="special"
+                        data-action="clear">
+                        AC
+                    </button>
+
+                    <button
+                        class="special"
+                        data-action="backspace">
+                        ⌫
+                    </button>
+
+                    <button
+                        class="special"
+                        data-action="percent">
+                        %
+                    </button>
+
+                    <button
+                        class="operator"
+                        data-operator="/">
+                        ÷
+                    </button>
+
+
+                    <button data-number="7">
+                        7
+                    </button>
+
+                    <button data-number="8">
+                        8
+                    </button>
+
+                    <button data-number="9">
+                        9
+                    </button>
+
+                    <button
+                        class="operator"
+                        data-operator="*">
+                        ×
+                    </button>
+
+
+                    <button data-number="4">
+                        4
+                    </button>
+
+                    <button data-number="5">
+                        5
+                    </button>
+
+                    <button data-number="6">
+                        6
+                    </button>
+
+                    <button
+                        class="operator"
+                        data-operator="-">
+                        −
+                    </button>
+
+
+                    <button data-number="1">
+                        1
+                    </button>
+
+                    <button data-number="2">
+                        2
+                    </button>
+
+                    <button data-number="3">
+                        3
+                    </button>
+
+                    <button
+                        class="operator"
+                        data-operator="+">
+                        +
+                    </button>
+
+
+                    <button
+                        class="zero"
+                        data-number="0">
+                        0
+                    </button>
+
+                    <button data-number=".">
+                        .
+                    </button>
+
+                    <button data-action="sign">
+                        ±
+                    </button>
+
+                    <button
+                        class="equal"
+                        data-action="equals">
+                        =
+                    </button>
+
+                </div>
+
+
+
+                <!-- =========================
+                     STATUS
+                ========================== -->
+
+                <div class="calculator-status">
+
+                    <span>
+                        ⌨ Keyboard Ready
+                    </span>
+
+                    <span id="systemStatus">
+                        SYSTEM ONLINE
+                    </span>
+
+                </div>
+
+            </section>
 
         </main>
+
+
+
+        <!-- =========================
+             HISTORY MODAL
+        ========================== -->
+
+        <div
+            id="historyModal"
+            class="modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h2>
+                        ⚔ Adventure History
+                    </h2>
+
+                    <button
+                        data-close="historyModal">
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div id="historyList">
+                </div>
+
+
+                <button
+                    id="deleteAllHistory"
+                    class="danger-button">
+
+                    DELETE ALL HISTORY
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             SETTINGS MODAL
+        ========================== -->
+
+        <div
+            id="settingsModal"
+            class="modal">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h2>
+                        ⚙ Settings
+                    </h2>
+
+                    <button
+                        data-close="settingsModal">
+                        ×
+                    </button>
+
+                </div>
+
+
+                <label class="setting-row">
+
+                    <span>
+                        Theme
+                    </span>
+
+                    <select id="themeSelect">
+
+                        <option value="dark">
+                            Dark
+                        </option>
+
+                        <option value="light">
+                            Light
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label class="setting-row">
+
+                    <span>
+                        Sound
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="soundToggle">
+
+                </label>
+
+
+                <label class="setting-row">
+
+                    <span>
+                        Animation
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="animationToggle"
+                        checked>
+
+                </label>
+
+
+                <label class="setting-row">
+
+                    <span>
+                        Vibration
+                    </span>
+
+                    <input
+                        type="checkbox"
+                        id="vibrationToggle">
+
+                </label>
+
+
+                <label class="setting-row">
+
+                    <span>
+                        Decimal Places
+                    </span>
+
+                    <select id="decimalSelect">
+
+                        <option value="auto">
+                            Auto
+                        </option>
+
+                        <option value="2">
+                            2
+                        </option>
+
+                        <option value="4">
+                            4
+                        </option>
+
+                        <option value="6">
+                            6
+                        </option>
+
+                        <option value="8">
+                            8
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <button
+                    id="resetData"
+                    class="danger-button">
+
+                    RESET ALL DATA
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             TOAST
+        ========================== -->
+
+        <div
+            id="toast"
+            class="toast">
+        </div>
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <footer>
+
+            ⚔ CUBES ADVENTURE KNIGHT
+            <span>•</span>
+            MATH QUEST
+            <span>•</span>
+            LOCAL STORAGE ENABLED
+
+        </footer>
+
     </div>
+
 
     <script src="script.js"></script>
 
